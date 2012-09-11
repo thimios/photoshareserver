@@ -30,7 +30,7 @@ Ext.define('TodosApp.model.Task', {
         ],
         proxy: {
             type: 'rest',
-            url: '/tasks',
+            url: 'http://192.168.2.150:3000/tasks',
             format: 'json'
         }
     }
