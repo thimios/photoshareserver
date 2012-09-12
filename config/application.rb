@@ -32,6 +32,18 @@ module TodosSt2
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    
+    # This removes the requirement of setting the callback parameter on every json responce
+    config.middleware.use Rack::JSONP
+    
+    # TODO: configure more restrictive jsonp cors middleware, this allows all resource calls from all origin domains
+    config.middleware.use Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options, :put, :delete]
+      end
+    end
+    
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"

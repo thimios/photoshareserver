@@ -37,3 +37,12 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+#jsonp middleware 
+
+gem 'rack-cors', :require => 'rack/cors'
+  
+
+gem 'rack-jsonp-middleware',  :require => 'rack/jsonp'
+
+

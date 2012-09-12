@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  
   # GET /tasks
   # GET /tasks.json
   def index
@@ -6,7 +7,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @tasks }
+      format.json { render json: @tasks}#, :callback => params[:callback] }
     end
   end
 
@@ -17,7 +18,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @task }
+      format.json { render json: @task}#, :callback => params[:callback] }
     end
   end
 
@@ -28,7 +29,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @task }
+      format.json { render json: @task}#, :callback => params[:callback] }
     end
   end
 
@@ -45,10 +46,10 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
-        format.json { render json: @task, status: :created, location: @task }
+        format.json { render json: @task, status: :created, location: @task}#, :callback => params[:callback] }
       else
         format.html { render action: "new" }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity}#, :callback => params[:callback] }
       end
     end
   end
@@ -61,10 +62,10 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.update_attributes(params[:task])
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
-        format.json { head :no_content }
+        format.json { head :no_content}#, :callback => params[:callback] }
       else
         format.html { render action: "edit" }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity}#, :callback => params[:callback] }
       end
     end
   end
@@ -77,7 +78,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to tasks_url }
-      format.json { head :no_content }
+      format.json { head :no_content}#, :callback => params[:callback] }
     end
   end
 end
