@@ -33,7 +33,7 @@ Ext.define('TodosApp.model.Task', {
         ],
         autoLoad: true,
         proxy: {
-            type: 'rest',
+            type: 'jsonp',
             url: 'http://192.168.2.150:3000/tasks',
             callbackKey: "callback",
             reader: {
