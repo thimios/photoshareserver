@@ -39,10 +39,7 @@ Ext.define('TodosApp.model.Task', {
             reader: {
                 type: "json",
                 rootProperty: ""
-            },
-            writer: {
-            	type: 'json'
-        	}
+            }
         }
     }
 });
