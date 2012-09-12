@@ -15,6 +15,9 @@
 
 Ext.define('TodosApp.model.Task', {
     extend: 'Ext.data.Model',
+    requires: [
+        "Ext.data.proxy.JsonP"
+    ],
     config: {
         fields: [
             {
@@ -28,10 +31,18 @@ Ext.define('TodosApp.model.Task', {
                 type: 'boolean'
             }
         ],
+        autoLoad: true,
         proxy: {
             type: 'rest',
             url: 'http://192.168.2.150:3000/tasks',
-            format: 'json'
+            callbackKey: "callback",
+            reader: {
+                type: "json",
+                rootProperty: ""
+            },
+            writer: {
+            	type: 'json'
+        	}
         }
     }
 });
