@@ -34,7 +34,7 @@ Ext.define('TodosApp.model.Task', {
         
         proxy: {
             type: 'rest',
-            url: 'http://192.168.2.150:3000/tasks',
+            url: 'http://ec2-50-17-235-99.compute-1.amazonaws.com/tasks',
             format: 'json',
             callbackKey: 'callback',
             reader: {
