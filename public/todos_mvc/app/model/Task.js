@@ -31,15 +31,20 @@ Ext.define('TodosApp.model.Task', {
                 type: 'boolean'
             }
         ],
-        autoLoad: true,
+        
         proxy: {
-            type: 'jsonp',
+            type: 'rest',
             url: 'http://192.168.2.150:3000/tasks',
-            callbackKey: "callback",
+            format: 'json',
+            callbackKey: 'callback',
             reader: {
-                type: "json",
+                type: 'json',
                 rootProperty: ""
+            },
+            writer: {
+                type: 'json'
             }
+
         }
     }
 });
