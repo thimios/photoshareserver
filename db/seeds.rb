@@ -9,3 +9,7 @@
 Task.create(name: "taks1")
 Task.create(name: "task2")
 Task.create(name: "skata")
+
+Category.create(title: "fashion", description: "fashion passion")
+Category.create(title: "place", description: "places category")
+Category.create(title: "design", description: "design")

@@ -1,4 +1,12 @@
 TodosSt2::Application.routes.draw do
+  resources :photos do
+    resource :category
+  end
+
+  resources :categories do
+       resources :photos
+  end
+
   resources :tasks
 
   # The priority is based upon order of creation:
