@@ -45,4 +45,7 @@ gem 'rack-cors', :require => 'rack/cors'
 
 gem 'rack-jsonp-middleware',  :require => 'rack/jsonp'
 
+# file uploads
+gem "paperclip", "~> 3.0"
+
 

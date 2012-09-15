@@ -15,6 +15,11 @@
   <%= @photo.category.title %>
 </p>
 
+<%= image_tag @photo.image.url %>
+<%= image_tag @photo.image.url(:medium) %>
+<%= image_tag @photo.image.url(:thumb) %>
+<%= image_tag @photo.image.url(:full) %>
+
 
 <%= link_to 'Edit', edit_photo_path(@photo) %> |
 <%= link_to 'Back', photos_path %>
