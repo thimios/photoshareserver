@@ -5,5 +5,5 @@ class Photo < ActiveRecord::Base
   
   
   validates :category_id, :presence => true
-  validates :image, :attachment_presence => true
+  #validates :image, :attachment_presence => true
 end

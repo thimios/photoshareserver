@@ -15,6 +15,11 @@
   <%= @photo.category.title %>
 </p>
 
+<p>
+  <b>Category Id:</b>
+  <%= @photo.category.id %>
+</p>
+
 <%= image_tag @photo.image.url %>
 <%= image_tag @photo.image.url(:medium) %>
 <%= image_tag @photo.image.url(:thumb) %>
