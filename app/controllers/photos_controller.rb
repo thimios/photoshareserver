@@ -2,7 +2,12 @@ class PhotosController < ApplicationController
   # GET /photos
   # GET /photos.json
   def index
-    @photos = Photo.all
+    if params[:category_id].nil?
+      @photos = Photo.all
+    else
+      @photos = Photo.where(:category_id => params[:category_id])
+    end
+    
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,11 +46,14 @@ class PhotosController < ApplicationController
   # POST /photos.json
   def create
     @photo = Photo.new(params[:photo])
-
+    unless params[:category_id].nil?
+      @photo.category_id = params[:category_id]
+    end
+    
     respond_to do |format|
       if @photo.save
         format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
-        format.json { render json: @photo, status: :created, location: @photo }
+        format.json { render json: @photo, status: :created}
       else
         format.html { render action: "new" }
         format.json { render json: @photo.errors, status: :unprocessable_entity }
@@ -61,7 +69,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       if @photo.update_attributes(params[:photo])
         format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: @photo, status: :updated  }
       else
         format.html { render action: "edit" }
         format.json { render json: @photo.errors, status: :unprocessable_entity }

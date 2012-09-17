@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :category_id %><br />
-    <%= collection_select(:photo, :category_id, Category.all, :id, :title, {:prompt => false}) %>
+    <%= collection_select(:photo, :category_id, Category.all, :id, :title) %>
   </div>
   <div class="field">
   	<%= f.label :image %><br />
