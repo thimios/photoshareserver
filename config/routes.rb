@@ -1,6 +1,12 @@
 TodosSt2::Application.routes.draw do
+  
+  #match 'photos/search' => 'photos#search'
+  
   resources :photos do
     resource :category
+    collection do
+      get 'search'
+    end
   end
 
   resources :categories do
@@ -11,8 +17,11 @@ TodosSt2::Application.routes.draw do
   
   root :to => "photos#index"
 
+  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
+  
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

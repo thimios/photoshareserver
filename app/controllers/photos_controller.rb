@@ -1,4 +1,15 @@
 class PhotosController < ApplicationController
+  
+  def search
+    @search = Photo.search { fulltext params[:search_string] }
+    @photos = @search.results
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @photos }
+    end
+  end
+  
   # GET /photos
   # GET /photos.json
   def index
