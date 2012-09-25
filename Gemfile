@@ -53,3 +53,6 @@ gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in developm
 
 # bundle exec rake sunspot:solr:start # or sunspot:solr:run to start in foreground
 # bundle exec rake sunspot:solr:reindex
+
+# Authentication
+gem 'devise'

@@ -1,4 +1,5 @@
 class PhotosController < ApplicationController
+   before_filter :authenticate_user!
   
   def search
     @search = Photo.search { fulltext params[:search_string] }

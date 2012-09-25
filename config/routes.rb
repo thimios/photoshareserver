@@ -1,5 +1,7 @@
 TodosSt2::Application.routes.draw do
   
+  devise_for :users
+
   #match 'photos/search' => 'photos#search'
   
   resources :photos do
@@ -10,7 +12,12 @@ TodosSt2::Application.routes.draw do
   end
 
   resources :categories do
-       resources :photos
+    resources :photos
+  end
+  
+  devise_for :users, :controllers => {:sessions => 'sessions'}, :skip => [:sessions] do
+    match 'login' => 'sessions#create', :via => [:get, :post]
+    get 'logout' => 'sessions#destroy', :as => :destroy_user_session
   end
 
   resources :tasks
