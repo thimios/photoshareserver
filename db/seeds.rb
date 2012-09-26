@@ -14,6 +14,16 @@ Category.create(title: "fashion", description: "fashion passion")
 Category.create(title: "place", description: "places category")
 Category.create(title: "design", description: "design")
 
+Photo.create(title: "fashion photo test", description: "belonging to fashion category", category_id: "1")
+Photo.create(title: "fashion photo test2", description: "belonging to fashion category", category_id: "1")
+
+Photo.create(title: "place photo test", description: "belonging to place category", category_id: "2")
+Photo.create(title: "place photo test2", description: "belonging to place category", category_id: "2")
+
+Photo.create(title: "design photo test", description: "belonging to design category", category_id: "3")
+Photo.create(title: "design photo test2", description: "belonging to design category", category_id: "3")
+
+
 
 #password: dimo5217
 

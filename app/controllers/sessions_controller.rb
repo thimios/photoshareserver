@@ -1,5 +1,5 @@
 class SessionsController < Devise::SessionsController
-  include Devise::Controllers::InternalHelpers
+  #include Devise::Controllers::InternalHelpers
   prepend_before_filter :require_no_authentication, :only => [:new, :create]
 
   def new
@@ -11,7 +11,7 @@ class SessionsController < Devise::SessionsController
     user = warden.authenticate(:scope => :user)
     if user
       user.reset_authentication_token!
-      render :json => {:access_token => user.authentication_token, :token_type => "persistant"}, :callback => params[:callback]
+      render :json => {:auth_token => user.authentication_token, :token_type => "persistant"}, :callback => params[:callback]
     else
       render :json => {:error => "invalid_grant"}, :callback => params[:callback]
     end

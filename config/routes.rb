@@ -1,6 +1,4 @@
 TodosSt2::Application.routes.draw do
-  
-  devise_for :users
 
   #match 'photos/search' => 'photos#search'
   
@@ -20,6 +18,7 @@ TodosSt2::Application.routes.draw do
     get 'logout' => 'sessions#destroy', :as => :destroy_user_session
   end
 
+  devise_for :users
   resources :tasks
   
   root :to => "photos#index"
