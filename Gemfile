@@ -55,4 +55,4 @@ gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in developm
 # bundle exec rake sunspot:solr:reindex
 
 # Authentication
-gem 'devise'
+gem 'devise', "2.1.2"
