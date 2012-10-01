@@ -13,7 +13,7 @@ TodosSt2::Application.routes.draw do
     resources :photos
   end
   
-  devise_for :users, :controllers => {:sessions => 'sessions'}, :skip => [:sessions] do
+  devise_for :users, :controllers => {:sessions => 'sessions', :registrations => "registrations"}, :skip => [:sessions] do
     match 'login' => 'sessions#create', :via => [:get, :post]
     get 'logout' => 'sessions#destroy', :as => :destroy_user_session
   end

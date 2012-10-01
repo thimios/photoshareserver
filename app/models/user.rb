@@ -12,9 +12,15 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => 6..30, :allow_blank => true
   validates_uniqueness_of   :email, :case_sensitive => false, :scope => :deleted_at
   validates_format_of       :email, :with => Devise::email_regexp
+  validates_presence_of     :username
+  validates_uniqueness_of   :username
+  validates_presence_of     :birth_date
+  validates_presence_of     :gender
+  validates_inclusion_of    :gender, :in => %w(male female)
+
   
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :username, :birth_date, :gender, :email, :password, :password_confirmation, :remember_me
 
   def destroy
     self.update_attribute(:deleted_at, Time.now.utc)

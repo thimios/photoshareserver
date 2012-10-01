@@ -10,9 +10,9 @@ Task.create(name: "taks1")
 Task.create(name: "task2")
 Task.create(name: "skata")
 
-Category.create(title: "fashion", description: "fashion passion")
-Category.create(title: "place", description: "places category")
-Category.create(title: "design", description: "design")
+Category.find_or_create_by_title(title: "fashion", description: "fashion passion")
+Category.find_or_create_by_title(title: "place", description: "places category")
+Category.find_or_create_by_title(title: "design", description: "design")
 
 Photo.create(title: "fashion photo test", description: "belonging to fashion category", category_id: "1")
 Photo.create(title: "fashion photo test2", description: "belonging to fashion category", category_id: "1")
@@ -29,6 +29,9 @@ Photo.create(title: "design photo test2", description: "belonging to design cate
 
 user1 =
   User.find_or_create_by_email(
+    :username => "thimios",
+    :birth_date => "2010-09-28 00:00:00",
+    :gender => "male",
     :email => "thimios@wantedpixel.com",
     :password => 'thimios',
     :password_confirmation => 'thimios')
@@ -37,6 +40,9 @@ user1.save
 
 user2 =
   User.find_or_create_by_email(
+    :username => "spiros",
+    :birth_date => "2010-09-28 00:00:00",
+    :gender => "male",
     :email => "spiros@wantedpixel.com",
     :password => 'spiros',
     :password_confirmation => 'spiros')
