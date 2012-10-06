@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   validates_presence_of     :password, :on => :create
   validates_confirmation_of :password, :on => :create
   validates_length_of       :password, :within => 6..30, :allow_blank => true
-  validates_uniqueness_of   :email, :case_sensitive => false, :scope => :deleted_at
+  #validates_uniqueness_of   :email, :case_sensitive => false, :scope => :deleted_at
   validates_format_of       :email, :with => Devise::email_regexp
   validates_presence_of     :username
   validates_uniqueness_of   :username
