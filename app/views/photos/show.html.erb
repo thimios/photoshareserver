@@ -20,6 +20,11 @@
   <%= @photo.category.id %>
 </p>
 
+<p>
+  <b>Votes:</b>
+  <%= @photo.plusminus %>
+</p>
+
 <%= image_tag @photo.image.url %>
 <%= image_tag @photo.image.url(:medium) %>
 <%= image_tag @photo.image.url(:thumb) %>
