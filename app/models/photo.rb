@@ -1,4 +1,6 @@
 class Photo < ActiveRecord::Base
+  acts_as_voteable
+
   attr_accessible :category_id, :description, :title, :image
   searchable do
   	text :description, :title

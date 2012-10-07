@@ -7,18 +7,21 @@ TodosSt2::Application.routes.draw do
     collection do
       get 'search'
     end
+    member do
+      get 'vote_up'
+    end
   end
 
   resources :categories do
     resources :photos
   end
   
-  devise_for :users, :controllers => {:sessions => 'sessions', :registrations => "registrations"}, :skip => [:sessions] do
+  devise_for :users, :controllers => {:sessions => 'sessions', :registrations => "registrations"}, :path_names => { :sign_in => 'login', :sign_out => 'logout'}, :skip => [:sessions] do
     match 'login' => 'sessions#create', :via => [:get, :post]
     get 'logout' => 'sessions#destroy', :as => :destroy_user_session
   end
 
-  devise_for :users
+  #devise_for :users
   resources :tasks
   
   root :to => "photos#index"

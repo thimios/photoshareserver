@@ -1,9 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  title: MyString
-  description: MyText
+  id: 1
+  title: fashion
+  description: fashion category description
 
 two:
-  title: MyString
-  description: MyText
+  id: 2
+  title: place
+  description: place category description
+
+three:
+  id: 3
+  title: design
+  description: design cat descr

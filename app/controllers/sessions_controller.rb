@@ -1,5 +1,5 @@
 class SessionsController < Devise::SessionsController
-  #include Devise::Controllers::InternalHelpers
+#  include Devise::Controllers::InternalHelpers
   prepend_before_filter :require_no_authentication, :only => [:new, :create]
 
   def new
@@ -7,7 +7,6 @@ class SessionsController < Devise::SessionsController
   end
 
   def create
-
     user = warden.authenticate(:scope => :user)
     if user
       user.reset_authentication_token!

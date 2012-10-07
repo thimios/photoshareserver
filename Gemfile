@@ -48,6 +48,7 @@ gem 'rack-jsonp-middleware',  :require => 'rack/jsonp'
 # file uploads
 gem "paperclip", "~> 3.0"
 
+# solr searching
 gem 'sunspot_rails'
 gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development
 
@@ -56,3 +57,8 @@ gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in developm
 
 # Authentication
 gem 'devise', "2.1.2"
+
+# Voting system
+gem 'thumbs_up', "0.6.2"
+
+

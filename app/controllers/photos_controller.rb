@@ -1,5 +1,5 @@
 class PhotosController < ApplicationController
-   before_filter :authenticate_user!
+  before_filter :authenticate_user!
   
   def search
     @search = Photo.search { fulltext params[:search_string] }
@@ -19,7 +19,6 @@ class PhotosController < ApplicationController
     else
       @photos = Photo.where(:category_id => params[:category_id])
     end
-    
 
     respond_to do |format|
       format.html # index.html.erb
@@ -94,10 +93,28 @@ class PhotosController < ApplicationController
   def destroy
     @photo = Photo.find(params[:id])
     @photo.destroy
-
+         exception
     respond_to do |format|
       format.html { redirect_to photos_url }
       format.json { head :no_content }
     end
   end
+
+  def vote_up
+    begin
+      @photo = Photo.find(params[:id])
+      current_user.vote_for(@photo)
+      respond_to do |format|
+        format.html { redirect_to @photo, notice: 'Photo was successfully voted.' }
+        format.json { render json: @photo, status: 200}
+      end
+    rescue ActiveRecord::RecordInvalid
+      respond_to do |format|
+        format.html { redirect_to @photo, notice: 'Photo was not voted.'}
+        format.json { render json: @photo.errors, status: :unprocessable_entity }
+      end
+    end
+
+  end
+
 end

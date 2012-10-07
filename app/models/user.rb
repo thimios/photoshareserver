@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  acts_as_voter
+  has_karma(:photos, :as => :submitter, :weight => 0.5)
+
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :
   # :lockable, :timeoutable and :omniauthable
