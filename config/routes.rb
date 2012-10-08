@@ -17,7 +17,8 @@ TodosSt2::Application.routes.draw do
   end
   
   devise_for :users, :controllers => {:sessions => 'sessions', :registrations => "registrations"}, :path_names => { :sign_in => 'login', :sign_out => 'logout'}, :skip => [:sessions] do
-    match 'login' => 'sessions#create', :via => [:get, :post]
+    match 'login' => 'sessions#create', :via => [:post]
+    match 'login' => 'sessions#new', :via => [:get]
     get 'logout' => 'sessions#destroy', :as => :destroy_user_session
   end
 

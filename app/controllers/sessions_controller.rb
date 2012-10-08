@@ -27,7 +27,7 @@ class SessionsController < Devise::SessionsController
           user.reset_authentication_token!
           render :json => {:auth_token => user.authentication_token, :token_type => "persistant"}, :callback => params[:callback]
         else
-          render :json => {:error => "invalid_grant"}, :callback => params[:callback]
+          render :json => {:error => "Invalid username or password"}, status: :unauthorized, :callback => params[:callback]
         end
 
       }
