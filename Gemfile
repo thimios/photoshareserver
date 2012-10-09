@@ -49,8 +49,9 @@ gem 'rack-jsonp-middleware',  :require => 'rack/jsonp'
 gem "paperclip", "~> 3.0"
 
 # solr searching
-gem 'sunspot_rails'
-gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development
+gem 'sunspot_rails', "~> 2.0.0.pre"
+gem 'sunspot_solr', "~> 2.0.0.pre" # optional pre-packaged Solr distribution for use in development
+gem 'progress_bar' # needed to show progress bar when indexing
 
 # bundle exec rake sunspot:solr:start # or sunspot:solr:run to start in foreground
 # bundle exec rake sunspot:solr:reindex
@@ -60,5 +61,11 @@ gem 'devise', "2.1.2"
 
 # Voting system
 gem 'thumbs_up', "0.6.2"
+
+#geocoded locations for photos and users
+gem 'geocoder'
+
+#only used on html views to display gmaps
+gem 'gmaps4rails'
 
 

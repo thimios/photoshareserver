@@ -30,6 +30,8 @@
 <%= image_tag @photo.image.url(:thumb) %>
 <%= image_tag @photo.image.url(:full) %>
 
+<%= gmaps4rails(@googleMapsJson) %>
+
 
 <%= link_to 'Edit', edit_photo_path(@photo) %> |
 <%= link_to 'Back', photos_path %>

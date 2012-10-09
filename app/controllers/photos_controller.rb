@@ -17,11 +17,13 @@ class PhotosController < ApplicationController
     if params[:category_id].nil?
       @photos = Photo.all
     else
-      @photos = Photo.where(:category_id => params[:category_id])
+      @photos = Photo.search do
+        with :category_id,  params[:category_id]
+      end
     end
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html {@googleMapsJson = @photos.to_gmaps4rails}# index.html.erb
       format.json { render json: @photos }
     end
   end
@@ -32,7 +34,7 @@ class PhotosController < ApplicationController
     @photo = Photo.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { @googleMapsJson = @photo.to_gmaps4rails }# show.html.erb
       format.json { render json: @photo }
     end
   end
