@@ -10,30 +10,8 @@
 
 <br />
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Category</th>
-    <th>Category Id</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @photos.each do |photo| %>
-  <tr>
-    <td><%= photo.title %></td>
-    <td><%= photo.description %></td>
-    <td><%= photo.category.title %></td>
-    <td><%= photo.category.id %></td>
-    <td><%= link_to 'Show', photo %></td>
-    <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
-    <td><%= link_to 'Destroy', photo, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
+<%= render 'index_table' %>
 <br />
 
+<%= link_to 'Back', photos_path %>
 <%= link_to 'New Photo', new_photo_path %>
