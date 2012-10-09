@@ -17,9 +17,11 @@ class PhotosController < ApplicationController
     if params[:category_id].nil?
       @photos = Photo.all
     else
-      @photos = Photo.search do
+      @search = Photo.search do
         with :category_id,  params[:category_id]
+
       end
+      @photos = @search.results
     end
 
     respond_to do |format|

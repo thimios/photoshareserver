@@ -8,6 +8,11 @@
   <%= submit_tag("Search") %>
 <% end %>
 
+<%= form_tag(photos_path, :method => "get") do %>
+    <%= hidden_field_tag "category_id", "1" %>
+    <%= submit_tag("fashion category filter and sort") %>
+<% end %>
+
 <br />
 
 <%= render 'index_table' %>
