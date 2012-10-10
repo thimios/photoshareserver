@@ -4,9 +4,6 @@ TodosSt2::Application.routes.draw do
   
   resources :photos do
     resource :category
-    collection do
-      get 'search'
-    end
     member do
       get 'vote_up'
     end

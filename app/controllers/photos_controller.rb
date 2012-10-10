@@ -1,30 +1,34 @@
 class PhotosController < ApplicationController
   before_filter :authenticate_user!
-  
-  def search
-    @search = Photo.search { fulltext params[:search_string] }
-    @photos = @search.results
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @photos }
-    end
-  end
-  
   # GET /photos
   # GET /photos.json
   def index
-    if params[:category_id].nil?
+    if params[:category_id].nil? and params[:search_string].blank?
       @photos = Photo.all
     else
       @search = Photo.search do
-        with :category_id,  params[:category_id]
-
+        if !params[:search_string].blank?
+          fulltext params[:search_string]
+        end
+        if !params[:category_id].nil?
+          with :category_id,  params[:category_id]
+        end
       end
       @photos = @search.results
     end
 
     # add whether the current user
+    @photos.each { |photo|
+      if (current_user.voted_against?(photo))
+        photo["voted_by_current_user"] = "against"
+      elsif (current_user.voted_for?(photo))
+        photo["voted_by_current_user"] = "for"
+      else
+        photo["voted_by_current_user"] = "not"
+      end
+
+    }
 
     respond_to do |format|
       format.html {@googleMapsJson = @photos.to_gmaps4rails}# index.html.erb
@@ -37,6 +41,13 @@ class PhotosController < ApplicationController
   def show
     @photo = Photo.find(params[:id])
 
+    if (current_user.voted_against?(@photo))
+      @photo["voted_by_current_user"] = "against"
+    elsif (current_user.voted_for?(@photo))
+      @photo["voted_by_current_user"] = "for"
+    else
+      @photo["voted_by_current_user"] = "not"
+    end
     respond_to do |format|
       format.html { @googleMapsJson = @photo.to_gmaps4rails }# show.html.erb
       format.json { render json: @photo }
@@ -99,7 +110,6 @@ class PhotosController < ApplicationController
   def destroy
     @photo = Photo.find(params[:id])
     @photo.destroy
-         exception
     respond_to do |format|
       format.html { redirect_to photos_url }
       format.json { head :no_content }

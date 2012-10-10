@@ -7,6 +7,9 @@ class Photo < ActiveRecord::Base
 
   attr_accessible :category_id, :description, :title, :image, :address, :latitude, :longitude
 
+  attr_accessor :voted_by_current_user
+
+
   searchable do
   	text :description, :title
     integer :category_id, :references => Category, :multiple => false

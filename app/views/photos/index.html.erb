@@ -2,7 +2,7 @@
 
 
 
-<%= form_tag(search_photos_path, :method => "get") do %>
+<%= form_tag(photos_path, :method => "get") do %>
   <%= label_tag(:search_string, "Search for:") %>
   <%= text_field_tag(:search_string) %>
   <%= submit_tag("Search") %>
@@ -20,4 +20,5 @@
 <%= gmaps4rails(@googleMapsJson) %>
 <br />
 
+<%= link_to 'back', photos_path %>
 <%= link_to 'New Photo', new_photo_path %>
