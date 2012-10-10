@@ -24,6 +24,8 @@ class PhotosController < ApplicationController
       @photos = @search.results
     end
 
+    # add whether the current user
+
     respond_to do |format|
       format.html {@googleMapsJson = @photos.to_gmaps4rails}# index.html.erb
       format.json { render json: @photos }
@@ -103,6 +105,8 @@ class PhotosController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
 
   def vote_up
     begin

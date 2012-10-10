@@ -12,8 +12,7 @@ class Photo < ActiveRecord::Base
     integer :category_id, :references => Category, :multiple => false
     latlon(:location) { Sunspot::Util::Coordinates.new(latitude, longitude) }
   end
-  
-  
+
   belongs_to :category, :touch => true, :inverse_of => :photos
   has_attached_file :image, :styles => { :full => "800x800", :medium => "300x300>", :thumb => "100x100>" }
   
@@ -28,6 +27,8 @@ class Photo < ActiveRecord::Base
 
   after_validation :geocode, :if => :address_changed?  # auto-fetch coordinates
   after_validation :reverse_geocode, :if => :longitude_changed? or :latitude_changed? # auto-fetch address
+
+
 
   private
 
