@@ -44,7 +44,7 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       format.html {@googleMapsJson }# index.html.erb
-      format.json { render json: @photos }
+      format.json { render json: @photos,  methods: [:full_size_url, :medium_size_url, :thumb_size_url] }
     end
   end
 
@@ -67,7 +67,7 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       format.html { @googleMapsJson = @photo.to_gmaps4rails }# show.html.erb
-      format.json { render json: @photo }
+      format.json { render json: @photo, methods: [:image] }
     end
   end
 
