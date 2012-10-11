@@ -33,9 +33,13 @@ user1 =
     :gender => "male",
     :email => "thimios@wantedpixel.com",
     :password => 'thimios',
-    :password_confirmation => 'thimios')
+    :password_confirmation => 'thimios',
+    :address => 'urbanstrasse 66, 10967 Berlin, Germany')
 user1.confirm!
-user1.save 
+user1.geocode
+user1.save
+
+
 
 user2 =
   User.find_or_create_by_email(
@@ -44,8 +48,10 @@ user2 =
     :gender => "male",
     :email => "spiros@wantedpixel.com",
     :password => 'spiros',
-    :password_confirmation => 'spiros')
+    :password_confirmation => 'spiros',
+    :address => 'Schlegelstrasse 15, 10115 Berlin, Germany')
 user2.confirm!
+user2.geocode
 user2.save
 
 unless user1.voted_on? (photo1)

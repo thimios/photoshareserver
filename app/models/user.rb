@@ -2,6 +2,10 @@ class User < ActiveRecord::Base
   acts_as_voter
   has_karma(:photos, :as => :submitter, :weight => 0.5)
 
+  acts_as_gmappable :lat => 'latitude', :lng => 'longitude', :process_geocoding => :geocode?,
+                    :address => "address", :normalized_address => "address",
+                    :msg => "Sorry, not even Google could figure out where that is"
+
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :
@@ -24,7 +28,7 @@ class User < ActiveRecord::Base
 
   
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :birth_date, :gender, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :username, :birth_date, :gender, :email, :password, :password_confirmation, :remember_me, :address, :latitude, :longitude
 
   def destroy
     self.update_attribute(:deleted_at, Time.now.utc)
@@ -39,4 +43,17 @@ class User < ActiveRecord::Base
       all
     end
   end
+
+  geocoded_by :address
+  reverse_geocoded_by :latitude, :longitude
+
+  after_validation :geocode, :if => :address_changed?  # auto-fetch coordinates
+  after_validation :reverse_geocode, :if => :longitude_changed? or :latitude_changed? # auto-fetch address
+
+  private
+
+    def geocode?
+      (!address.blank? && (latitude.blank? || longitude.blank?)) || address_changed?
+    end
+
 end

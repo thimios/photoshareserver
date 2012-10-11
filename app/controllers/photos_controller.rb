@@ -7,19 +7,24 @@ class PhotosController < ApplicationController
     if params[:category_id].nil? and params[:search_string].blank?
       @photos = Photo.all
     else
-      @search = Photo.search do
+      @search = Sunspot.search (Photo) do
         if !params[:search_string].blank?
           fulltext params[:search_string]
         end
         if !params[:category_id].nil?
-          with :category_id,  params[:category_id]
+          with(:category_id,  params[:category_id])
         end
+
+        order_by_geodist :coordinates, current_user.latitude, current_user.longitude, :asc
       end
       @photos = @search.results
     end
 
-    # add whether the current user
+
+
     @photos.each { |photo|
+
+      # add whether the current user has voted for it
       if (current_user.voted_against?(photo))
         photo["voted_by_current_user"] = "against"
       elsif (current_user.voted_for?(photo))
@@ -28,10 +33,17 @@ class PhotosController < ApplicationController
         photo["voted_by_current_user"] = "not"
       end
 
+      # also add plusminus
+      photo["plusminus"] = photo.plusminus
+
     }
+    @googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
+        marker.title   photo.title
+        marker.infowindow photo.address
+    end
 
     respond_to do |format|
-      format.html {@googleMapsJson = @photos.to_gmaps4rails}# index.html.erb
+      format.html {@googleMapsJson }# index.html.erb
       format.json { render json: @photos }
     end
   end
@@ -48,6 +60,11 @@ class PhotosController < ApplicationController
     else
       @photo["voted_by_current_user"] = "not"
     end
+
+    # also add plusminus
+    @photo["plusminus"] = @photo.plusminus
+
+
     respond_to do |format|
       format.html { @googleMapsJson = @photo.to_gmaps4rails }# show.html.erb
       format.json { render json: @photo }

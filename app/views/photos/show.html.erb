@@ -25,6 +25,11 @@
   <%= @photo.plusminus %>
 </p>
 
+<p>
+  <b>Voted by current user:</b>
+  <%= @photo["voted_by_current_user"] %>
+</p>
+
 <%= image_tag @photo.image.url %>
 <%= image_tag @photo.image.url(:medium) %>
 <%= image_tag @photo.image.url(:thumb) %>
