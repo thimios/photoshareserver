@@ -1,6 +1,8 @@
 class PhotosController < ApplicationController
   before_filter :authenticate_user!
 
+
+  #http://localhost:3000/photos/indexbbox.json?sw_y=48.488334&sw_x=6.416342&ne_y=57.492658&ne_x=18.428616
   def indexbbox
     @search = Sunspot.search (Photo) do
       with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
@@ -10,9 +12,7 @@ class PhotosController < ApplicationController
     @googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
       marker.title   photo.title
       marker.infowindow photo.address
-      marker.category_id photo.category_id
     end
-
     respond_to do |format|
       format.html {@googleMapsJson }# index.html.erb
       format.json { render json: @googleMapsJson }
