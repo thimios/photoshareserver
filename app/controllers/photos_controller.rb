@@ -9,13 +9,17 @@ class PhotosController < ApplicationController
     end
     @photos = @search.results
 
-    @googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
-      marker.title   photo.title
-      marker.infowindow photo.address
-    end
+    #@googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
+    #  marker.title   photo.title
+    #  marker.infowindow photo.address
+    #end
+    # set current_user on all photos before calling voted_by_current_user
+    @photos.each { |photo|
+      photo.current_user = current_user
+    }
     respond_to do |format|
       format.html {@googleMapsJson }# index.html.erb
-      format.json { render json: @googleMapsJson }
+      format.json { render json: @photos, methods: [ :author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user ] }
     end
   end
 
