@@ -10,6 +10,7 @@ class PhotosController < ApplicationController
     @googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
       marker.title   photo.title
       marker.infowindow photo.address
+      marker.category_id photo.category_id
     end
 
     respond_to do |format|
