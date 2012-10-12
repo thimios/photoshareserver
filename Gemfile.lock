@@ -143,6 +143,7 @@ GEM
       multi_json (>= 1.0.2)
     warden (1.2.1)
       rack (>= 1.0)
+    will_paginate (3.0.3)
 
 PLATFORMS
   ruby
@@ -165,3 +166,4 @@ DEPENDENCIES
   sunspot_solr (~> 2.0.0.pre)
   thumbs_up (= 0.6.2)
   uglifier (>= 1.0.3)
+  will_paginate (~> 3.0)

@@ -1,11 +1,28 @@
 class PhotosController < ApplicationController
   before_filter :authenticate_user!
 
+  def indexbbox
+    @search = Sunspot.search (Photo) do
+      with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
+    end
+    @photos = @search.results
+
+    @googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
+      marker.title   photo.title
+      marker.infowindow photo.address
+    end
+
+    respond_to do |format|
+      format.html {@googleMapsJson }# index.html.erb
+      format.json { @googleMapsJson }
+    end
+  end
+
   # GET /photos
   # GET /photos.json
   def index
     if params[:category_id].nil? and params[:search_string].blank?
-      @photos = Photo.all
+      @photos = Photo.paginate(:page => params[:page], :per_page => params[:limit])
     else
       @search = Sunspot.search (Photo) do
         if !params[:search_string].blank?
@@ -14,8 +31,13 @@ class PhotosController < ApplicationController
         if !params[:category_id].nil?
           with(:category_id,  params[:category_id])
         end
-        paginate(:page => 2, :per_page => 15)
-        order_by_geodist :coordinates, current_user.latitude, current_user.longitude, :asc
+        if !params[:page].blank?
+          paginate(:page => params[:page], :per_page => params[:limit])
+          order_by_geodist :coordinates, current_user.latitude, current_user.longitude, :asc
+        end
+        if (params[:sw_y] && params[:sw_x] && params[:ne_y] && params[:ne_x])
+          with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
+        end
       end
       @photos = @search.results
     end

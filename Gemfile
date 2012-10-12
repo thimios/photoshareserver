@@ -68,4 +68,7 @@ gem 'geocoder'
 #only used on html views to display gmaps
 gem 'gmaps4rails'
 
+# pagination
+gem 'will_paginate', '~> 3.0'
+
 
