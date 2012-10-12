@@ -13,14 +13,14 @@ Category.find_or_create_by_title(title: "fashion", description: "fashion passion
 Category.find_or_create_by_title(title: "place", description: "places category")
 Category.find_or_create_by_title(title: "design", description: "design")
 
-photo1 = Photo.find_or_create_by_title(title: "fashion photo test", description: "belonging to fashion category", category_id: "1", address: "Urbanstrasse 66, Berlin, Germany")
-photo2 = Photo.find_or_create_by_title(title: "fashion photo test2", description: "belonging to fashion category", category_id: "1", address: "Urbanstraße 30, Berlin, Deutschland")
+photo1 = Photo.find_or_create_by_title(title: "fashion photo test", description: "belonging to fashion category", category_id: "1", user_id: "1", address: "Urbanstrasse 66, Berlin, Germany")
+photo2 = Photo.find_or_create_by_title(title: "fashion photo test2", description: "belonging to fashion category", category_id: "1", user_id: "2", address: "Urbanstraße 30, Berlin, Deutschland")
 
-photo3 = Photo.find_or_create_by_title(title: "place photo test", description: "belonging to place category", category_id: "2", address: "Dieffenbachstraße 54, 10967 Berlin, Germany")
-photo4 = Photo.find_or_create_by_title(title: "place photo test2", description: "belonging to place category", category_id: "2", address: "Dieffenbachstraße 62, 10967 Berlin, Germany")
+photo3 = Photo.find_or_create_by_title(title: "place photo test", description: "belonging to place category", category_id: "2", user_id: "1", address: "Dieffenbachstraße 54, 10967 Berlin, Germany")
+photo4 = Photo.find_or_create_by_title(title: "place photo test2", description: "belonging to place category", category_id: "2", user_id: "2", address: "Dieffenbachstraße 62, 10967 Berlin, Germany")
 
-photo5 = Photo.find_or_create_by_title(title: "design photo test", description: "belonging to design category", category_id: "3", address: "Graefestraße 71, 10967 Berlin, Germany")
-photo6 = Photo.find_or_create_by_title(title: "design photo test2", description: "belonging to design category", category_id: "3", address: "Grimmstraße 24, 10967 Berlin, Germany")
+photo5 = Photo.find_or_create_by_title(title: "design photo test", description: "belonging to design category", category_id: "3", user_id: "1", address: "Graefestraße 71, 10967 Berlin, Germany")
+photo6 = Photo.find_or_create_by_title(title: "design photo test2", description: "belonging to design category", category_id: "3", user_id: "2", address: "Grimmstraße 24, 10967 Berlin, Germany")
 
 
 

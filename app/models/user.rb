@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   acts_as_voter
   has_karma(:photos, :as => :submitter, :weight => 0.5)
 
+  has_many :photos, :inverse_of => :user
+
   acts_as_gmappable :lat => 'latitude', :lng => 'longitude', :process_geocoding => :geocode?,
                     :address => "address", :normalized_address => "address",
                     :msg => "Sorry, not even Google could figure out where that is"

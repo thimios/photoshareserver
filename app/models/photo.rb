@@ -5,7 +5,7 @@ class Photo < ActiveRecord::Base
                     :address => "address", :normalized_address => "address",
                     :msg => "Sorry, not even Google could figure out where that is"
 
-  attr_accessible :category_id, :description, :title, :image, :address, :latitude, :longitude
+  attr_accessible :category_id, :user_id, :description, :title, :image, :address, :latitude, :longitude
 
   searchable do
   	text :description, :title
@@ -17,6 +17,7 @@ class Photo < ActiveRecord::Base
   end
 
   belongs_to :category, :touch => true, :inverse_of => :photos
+  belongs_to :user, :touch => false, :inverse_of => :photos
   has_attached_file :image, :styles => { :full => "800x800", :medium => "300x300>", :thumb => "100x100>" }
 
   def full_size_url
@@ -29,6 +30,10 @@ class Photo < ActiveRecord::Base
 
   def thumb_size_url
     image.url(:thumb)
+  end
+
+  def author_name
+    user.username
   end
 
   validates :category_id, :presence => true

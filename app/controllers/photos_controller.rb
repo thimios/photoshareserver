@@ -31,9 +31,6 @@ class PhotosController < ApplicationController
         photo["voted_by_current_user"] = "not"
       end
 
-      # also add plusminus
-      photo["plusminus"] = photo.plusminus
-
     }
     @googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
         marker.title   photo.title
@@ -42,7 +39,7 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       format.html {@googleMapsJson }# index.html.erb
-      format.json { render json: @photos,  methods: [:full_size_url, :medium_size_url, :thumb_size_url] }
+      format.json { render json: @photos,  methods: [:author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus] }
     end
   end
 
@@ -59,12 +56,9 @@ class PhotosController < ApplicationController
       @photo["voted_by_current_user"] = "not"
     end
 
-    # also add plusminus
-    @photo["plusminus"] = @photo.plusminus
-
     respond_to do |format|
       format.html { @googleMapsJson = @photo.to_gmaps4rails }# show.html.erb
-      format.json { render json: @photo, methods:[:full_size_url, :medium_size_url, :thumb_size_url] }
+      format.json { render json: @photo, methods: [:author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus]}
     end
   end
 
