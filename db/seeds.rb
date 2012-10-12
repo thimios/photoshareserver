@@ -25,7 +25,11 @@ photo4 = Photo.find_or_create_by_title(title: "place photo test2", description: 
 photo5 = Photo.find_or_create_by_title(title: "design photo test", description: "belonging to design category", category_id: "3", user_id: "1", address: "Graefestraße 71, 10967 Berlin, Germany")
 photo6 = Photo.find_or_create_by_title(title: "design photo test2", description: "belonging to design category", category_id: "3", user_id: "2", address: "Grimmstraße 24, 10967 Berlin, Germany")
 
+generator = Random.new
 
+60.times do
+   Photo.find_or_create_by_title(title: Faker::Lorem.sentence(2), description: Faker::Lorem.sentence(3), category_id: generator.rand(1..3), user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5))
+end
 
 
 #password: dimo5217
