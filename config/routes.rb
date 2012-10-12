@@ -1,7 +1,7 @@
 TodosSt2::Application.routes.draw do
 
   #match 'photos/search' => 'photos#search'
-  match 'photos/indexbbox' => 'photos#indexbbox'
+  match 'photos/indexbbox(.:format)' => 'photos#indexbbox'
   resources :photos do
     resource :category
     member do
