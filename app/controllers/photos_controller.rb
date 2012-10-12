@@ -14,32 +14,25 @@ class PhotosController < ApplicationController
         if !params[:category_id].nil?
           with(:category_id,  params[:category_id])
         end
-
+        paginate(:page => 2, :per_page => 15)
         order_by_geodist :coordinates, current_user.latitude, current_user.longitude, :asc
       end
       @photos = @search.results
     end
 
-    @photos.each { |photo|
-
-      # add whether the current user has voted for it
-      if (current_user.voted_against?(photo))
-        photo["voted_by_current_user"] = "against"
-      elsif (current_user.voted_for?(photo))
-        photo["voted_by_current_user"] = "for"
-      else
-        photo["voted_by_current_user"] = "not"
-      end
-
-    }
     @googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
-        marker.title   photo.title
-        marker.infowindow photo.address
+      marker.title   photo.title
+      marker.infowindow photo.address
     end
+
+    # set current_user on all photos before calling voted_by_current_user
+    @photos.each { |photo|
+      photo.current_user = current_user
+    }
 
     respond_to do |format|
       format.html {@googleMapsJson }# index.html.erb
-      format.json { render json: @photos,  methods: [:author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus] }
+      format.json { render json: @photos, methods: [ :author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user ] }
     end
   end
 
@@ -48,17 +41,12 @@ class PhotosController < ApplicationController
   def show
     @photo = Photo.find(params[:id])
 
-    if (current_user.voted_against?(@photo))
-      @photo["voted_by_current_user"] = "against"
-    elsif (current_user.voted_for?(@photo))
-      @photo["voted_by_current_user"] = "for"
-    else
-      @photo["voted_by_current_user"] = "not"
-    end
+    # set current_user on all photos before calling voted_by_current_user
+    @photo.current_user = current_user
 
     respond_to do |format|
       format.html { @googleMapsJson = @photo.to_gmaps4rails }# show.html.erb
-      format.json { render json: @photo, methods: [:author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus]}
+      format.json { render json: @photo, methods: [:author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user]}
     end
   end
 
@@ -67,9 +55,12 @@ class PhotosController < ApplicationController
   def new
     @photo = Photo.new
 
+    # set current_user on all photos before calling voted_by_current_user
+    @photo.current_user = current_user
+
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @photo, methods:[:full_size_url, :medium_size_url, :thumb_size_url] }
+      format.json { render json: @photo, methods:[:full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user] }
     end
   end
 
@@ -123,8 +114,6 @@ class PhotosController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-
 
   def vote_up
     begin

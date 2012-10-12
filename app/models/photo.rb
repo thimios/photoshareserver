@@ -36,6 +36,19 @@ class Photo < ActiveRecord::Base
     user.username
   end
 
+  attr_accessor :current_user
+
+  def voted_by_current_user
+    # add whether the current user has voted for it
+    if (self.current_user.voted_against?(self))
+      return "against"
+    elsif (self.current_user.voted_for?(self))
+      return "for"
+    else
+      return "not"
+    end
+  end
+
   validates :category_id, :presence => true
   validates :title, :presence => true
   #validate :address_or_coordinates
