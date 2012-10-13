@@ -14,21 +14,21 @@ Category.find_or_create_by_title(title: "place", description: "places category")
 Category.find_or_create_by_title(title: "design", description: "design")
 
 
+imagefile = File.open(File.join(Rails.root, 'test', 'fixtures','lost-hipster.jpg'))
 
+photo1 = Photo.find_or_create_by_title(title: "fashion photo test", description: "belonging to fashion category", category_id: "1", user_id: "1", address: "Urbanstrasse 66, Berlin, Germany", image: imagefile)
+photo2 = Photo.find_or_create_by_title(title: "fashion photo test2", description: "belonging to fashion category", category_id: "1", user_id: "2", address: "Urbanstraße 30, Berlin, Deutschland", image: imagefile)
 
-photo1 = Photo.find_or_create_by_title(title: "fashion photo test", description: "belonging to fashion category", category_id: "1", user_id: "1", address: "Urbanstrasse 66, Berlin, Germany")
-photo2 = Photo.find_or_create_by_title(title: "fashion photo test2", description: "belonging to fashion category", category_id: "1", user_id: "2", address: "Urbanstraße 30, Berlin, Deutschland")
+photo3 = Photo.find_or_create_by_title(title: "place photo test", description: "belonging to place category", category_id: "2", user_id: "1", address: "Dieffenbachstraße 54, 10967 Berlin, Germany", image: imagefile)
+photo4 = Photo.find_or_create_by_title(title: "place photo test2", description: "belonging to place category", category_id: "2", user_id: "2", address: "Dieffenbachstraße 62, 10967 Berlin, Germany", image: imagefile)
 
-photo3 = Photo.find_or_create_by_title(title: "place photo test", description: "belonging to place category", category_id: "2", user_id: "1", address: "Dieffenbachstraße 54, 10967 Berlin, Germany")
-photo4 = Photo.find_or_create_by_title(title: "place photo test2", description: "belonging to place category", category_id: "2", user_id: "2", address: "Dieffenbachstraße 62, 10967 Berlin, Germany")
-
-photo5 = Photo.find_or_create_by_title(title: "design photo test", description: "belonging to design category", category_id: "3", user_id: "1", address: "Graefestraße 71, 10967 Berlin, Germany")
-photo6 = Photo.find_or_create_by_title(title: "design photo test2", description: "belonging to design category", category_id: "3", user_id: "2", address: "Grimmstraße 24, 10967 Berlin, Germany")
+photo5 = Photo.find_or_create_by_title(title: "design photo test", description: "belonging to design category", category_id: "3", user_id: "1", address: "Graefestraße 71, 10967 Berlin, Germany", image: imagefile)
+photo6 = Photo.find_or_create_by_title(title: "design photo test2", description: "belonging to design category", category_id: "3", user_id: "2", address: "Grimmstraße 24, 10967 Berlin, Germany", image: imagefile)
 
 generator = Random.new
 
 60.times do
-   Photo.find_or_create_by_title(title: Faker::Lorem.sentence(2), description: Faker::Lorem.sentence(3), category_id: generator.rand(1..3), user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5))
+   Photo.find_or_create_by_title(title: Faker::Lorem.sentence(2), description: Faker::Lorem.sentence(3), category_id: generator.rand(1..3), user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile)
 end
 
 
