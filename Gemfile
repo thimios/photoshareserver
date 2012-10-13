@@ -73,4 +73,9 @@ gem 'will_paginate', '~> 3.0'
 
 gem 'faker'
 
+# comments
+gem 'opinio', '0.6'
 
+
+
+gem "kaminari"

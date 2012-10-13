@@ -7,12 +7,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-
-
 Category.find_or_create_by_title(title: "fashion", description: "fashion passion")
 Category.find_or_create_by_title(title: "place", description: "places category")
 Category.find_or_create_by_title(title: "design", description: "design")
-
 
 imagefile = File.open(File.join(Rails.root, 'test', 'fixtures','lost-hipster.jpg'))
 
@@ -32,8 +29,6 @@ generator = Random.new
 end
 
 
-#password: dimo5217
-
 user1 =
   User.find_or_create_by_email(
     :username => "thimios",
@@ -46,8 +41,6 @@ user1 =
 user1.confirm!
 user1.geocode
 user1.save
-
-
 
 user2 =
   User.find_or_create_by_email(

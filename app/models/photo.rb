@@ -1,6 +1,9 @@
 class Photo < ActiveRecord::Base
   acts_as_voteable
 
+  # comments
+  opinio_subjectum
+
   acts_as_gmappable :lat => 'latitude', :lng => 'longitude', :process_geocoding => :geocode?,
                     :address => "address", :normalized_address => "address",
                     :msg => "Sorry, not even Google could figure out where that is"

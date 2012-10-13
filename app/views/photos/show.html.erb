@@ -30,6 +30,8 @@
   <%= @photo["voted_by_current_user"] %>
 </p>
 
+<%= comments_for @photo %>
+
 <%= image_tag @photo.image.url %>
 <%= image_tag @photo.image.url(:medium) %>
 <%= image_tag @photo.image.url(:thumb) %>
