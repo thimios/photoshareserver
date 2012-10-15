@@ -2,6 +2,13 @@ class CommentsController < Opinio::CommentsController
   before_filter :authenticate_user!
 
   def index
+    @filter_params = HashWithIndifferentAccess.new
+    @filter = ActiveSupport::JSON.decode(params[:filter])
+    @filter_params[@filter[0].values[0]] = @filter[0].values[1]
+    if @filter_params[:photo_id]
+      params[:photo_id] = @filter_params[:photo_id]
+    end
+
     @comments = resource.comments.page(params[:page])
     respond_to do |format|
       format.html # index.html.erb
@@ -10,7 +17,7 @@ class CommentsController < Opinio::CommentsController
   end
 
   def create
-    @comment = resource.comments.build(params[:comment])
+    @comment = resource.comments.build(params[:comment], params[:limit] )
     @comment.owner = send(Opinio.current_user_method)
     if @comment.save
       flash_area = :notice

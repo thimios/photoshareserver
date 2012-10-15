@@ -27,7 +27,6 @@ class PhotosController < ApplicationController
   # GET /photos.json
   def index
     @filter_params = HashWithIndifferentAccess.new
-
     @filter = ActiveSupport::JSON.decode(params[:filter])
     @filter_params[@filter[0].values[0]] = @filter[0].values[1]
     if @filter_params[:category_id]
