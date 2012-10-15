@@ -26,6 +26,15 @@ class PhotosController < ApplicationController
   # GET /photos
   # GET /photos.json
   def index
+    @filter_params = HashWithIndifferentAccess.new
+
+    @filter = ActiveSupport::JSON.decode(params[:filter])
+    @filter_params[@filter[0].values[0]] = @filter[0].values[1]
+    if @filter_params[:category_id]
+      params[:category_id] = @filter_params[:category_id]
+    end
+
+
     if params[:category_id].nil? and params[:search_string].blank?
       @photos = Photo.paginate(:page => params[:page], :per_page => params[:limit])
     else
