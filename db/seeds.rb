@@ -25,7 +25,7 @@ photo6 = Photo.find_or_create_by_title(title: "design photo test2", description:
 generator = Random.new
 
 60.times do
-   Photo.find_or_create_by_title(title: Faker::Lorem.sentence(2), description: Faker::Lorem.sentence(3), category_id: generator.rand(1..3), user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile)
+   Photo.create(title: Faker::Lorem.sentence(2), description: Faker::Lorem.sentence(3), category_id: generator.rand(1..3), user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile)
 end
 
 
@@ -65,4 +65,11 @@ end
 
 unless user2.voted_on? (photo2)
   user2.vote_for(photo2)
+end
+
+
+100.times do
+  comment = photo1.comments.build( body: Faker::Lorem.sentence(3) )
+  comment.owner = user1
+  comment.save
 end
