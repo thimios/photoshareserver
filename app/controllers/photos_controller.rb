@@ -38,7 +38,7 @@ class PhotosController < ApplicationController
 
 
     if params[:category_id].nil? and params[:search_string].blank?
-      @photos = Photo.paginate(:page => params[:page], :per_page => params[:limit])
+      @photos = Photo.page(params[:page]).per(params[:limit])
     else
       @search = Sunspot.search (Photo) do
         if !params[:search_string].blank?

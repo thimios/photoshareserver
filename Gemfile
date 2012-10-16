@@ -69,7 +69,7 @@ gem 'geocoder'
 gem 'gmaps4rails'
 
 # pagination
-gem 'will_paginate', '~> 3.0'
+gem "kaminari" ,'0.14.1'
 
 gem 'faker'
 
@@ -78,4 +78,3 @@ gem 'opinio', '0.6'
 
 
 
-gem "kaminari"
