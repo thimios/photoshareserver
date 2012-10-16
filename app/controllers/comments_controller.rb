@@ -11,7 +11,7 @@ class CommentsController < Opinio::CommentsController
       end
     end
 
-    @comments = resource.comments.page(params[:page], params[:limit])
+    @comments = resource.comments.paginate(:page => params[:page], :per_page => params[:limit])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @comments }
