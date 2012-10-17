@@ -77,14 +77,15 @@ class PhotosController < ApplicationController
   # GET /photos/1
   # GET /photos/1.json
   def show
-    @photo = Photo.find(params[:id])
+    @photos = Array.new
+    @photo = (Photo.find(params[:id]))
 
     # set current_user on all photos before calling voted_by_current_user
     @photo.current_user = current_user
-
+    @photos[0] = @photo
     respond_to do |format|
       format.html { @googleMapsJson = @photo.to_gmaps4rails }# show.html.erb
-      format.json { render json: @photo, methods: [:author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count]}
+      format.json { render json: @photos, methods: [:author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count]}
     end
   end
 
