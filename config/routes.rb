@@ -2,7 +2,6 @@ TodosSt2::Application.routes.draw do
 
   opinio_model :controller => 'comments'
 
-  #match 'photos/search' => 'photos#search'
   match 'photos/indexbbox(.:format)' => 'photos#indexbbox'
   resources :photos do
     opinio :controller => 'comments'

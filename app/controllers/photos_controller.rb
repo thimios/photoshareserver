@@ -19,7 +19,7 @@ class PhotosController < ApplicationController
     }
     respond_to do |format|
       format.html {@googleMapsJson }# index.html.erb
-      format.json { render json: @photos, methods: [ :author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user ] }
+      format.json { render json: @photos, methods: [ :author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count ] }
     end
   end
 
@@ -70,7 +70,7 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       format.html {@googleMapsJson }# index.html.erb
-      format.json { render json: @photos, methods: [ :author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user ] }
+      format.json { render json: @photos, methods: [ :author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count ] }
     end
   end
 
@@ -84,7 +84,7 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       format.html { @googleMapsJson = @photo.to_gmaps4rails }# show.html.erb
-      format.json { render json: @photo, methods: [:author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user]}
+      format.json { render json: @photo, methods: [:author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count]}
     end
   end
 
@@ -98,7 +98,7 @@ class PhotosController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @photo, methods:[:full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user] }
+      format.json { render json: @photo, methods:[:full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count] }
     end
   end
 
