@@ -4,6 +4,7 @@
     <th>Description</th>
     <th>Votes</th>
     <th>Category</th>
+    <th>Posted by</th>
     <th>Voted by current user</th>
     <th></th>
     <th></th>
@@ -16,7 +17,8 @@
         <td><%= photo.description %></td>
         <td><%= photo.plusminus %></td>
         <td><%= photo.category.title %></td>
-        <td><%= photo["voted_by_current_user"] %></td>
+        <td><%= link_to photo.user.username, '/users/'+ photo.user.id.to_s %></td>
+        <td><%= photo.voted_by_current_user %></td>
         <td><%= link_to 'Show', photo %></td>
         <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
         <td><%= link_to 'Destroy', photo, confirm: 'Are you sure?', method: :delete %></td>

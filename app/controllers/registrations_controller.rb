@@ -12,4 +12,18 @@ class RegistrationsController < Devise::RegistrationsController
       render :json => { :errors =>user.errors },:status=>422
     end
   end
+
+  # GET /users/1
+  # GET /users/1.json
+  def show
+    @users = Array.new
+    @user = (User.find(params[:id]))
+
+    # set current_user on all photos before calling voted_by_current_user
+    @users[0] = @user
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @users }
+    end
+  end
 end

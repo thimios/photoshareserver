@@ -21,7 +21,14 @@ TodosSt2::Application.routes.draw do
     get 'logout' => 'sessions#destroy', :as => :destroy_user_session
   end
 
-  #devise_for :users
+
+
+  devise_scope :user do match 'users/:id' => 'registrations#show' end
+
+  #scope "/admin" do
+  #  resources :users
+  #end
+
   resources :tasks
   
   root :to => "photos#index"
