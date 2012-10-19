@@ -14,7 +14,7 @@ class CommentsController < Opinio::CommentsController
     @comments = resource.comments.page(params[:page]).per(params[:limit])
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @comments }
+      format.json { render json: @comments, methods: [:owner_username] }
     end
   end
 
