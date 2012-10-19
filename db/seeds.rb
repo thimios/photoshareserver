@@ -37,7 +37,8 @@ user1 =
     :email => "thimios@wantedpixel.com",
     :password => 'thimios',
     :password_confirmation => 'thimios',
-    :address => 'urbanstrasse 66, 10967 Berlin, Germany')
+    :address => 'urbanstrasse 66, 10967 Berlin, Germany',
+    :avatar => imagefile)
 user1.confirm!
 user1.geocode
 user1.save
@@ -50,7 +51,8 @@ user2 =
     :email => "spiros@wantedpixel.com",
     :password => 'spiros',
     :password_confirmation => 'spiros',
-    :address => 'Schlegelstrasse 15, 10115 Berlin, Germany')
+    :address => 'Schlegelstrasse 15, 10115 Berlin, Germany',
+    :avatar => imagefile )
 user2.confirm!
 user2.geocode
 user2.save

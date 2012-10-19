@@ -28,9 +28,24 @@ class User < ActiveRecord::Base
   validates_presence_of     :gender
   validates_inclusion_of    :gender, :in => %w(male female)
 
-  
+  has_attached_file :avatar, :styles => { :full => "800x800", :medium => "300x300>", :thumb => "80x80>" }
+
+  def full_size_url
+    avatar.url
+  end
+
+  def medium_size_url
+    avatar.url(:medium)
+  end
+
+  def thumb_size_url
+    avatar.url(:thumb)
+  end
+
+
+
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :birth_date, :gender, :email, :password, :password_confirmation, :remember_me, :address, :latitude, :longitude
+  attr_accessible :username, :birth_date, :gender, :email, :password, :password_confirmation, :remember_me, :address, :latitude, :longitude, :avatar
 
   def destroy
     self.update_attribute(:deleted_at, Time.now.utc)

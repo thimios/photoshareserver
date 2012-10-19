@@ -15,6 +15,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   # GET /users/1
   # GET /users/1.json
+  # Show user's public profile
   def show
     @users = Array.new
     @user = (User.find(params[:id]))

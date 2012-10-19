@@ -8,4 +8,9 @@
   <%= @user.created_at %>
 </p>
 
+<p>
+  <b>Avatar:</b>
+<%= image_tag @user.avatar.url(:thumb) %>
+</p>
+
 <%= link_to 'Back', photos_path %>
