@@ -1,5 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
 
+
  # respond_to :json
   def create
 
@@ -17,6 +18,7 @@ class RegistrationsController < Devise::RegistrationsController
   # GET /users/1.json
   # Show user's public profile
   def show
+    warden.authenticate!
     @users = Array.new
     @user = (User.find(params[:id]))
 
