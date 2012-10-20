@@ -21,14 +21,6 @@ class CommentsController < Opinio::CommentsController
   def create
     @comment = resource.comments.build(params[:comment] )
     @comment.owner = send(Opinio.current_user_method)
-    if @comment.save
-      flash_area = :notice
-      message = t('opinio.messages.comment_sent')
-    else
-      flash_area = :error
-      message = t('opinio.messages.comment_sending_error')
-    end
-
     respond_to do |format|
       if @comment.save
         flash_area = :notice
