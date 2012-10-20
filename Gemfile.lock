@@ -89,6 +89,11 @@ GEM
     progress_bar (0.4.0)
       highline (~> 1.6.1)
       options (~> 2.3.0)
+    public_activity (0.4.1)
+      actionpack (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      i18n (>= 0.5.0)
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -168,6 +173,7 @@ DEPENDENCIES
   paperclip (~> 3.0)
   pg
   progress_bar
+  public_activity (= 0.4.1)
   rack-cors
   rack-jsonp-middleware
   rails (= 3.2.3)

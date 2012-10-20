@@ -57,6 +57,10 @@ class Photo < ActiveRecord::Base
     end
   end
 
+  # tracked for user's activity feeds
+  include PublicActivity::Model
+  tracked :owner => proc { |controller, model| controller.current_user }
+
   validates :category_id, :presence => true
   validates :title, :presence => true
   #validate :address_or_coordinates

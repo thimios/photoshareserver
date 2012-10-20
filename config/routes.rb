@@ -19,18 +19,20 @@ TodosSt2::Application.routes.draw do
     match 'login' => 'sessions#create', :via => [:post]
     match 'login' => 'sessions#new', :via => [:get]
     get 'logout' => 'sessions#destroy', :as => :destroy_user_session
+
+
   end
 
+  devise_scope :user do
+    match 'users/:id' => 'registrations#show'
+  end
 
-
-  devise_scope :user do match 'users/:id' => 'registrations#show' end
+  resources :histories
 
   #scope "/admin" do
   #  resources :users
   #end
 
-  resources :tasks
-  
   root :to => "photos#index"
 
   # The priority is based upon order of creation:

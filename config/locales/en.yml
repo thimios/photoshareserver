@@ -3,3 +3,19 @@
 
 en:
   hello: "Hello world"
+
+  # activity translations are taken into account only when no corresponding partial view
+  # exists under views_public_activity
+  activity:
+    comment:
+      create: 'Comment has been created'
+      update: 'Someone has edited the comment'
+      destroy: 'Some user removed a comment!'
+    photo:
+      create: 'Photo has been created'
+      update: 'Someone has edited the photo'
+      destroy: 'Some user removed a photo!'
+    vote:
+      create: 'Vote has been created'
+      update: 'Someone has edited the vote'
+      destroy: 'Some user removed a vote!'

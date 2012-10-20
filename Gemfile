@@ -76,5 +76,8 @@ gem 'faker'
 # comments
 gem 'opinio', '0.6'
 
+# activity feeds
+gem 'public_activity', '0.4.1'
+
 
 

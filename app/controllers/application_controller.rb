@@ -9,4 +9,7 @@ class ApplicationController < ActionController::Base
     comment.owner == current_user
   end
 
+  # setting current_user as owner for activity
+  include PublicActivity::StoreController
+
 end

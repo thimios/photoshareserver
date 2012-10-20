@@ -21,6 +21,8 @@ class RegistrationsController < Devise::RegistrationsController
     @users = Array.new
     @user = (User.find(params[:id]))
 
+    @activities = PublicActivity::Activity.where(:owner_id =>params[:id])
+
     # set current_user on all photos before calling voted_by_current_user
     @users[0] = @user
     respond_to do |format|

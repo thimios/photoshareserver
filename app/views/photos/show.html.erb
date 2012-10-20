@@ -28,6 +28,10 @@
   <%= @photo.voted_by_current_user %>
 </p>
 
+<%= form_tag(photo_path+"/vote_up", :method => "get") do %>
+    <%= submit_tag("Vote up") %>
+<% end %>
+
 <%= comments_for @photo %>
 
 <%= image_tag @photo.image.url %>
