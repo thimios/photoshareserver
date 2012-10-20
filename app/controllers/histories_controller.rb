@@ -63,7 +63,7 @@ class HistoriesController < ApplicationController
         @histories << @history
       end
     else
-      # respond with error
+      # TODO: respond with error
     end
 
     respond_to do |format|
