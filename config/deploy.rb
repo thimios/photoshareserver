@@ -98,6 +98,6 @@ end
 namespace :deploy do
   desc "reload the database with seed data"
   task :seed do
-    run "cd #{release_path}; rake db:seed RAILS_ENV=production"
+    run "cd #{release_path}; RAILS_ENV=production bundle exec rake db:seed"
   end
 end
