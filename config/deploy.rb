@@ -9,6 +9,8 @@ require 'bundler/capistrano'
 # repository's Admin / Deploy Keys section, you can configure your Rails
 # app to use this deployment recipe by doing the following:
 #
+# run  ssh -T -oStrictHostKeyChecking=no git@bitbucket.org
+
 # 1. Add `gem 'capistrano'` to your Gemfile.
 # 2. Run `bundle install --binstubs --path=vendor/bundles`.
 # 3. Run `bin/capify .` in your app's root directory.
@@ -41,8 +43,8 @@ LINODE_SERVER_HOSTNAME = '176.58.126.160'
 
 set :bundle_flags,               "--deployment"
 
-set :application,                "soberlin"
-set :deploy_to,                  "/var/www/apps/soberlin"
+set :application,                "railsrumble"
+set :deploy_to,                  "/var/www/apps/railsrumble"
 set :normalize_asset_timestamps, false
 set :rails_env,                  "production"
 
