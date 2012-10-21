@@ -138,6 +138,8 @@ GEM
       json (~> 1.4)
     rsolr (1.0.8)
       builder (>= 2.1.2)
+    rvm-capistrano (1.2.7)
+      capistrano (>= 2.0.0)
     sass (3.1.19)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -192,6 +194,7 @@ DEPENDENCIES
   rack-cors
   rack-jsonp-middleware
   rails (= 3.2.3)
+  rvm-capistrano
   sass-rails (~> 3.2.3)
   sqlite3
   sunspot_rails (~> 2.0.0.pre)
