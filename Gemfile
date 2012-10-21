@@ -81,6 +81,9 @@ gem 'public_activity', '0.4.1'
 
 gem 'bundler'
 
+group :production do
+  gem 'activerecord-mysql2-adapter'
+end
 
 
 
