@@ -42,8 +42,8 @@ LINODE_SERVER_HOSTNAME = '176.58.126.160'
 
 set :bundle_flags,               "--deployment"
 
-set :application,                "railsrumble"
-set :deploy_to,                  "/var/www/apps/railsrumble"
+set :application,                "soberlin"
+set :deploy_to,                  "/var/www/apps/soberlin"
 set :normalize_asset_timestamps, false
 set :rails_env,                  "production"
 
