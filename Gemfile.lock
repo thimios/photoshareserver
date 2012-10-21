@@ -22,8 +22,6 @@ GEM
       activesupport (= 3.2.3)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activerecord-mysql2-adapter (0.0.3)
-      mysql2
     activeresource (3.2.3)
       activemodel (= 3.2.3)
       activesupport (= 3.2.3)
@@ -178,7 +176,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-mysql2-adapter
   bundler
   capistrano
   coffee-rails (~> 3.2.1)
@@ -188,6 +185,7 @@ DEPENDENCIES
   gmaps4rails
   jquery-rails
   kaminari (= 0.14.1)
+  mysql2
   opinio (= 0.6)
   paperclip (~> 3.0)
   pg
