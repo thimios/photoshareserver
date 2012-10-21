@@ -1,5 +1,4 @@
 require 'bundler/capistrano'
-require "rvm/capistrano"
 
 # This capistrano deployment recipe is made to work with the optional
 # StackScript provided to all Rails Rumble teams in their Linode dashboard.
@@ -32,7 +31,7 @@ require "rvm/capistrano"
 ##                                         ##
 #############################################
 
-GITHUB_REPOSITORY_URL = 'git@bitbucket.org:thimios/engineyardhipster.git'
+GIT_REPOSITORY_URL = 'git@bitbucket.org:thimios/engineyardhipster.git'
 LINODE_SERVER_HOSTNAME = '176.58.126.160'
 
 #############################################
@@ -64,22 +63,12 @@ ssh_options[:keys] = ["~/.ssh/id_rsa"]
 
 # SCM Options
 set :scm,        :git
-set :repository, GITHUB_REPOSITORY_URL
+set :repository, GIT_REPOSITORY_URL
 set :branch,     "master"
 
 # Roles
 role :app, LINODE_SERVER_HOSTNAME
 role :db,  LINODE_SERVER_HOSTNAME, :primary => true
-
-#rvm and ruby with capistrano
-set :rvm_ruby_string, 'ruby-1.9.2-p320@soberlin'
-set :use_sudo, false
- 
-
-before 'deploy:setup', 'rvm:install_rvm'
-before 'deploy', 'rvm:install_rvm'
-before 'deploy:setup', 'rvm:install_ruby'
-before 'deploy', 'rvm:install_ruby'
 
 # Add Configuration Files & Compile Assets
 after 'deploy:update_code' do

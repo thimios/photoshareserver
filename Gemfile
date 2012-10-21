@@ -81,7 +81,6 @@ gem 'public_activity', '0.4.1'
 
 gem 'bundler'
 
-gem 'rvm-capistrano'
 
 
 
