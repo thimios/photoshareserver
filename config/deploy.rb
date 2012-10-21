@@ -1,4 +1,5 @@
 require 'bundler/capistrano'
+require "rvm/capistrano"
 
 # This capistrano deployment recipe is made to work with the optional
 # StackScript provided to all Rails Rumble teams in their Linode dashboard.
@@ -73,7 +74,7 @@ role :db,  LINODE_SERVER_HOSTNAME, :primary => true
 #rvm and ruby with capistrano
 set :rvm_ruby_string, 'ruby-1.9.2-p320@soberlin'
 set :use_sudo, false
-require "rvm/capistrano" 
+ 
 
 before 'deploy:setup', 'rvm:install_rvm'
 before 'deploy', 'rvm:install_rvm'
