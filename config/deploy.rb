@@ -10,6 +10,7 @@ require 'bundler/capistrano'
 # app to use this deployment recipe by doing the following:
 #
 # run  ssh -T -oStrictHostKeyChecking=no git@bitbucket.org
+# apt-get install openjdk-7-jdk
 
 # 1. Add `gem 'capistrano'` to your Gemfile.
 # 2. Run `bundle install --binstubs --path=vendor/bundles`.
