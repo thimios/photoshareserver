@@ -84,6 +84,7 @@ GEM
     net-ssh (2.6.1)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
+    newrelic_rpm (3.5.0)
     nokogiri (1.5.5)
     opinio (0.6)
       jquery-rails
@@ -189,6 +190,7 @@ DEPENDENCIES
   jquery-rails
   kaminari (= 0.14.1)
   mysql2
+  newrelic_rpm
   opinio (= 0.6)
   paperclip (~> 3.0)
   pg
