@@ -21,6 +21,7 @@ require 'bundler/capistrano'
 # 8. Run `bin/cap deploy:setup`.
 # 9. Run `bin/cap deploy:migrations` or `bin/cap deploy`.
 
+# bin/cap deploy:solr_start
 # bin/cap deploy:seed
 #
 # Note: You may also need to add your local system's public key to
