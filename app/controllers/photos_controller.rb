@@ -20,7 +20,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       format.html {@googleMapsJson }# index.html.erb
       format.json {
-        render :json =>  { :records => @photos, :total_count => @photos.total_count }
+        render :json =>  { :records => @photos }
       }
     end
   end
