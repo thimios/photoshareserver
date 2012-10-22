@@ -1,0 +1,19 @@
+<h1>Listing Users</h1>
+
+
+
+<%= form_tag(users_path, :method => "get") do %>
+  <%= label_tag(:search_string, "Search for:") %>
+  <%= text_field_tag(:search_string) %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+
+<br />
+
+<%= render 'index_table' %>
+
+<br />
+
+<%= link_to 'back', photos_path %>
+

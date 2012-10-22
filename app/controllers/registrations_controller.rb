@@ -1,5 +1,32 @@
 class RegistrationsController < Devise::RegistrationsController
 
+  # GET /users
+  # GET /users.json
+  def index
+    if params[:search_string].blank?
+      @users = User.page(params[:page]).per(params[:limit])
+      @total_count = @users.total_count
+    else
+      @search = Sunspot.search (User) do
+        if !params[:search_string].blank?
+          fulltext params[:search_string]
+        end
+        if !params[:page].blank?
+          paginate(:page => params[:page], :per_page => params[:limit])
+        end
+      end
+      @users = User.find(@search.results.map{|user| user.id})
+      @total_count = @search.total
+    end
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json {
+        render :json =>  { :records => @users, :total_count => @total_count }
+      }
+    end
+  end
+
  # respond_to :json
   def create
 

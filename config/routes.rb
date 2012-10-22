@@ -25,6 +25,7 @@ TodosSt2::Application.routes.draw do
 
   devise_scope :user do
     match 'users/:id' => 'registrations#show'
+    match 'users' => 'registrations#index'
   end
 
   resources :histories
