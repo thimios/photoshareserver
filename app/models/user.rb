@@ -76,6 +76,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  def as_json(options={})
+    super(
+        :methods => [ :thumb_size_url],
+        :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ]
+    )
+  end
+
   private
 
     def geocode?
