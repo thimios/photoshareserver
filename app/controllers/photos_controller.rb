@@ -35,12 +35,11 @@ class PhotosController < ApplicationController
       if @filter_params[:category_id]
         params[:category_id] = @filter_params[:category_id]
       end
-
     end
-
 
     if params[:category_id].nil? and params[:search_string].blank?
       @photos = Photo.page(params[:page]).per(params[:limit])
+      @total = @photos.total_count
     else
       @search = Sunspot.search (Photo) do
         if !params[:search_string].blank?
@@ -58,6 +57,7 @@ class PhotosController < ApplicationController
         end
       end
       @photos = Photo.find(@search.results.map{|photo| photo.id})
+      @total = @search.total
     end
 
     @googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
@@ -73,7 +73,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       format.html {@googleMapsJson }# index.html.erb
       format.json {
-        render :json =>  { :records => @photos.as_json, :total_count => @search.total }
+        render :json =>  { :records => @photos.as_json, :total_count => @total }
       }
     end
   end
