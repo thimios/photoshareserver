@@ -20,6 +20,8 @@ require 'bundler/capistrano'
 # 7. Run `git push origin master`.
 # 8. Run `bin/cap deploy:setup`.
 # 9. Run `bin/cap deploy:migrations` or `bin/cap deploy`.
+
+# bin/cap deploy:seed
 #
 # Note: You may also need to add your local system's public key to
 # your GitHub repository's Admin / Deploy Keys area.
@@ -90,14 +92,25 @@ deploy.task :restart, :roles => :app do
   sudo "chown -R www-data:www-data #{latest_release}"
   sudo "chown -R www-data:www-data #{shared_path}/bundle"
   sudo "chown -R www-data:www-data #{shared_path}/log"
+  
 
   # Restart Application
+  run "cd #{current_path}; RAILS_ENV=production bundle exec rake db:seed"
   run "touch #{current_path}/tmp/restart.txt"
 end
 
-namespace :deploy do
-  desc "reload the database with seed data"
-  task :seed do
-    run "cd #{release_path}; RAILS_ENV=production bundle exec rake db:seed"
-  end
+deploy.task :solr_start do
+  run "cd #{current_path}; RAILS_ENV=production bundle exec rake sunspot:solr:start"
+end
+
+deploy.task :solr_stop do
+  run "cd #{current_path}; RAILS_ENV=production bundle exec rake sunspot:solr:stop"
+end
+
+deploy.task :solr_reindex do
+  run "cd #{current_path}; RAILS_ENV=production bundle exec rake sunspot:solr:reindex"
+end
+
+deploy.task :seed do
+  run "cd #{current_path}; RAILS_ENV=production bundle exec rake db:seed"
 end
