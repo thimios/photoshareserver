@@ -84,6 +84,7 @@ gem 'bundler'
 group :production do
   gem 'mysql2'
   gem 'therubyracer', :require => 'v8'
+  gem 'newrelic_rpm'
 end
 
 
