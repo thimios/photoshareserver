@@ -14,4 +14,9 @@ class Comment < ActiveRecord::Base
   def owner_username
     self.owner.username
   end
+
+  def as_json(options={})
+    super(options.reverse_merge(:methods => :owner_username))
+  end
+
 end
