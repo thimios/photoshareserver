@@ -15,7 +15,7 @@ class HistoriesController < ApplicationController
     end
 
     unless params[:user_id].nil?
-      @activities = PublicActivity::Activity.where(:owner_id =>params[:user_id]).page(params[:page]).per(params[:limit])
+      @activities = PublicActivity::Activity.where("owner_id = ? AND (key = 'photo.create' OR key = 'vote.create' OR key = 'comment.create')",params[:user_id]).page(params[:page]).per(params[:limit])
       @histories = Array.new
       @activities.each do |activity|
 
@@ -57,7 +57,7 @@ class HistoriesController < ApplicationController
           @history.comment_id = ""
           @history.thumb_url = @photo.thumb_size_url
         else
-          # TODO: log this
+          logger.debug "Should not load activity with key: #{activity.key} "
         end
 
         @histories << @history
@@ -68,7 +68,9 @@ class HistoriesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @histories }
+      format.json {
+        render :json =>  { :records => @histories, :total_count => @activities.total_count }
+      }
     end
   end
 
