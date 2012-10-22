@@ -10,8 +10,16 @@ class Vote < ActiveRecord::Base
 
   attr_accessible :vote, :voter, :voteable
 
+
+  # tracked for user's activity feeds
   include PublicActivity::Model
-  tracked :owner => proc { |controller, model| controller.current_user }
+  tracked :owner => proc { |controller, model|
+    unless controller.nil?
+      controller.current_user
+    else
+      User.find(1)
+    end
+  }
 
 
   # Comment out the line below to allow multiple votes per user.

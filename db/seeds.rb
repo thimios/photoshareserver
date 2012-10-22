@@ -13,6 +13,35 @@ Category.find_or_create_by_title(title: "design", description: "design")
 
 imagefile = File.open(File.join(Rails.root, 'test', 'fixtures','lost-hipster.jpg'))
 
+user1 =
+    User.find_or_create_by_email(
+        :username => "thimios",
+        :birth_date => "2010-09-28 00:00:00",
+        :gender => "male",
+        :email => "thimios@wantedpixel.com",
+        :password => 'thimios',
+        :password_confirmation => 'thimios',
+        :address => 'urbanstrasse 66, 10967 Berlin, Germany',
+        :avatar => imagefile)
+user1.confirm!
+user1.geocode
+user1.save
+
+user2 =
+    User.find_or_create_by_email(
+        :username => "spiros",
+        :birth_date => "2010-09-28 00:00:00",
+        :gender => "male",
+        :email => "spiros@wantedpixel.com",
+        :password => 'spiros',
+        :password_confirmation => 'spiros',
+        :address => 'Schlegelstrasse 15, 10115 Berlin, Germany',
+        :avatar => imagefile )
+user2.confirm!
+user2.geocode
+user2.save
+
+
 photo1 = Photo.find_or_create_by_title(title: "fashion photo test", description: "belonging to fashion category", category_id: "1", user_id: "1", address: "Urbanstrasse 66, Berlin, Germany", image: imagefile)
 photo2 = Photo.find_or_create_by_title(title: "fashion photo test2", description: "belonging to fashion category", category_id: "1", user_id: "2", address: "Urbanstraße 30, Berlin, Deutschland", image: imagefile)
 
@@ -29,33 +58,7 @@ generator = Random.new
 end
 
 
-user1 =
-  User.find_or_create_by_email(
-    :username => "thimios",
-    :birth_date => "2010-09-28 00:00:00",
-    :gender => "male",
-    :email => "thimios@wantedpixel.com",
-    :password => 'thimios',
-    :password_confirmation => 'thimios',
-    :address => 'urbanstrasse 66, 10967 Berlin, Germany',
-    :avatar => imagefile)
-user1.confirm!
-user1.geocode
-user1.save
 
-user2 =
-  User.find_or_create_by_email(
-    :username => "spiros",
-    :birth_date => "2010-09-28 00:00:00",
-    :gender => "male",
-    :email => "spiros@wantedpixel.com",
-    :password => 'spiros',
-    :password_confirmation => 'spiros',
-    :address => 'Schlegelstrasse 15, 10115 Berlin, Germany',
-    :avatar => imagefile )
-user2.confirm!
-user2.geocode
-user2.save
 
 unless user1.voted_on? (photo1)
   user1.vote_for (photo1)
