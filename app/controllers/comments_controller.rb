@@ -15,7 +15,6 @@ class CommentsController < Opinio::CommentsController
     respond_to do |format|
       format.html # index.html.erb
       format.json {
-        #render json: @comments, :total_count => @comments.total_count
         render :json =>  { :records => @comments, :total_count => @comments.total_count }
       }
     end
