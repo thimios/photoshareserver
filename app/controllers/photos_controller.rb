@@ -57,7 +57,7 @@ class PhotosController < ApplicationController
           with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
         end
       end
-      @photos = @search.results
+      @photos = Photo.find(@search.results.map{|photo| photo.id})
     end
 
     @googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
@@ -73,7 +73,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       format.html {@googleMapsJson }# index.html.erb
       format.json {
-        render :json =>  { :records => @photos, :total_count => @photos.total_count }
+        render :json =>  { :records => @photos.as_json, :total_count => @search.total }
       }
     end
   end
