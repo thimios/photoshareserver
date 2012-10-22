@@ -44,8 +44,6 @@ class User < ActiveRecord::Base
     avatar.url(:thumb)
   end
 
-
-
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :birth_date, :gender, :email, :password, :password_confirmation, :remember_me, :address, :latitude, :longitude, :avatar
 
@@ -76,11 +74,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  #def as_json(options={})
+  #  super(
+  #      :methods => [ :thumb_size_url],
+  #      :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ]
+  #  )
+  #end
+
   def as_json(options={})
-    super(
-        :methods => [ :thumb_size_url],
-        :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ]
-    )
+    super(options.reverse_merge(:methods => [ :thumb_size_url ]))
   end
 
   private

@@ -22,14 +22,14 @@ class RegistrationsController < Devise::RegistrationsController
     respond_to do |format|
       format.html # index.html.erb
       format.json {
-        render :json =>  { :records => @users, :total_count => @total_count }
+        @records_as_json = @users.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ] )
+        render :json =>  { :records => @records_as_json, :total_count => @total_count }
       }
     end
   end
 
  # respond_to :json
   def create
-
     user = User.new(params[:registration])
     if user.save
       render :json=> user.as_json(:auth_token=>user.authentication_token, :email=>user.email), :status=>201
@@ -54,7 +54,14 @@ class RegistrationsController < Devise::RegistrationsController
     @users[0] = @user
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @users }
+      format.json {
+        unless params[:id].eql? (current_user.id.to_s)
+          @records_as_json = @users.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ] )
+        else
+          @records_as_json = @users.as_json()
+        end
+        render json: @records_as_json
+      }
     end
   end
 end
