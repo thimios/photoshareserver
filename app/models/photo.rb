@@ -59,7 +59,13 @@ class Photo < ActiveRecord::Base
 
   # tracked for user's activity feeds
   include PublicActivity::Model
-  tracked :owner => proc { |controller, model| controller.current_user }
+  tracked :owner => proc { |controller, model|
+    unless controller.nil?
+      controller.current_user
+    else
+      User.find(1)
+    end
+  }
 
   validates :category_id, :presence => true
   validates :title, :presence => true
