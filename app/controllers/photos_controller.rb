@@ -7,8 +7,7 @@ class PhotosController < ApplicationController
     @search = Sunspot.search (Photo) do
       with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
     end
-    @photos = @search.results
-
+    @photos = Photo.find(@search.results.map{|photo| photo.id})
     #@googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
     #  marker.title   photo.title
     #  marker.infowindow photo.address
