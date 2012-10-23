@@ -25,7 +25,7 @@ class SessionsController < Devise::SessionsController
         user = warden.authenticate(:scope => :user)
         if user
           user.reset_authentication_token!
-          render :json => {:auth_token => user.authentication_token, :token_type => "persistant"}, :callback => params[:callback]
+          render :json => {:auth_token => user.authentication_token, :token_type => "persistant", :user_id => user.id}, :callback => params[:callback]
         else
           render :json => {:error => "Invalid username or password"}, status: :unauthorized, :callback => params[:callback]
         end
