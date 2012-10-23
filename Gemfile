@@ -77,12 +77,13 @@ gem 'faker'
 gem 'opinio', '0.6'
 
 # activity feeds
-gem 'public_activity', '0.4.1'
+gem 'public_activity', '0.5.0'
 
 gem 'bundler'
 
+gem 'mysql2'
+
 group :production do
-  gem 'mysql2'
   gem 'therubyracer', :require => 'v8'
   gem 'newrelic_rpm'
 end

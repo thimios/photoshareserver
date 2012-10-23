@@ -7,6 +7,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# disable activity logging while seeding
+PublicActivity.enabled= false
+
 Category.find_or_create_by_title(title: "fashion", description: "fashion passion")
 Category.find_or_create_by_title(title: "place", description: "places category")
 Category.find_or_create_by_title(title: "design", description: "design")

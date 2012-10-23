@@ -12,6 +12,7 @@ require 'bundler/capistrano'
 # run  ssh -T -oStrictHostKeyChecking=no git@bitbucket.org
 # copy public key to bitbucket
 # apt-get install openjdk-7-jdk
+# apt-get -y install postgresql libpq-dev
 
 # 1. Add `gem 'capistrano'` to your Gemfile.
 # 2. Run `bundle install --binstubs --path=vendor/bundles`.

@@ -13,13 +13,7 @@ class Vote < ActiveRecord::Base
 
   # tracked for user's activity feeds
   include PublicActivity::Model
-  tracked :owner => proc { |controller, model|
-    unless controller.nil?
-      controller.current_user
-    else
-      User.find(1)
-    end
-  }
+  tracked :owner => proc { |controller, model| controller.current_user }
 
 
   # Comment out the line below to allow multiple votes per user.
