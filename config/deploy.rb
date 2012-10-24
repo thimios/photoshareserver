@@ -1,5 +1,6 @@
 require 'bundler/capistrano'
 
+
 # This capistrano deployment recipe is made to work with the optional
 # StackScript provided to all Rails Rumble teams in their Linode dashboard.
 #
@@ -76,9 +77,27 @@ set :scm,        :git
 set :repository, GIT_REPOSITORY_URL
 set :branch,     "master"
 
+#set :rvm_type, :system
+set :rvm_ruby_string, 'ruby-1.9.3-p194@senchatouch2'
+require 'rvm/capistrano'
+
 # Roles
 role :app, LINODE_SERVER_HOSTNAME
 role :db,  LINODE_SERVER_HOSTNAME, :primary => true
+
+
+before 'deploy:setup', 'rvm:install_rvm'
+before 'deploy:setup', 'rvm:install_ruby'
+before 'deploy', 'rvm:install_rvm'
+before 'deploy', 'rvm:install_ruby'
+
+namespace :rvm do
+  task :trust_rvmrc do
+    run "rvm rvmrc trust #{release_path}"
+  end
+end
+
+after "deploy", "rvm:trust_rvmrc"
 
 # Add Configuration Files & Compile Assets
 after 'deploy:update_code' do
