@@ -42,6 +42,9 @@ class PhotosController < ApplicationController
     if params[:category_id].nil? and params[:search_string].blank? and  params[:feed].blank?
       @photos = Photo.page(params[:page]).per(params[:limit])
       @total = @photos.total_count
+    elsif !params[:feed].blank? and current_user.following_users_count == 0
+      @photos = Photo.where(:id => nil).page(params[:page]).per(params[:limit])
+      @total = 0
     else
       @search = Sunspot.search (Photo) do
         if !params[:search_string].blank?
@@ -50,7 +53,7 @@ class PhotosController < ApplicationController
         if !params[:category_id].nil?
           with(:category_id,  params[:category_id])
         end
-        if !params[:feed].blank?
+        if !params[:feed].blank? and current_user.following_users_count > 0
           with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
         end
         if !params[:page].blank?
@@ -61,6 +64,7 @@ class PhotosController < ApplicationController
           with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
         end
       end
+
       @photos = Photo.where(:id => @search.results.map{|photo| photo.id}).page(params[:page]).per(params[:limit])
       @total = @search.total
     end
