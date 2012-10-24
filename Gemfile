@@ -62,7 +62,7 @@ gem 'progress_bar' # needed to show progress bar when indexing
 gem 'devise', "2.1.2"
 
 # Voting system
-gem 'thumbs_up', "0.6.2"
+gem 'thumbs_up'
 
 #geocoded locations for photos and users
 gem 'geocoder'
