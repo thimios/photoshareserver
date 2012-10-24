@@ -1,2 +1,2 @@
-listen '/home/deploy/app/shared/pids/unicorn.socket'
-pid    '/home/deploy/app/shared/pids/unicorn.pid'
+listen 'unix:#{shared_path}/sockets/unicorn.sock'
+pid    'unix:#{shared_path}/pids/unicorn.pid'

@@ -38,8 +38,7 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
-    capistrano-file_db (0.1.0)
-      capistrano
+    capistrano-nginx (0.0.2)
     capistrano-unicorn (0.1.6)
       capistrano
     cocaine (0.4.2)
@@ -196,7 +195,7 @@ DEPENDENCIES
   acts_as_follower
   bundler
   capistrano
-  capistrano-file_db
+  capistrano-nginx
   capistrano-unicorn
   coffee-rails (~> 3.2.1)
   devise (= 2.1.2)

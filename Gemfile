@@ -82,7 +82,8 @@ gem 'unicorn'                 # Use unicorn as the app server
 group :development do
   gem 'capistrano'
   gem 'capistrano-unicorn'
-  gem 'capistrano-file_db'
+  #gem 'capistrano-file_db'
+  gem 'capistrano-nginx'
   gem 'rvm-capistrano'
 end
 

@@ -97,6 +97,8 @@ before 'deploy:setup',   'rvm:install_ruby'
 before 'deploy',         'rvm:create_gemset'
 after  'deploy',         'deploy:cleanup'
 
+after "deploy:setup", "nginx:setup", "nginx:reload"
+
 namespace :rvm do
   task :trust_rvmrc do
     run "rvm rvmrc trust #{release_path}"
@@ -124,5 +126,6 @@ end
 require "rvm/capistrano"
 require "bundler/capistrano"
 require "capistrano-unicorn"
-require "capistrano-file_db"
+require 'capistrano/nginx/tasks'
+#require "capistrano-file_db"
 load 'deploy/assets'
