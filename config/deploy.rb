@@ -1,8 +1,4 @@
-# Add RVM's lib directory to the load path.
-#$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 
-require 'bundler/capistrano'
-require 'rvm/capistrano'
 
 
 # This capistrano deployment recipe is made to work with the optional
@@ -55,14 +51,13 @@ LINODE_SERVER_HOSTNAME = '176.58.126.160'
 
 set :bundle_flags,               "--deployment"
 
-set :application,                "railsrumble"
-set :deploy_to,                  "/var/www/apps/railsrumble"
+set :application,                "soberlin"
 set :normalize_asset_timestamps, false
 set :rails_env,                  "production"
 
-set :user,                       "root"
-set :runner,                     "www-data"
-set :admin_runner,               "www-data"
+set :user,                       "deploy"
+set :deploy_to,                  "/home/#{user}/app"
+
 
 # Password-less Deploys (Optional)
 #
@@ -75,28 +70,32 @@ set :admin_runner,               "www-data"
 #
 # ssh_options[:keys] = ["~/.ssh/id_rsa"]
 
-# set :use_sudo, false
+set :use_sudo, false
 
 # SCM Options
 set :scm,        :git
 set :repository, GIT_REPOSITORY_URL
 set :branch,     "master"
 
-set :rvm_type, :system  # Copy the exact line. I really mean :user here
+set :rvm_type, :user  # Copy the exact line. I really mean :user here
 set :normalize_asset_timestamps, false  # Убирает сёр ошибок со старыми папками жаваскрипта и имаджов
 
-set :rvm_ruby_string, 'ruby-1.9.3-p194@senchatouch2'
+set :rvm_ruby_string, 'ruby-1.9.3-p194@soberlin'
+set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 
 
 # Roles
-role :app, LINODE_SERVER_HOSTNAME
-role :db,  LINODE_SERVER_HOSTNAME, :primary => true
 
+server LINODE_SERVER_HOSTNAME, :app, :web, :db, :primary => true
 
-before 'deploy:setup', 'rvm:install_rvm'
-before 'deploy:setup', 'rvm:install_ruby'
-before 'deploy', 'rvm:install_rvm'
-before 'deploy', 'rvm:install_ruby'
+before 'deploy:restart', 'deploy:migrate'
+# Install RVM
+before 'deploy:setup',   'rvm:install_rvm'
+# Install Ruby
+before 'deploy:setup',   'rvm:install_ruby'
+# Or create gemset
+before 'deploy',         'rvm:create_gemset'
+after  'deploy',         'deploy:cleanup'
 
 namespace :rvm do
   task :trust_rvmrc do
@@ -105,29 +104,6 @@ namespace :rvm do
 end
 
 after "deploy", "rvm:trust_rvmrc"
-
-# Add Configuration Files & Compile Assets
-after 'deploy:update_code' do
-  # Setup Configuration
-  run "cp #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-
-  # Compile Assets
-  run "cd #{release_path}; RAILS_ENV=production bundle exec rake assets:precompile"
-end
-
-# Restart Passenger
-deploy.task :restart, :roles => :app do
-  # Fix Permissions
-  sudo "chown -R www-data:www-data #{current_path}"
-  sudo "chown -R www-data:www-data #{latest_release}"
-  sudo "chown -R www-data:www-data #{shared_path}/bundle"
-  sudo "chown -R www-data:www-data #{shared_path}/log"
-  
-
-  # Restart Application
-  run "cd #{current_path}; RAILS_ENV=production bundle exec rake db:seed"
-  run "touch #{current_path}/tmp/restart.txt"
-end
 
 deploy.task :solr_start do
   run "cd #{current_path}; RAILS_ENV=production bundle exec rake sunspot:solr:start"
@@ -144,3 +120,9 @@ end
 deploy.task :seed do
   run "cd #{current_path}; RAILS_ENV=production bundle exec rake db:seed"
 end
+
+require "rvm/capistrano"
+require "bundler/capistrano"
+require "capistrano-unicorn"
+require "capistrano-file_db"
+load 'deploy/assets'
