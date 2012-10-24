@@ -173,7 +173,7 @@ class PhotosController < ApplicationController
       current_user.vote_for(@photo)
       respond_to do |format|
         format.html { redirect_to @photo, notice: 'Photo was successfully voted.' }
-        format.json { render json: @photo, status: 200}
+        format.json { render :json => @photo}
       end
     rescue ActiveRecord::RecordInvalid
       respond_to do |format|
