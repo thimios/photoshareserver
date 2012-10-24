@@ -13,6 +13,7 @@ class Photo < ActiveRecord::Base
   searchable do
   	text :description, :title
     integer :category_id, :references => Category, :multiple => false
+    integer :user_id, :references => User, :multiple => false
     latlon :coordinates do
       Sunspot::Util::Coordinates.new(latitude, longitude)
     end

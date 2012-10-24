@@ -31,12 +31,15 @@ class PhotosController < ApplicationController
       @filter_params = HashWithIndifferentAccess.new
       @filter = ActiveSupport::JSON.decode(params[:filter])
       @filter_params[@filter[0].values[0]] = @filter[0].values[1]
+      if @filter_params[:feed]
+        params[:feed] = @filter_params[:feed]
+      end
       if @filter_params[:category_id]
         params[:category_id] = @filter_params[:category_id]
       end
     end
 
-    if params[:category_id].nil? and params[:search_string].blank?
+    if params[:category_id].nil? and params[:search_string].blank? and  params[:feed].blank?
       @photos = Photo.page(params[:page]).per(params[:limit])
       @total = @photos.total_count
     else
@@ -47,6 +50,9 @@ class PhotosController < ApplicationController
         if !params[:category_id].nil?
           with(:category_id,  params[:category_id])
         end
+        if !params[:feed].blank?
+          with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
+        end
         if !params[:page].blank?
           paginate(:page => params[:page], :per_page => params[:limit])
           order_by_geodist :coordinates, current_user.latitude, current_user.longitude, :asc
@@ -55,7 +61,7 @@ class PhotosController < ApplicationController
           with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
         end
       end
-      @photos = Photo.find(@search.results.map{|photo| photo.id})
+      @photos = Photo.where(:id => @search.results.map{|photo| photo.id}).page(params[:page]).per(params[:limit])
       @total = @search.total
     end
 

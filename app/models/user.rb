@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  acts_as_followable
+  acts_as_follower
+
   acts_as_voter
   has_karma(:photos, :as => :submitter, :weight => 0.5)
 

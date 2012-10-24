@@ -13,6 +13,11 @@
     <%= submit_tag("fashion category filter and sort") %>
 <% end %>
 
+<%= form_tag(photos_path, :method => "get") do %>
+    <%= hidden_field_tag "feed", "true" %>
+    <%= submit_tag("Photos posted by people i follow") %>
+<% end %>
+
 <br />
 
 <%= render 'index_table' %>

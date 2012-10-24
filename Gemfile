@@ -85,7 +85,7 @@ gem 'bundler'
 
 gem 'mysql2'
 
-
+gem "acts_as_follower"
 
 group :production do
   gem 'therubyracer', :require => 'v8'

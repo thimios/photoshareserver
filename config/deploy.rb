@@ -75,7 +75,7 @@ set :admin_runner,               "www-data"
 #
 # ssh_options[:keys] = ["~/.ssh/id_rsa"]
 
-set :use_sudo, false
+# set :use_sudo, false
 
 # SCM Options
 set :scm,        :git

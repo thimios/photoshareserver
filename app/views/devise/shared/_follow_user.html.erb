@@ -1,0 +1,13 @@
+<% unless user == current_user %>
+    <% if current_user.following?(user) %>
+
+        <%= form_tag(user_path+"/unfollow", :method => "get") do %>
+            <%= submit_tag("Un-Follow #{user.username}") %>
+        <% end %>
+
+    <% else %>
+        <%= form_tag(user_path+"/follow", :method => "get") do %>
+            <%= submit_tag("Follow #{user.username}") %>
+        <% end %>
+    <% end %>
+<% end %>

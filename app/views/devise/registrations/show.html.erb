@@ -13,6 +13,12 @@
 <%= image_tag @user.avatar.url(:thumb) %>
 </p>
 
+<% if user_signed_in? %>
+    <div id="follow_user">
+      <%= render :partial => "devise/shared/follow_user", :locals => {:user => @user} %>
+    </div>
+<% end %>
+
 <% for activity in @activities %>
     <%= render_activity(activity) %>
 <% end %>

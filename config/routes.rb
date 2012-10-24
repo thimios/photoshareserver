@@ -25,8 +25,15 @@ TodosSt2::Application.routes.draw do
 
   devise_scope :user do
     match 'users/:id' => 'registrations#show'
+    match 'users/:id/follow' => 'registrations#follow'
+    match 'users/:id/unfollow' => 'registrations#unfollow'
     match 'users' => 'registrations#index'
+
   end
+
+  #resources :users, :only => [:index, :show], :controller => 'registrations' do
+  #  resources :follows, :only => [:create, :destroy]
+  #end
 
   resources :histories
 
