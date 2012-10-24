@@ -15,6 +15,7 @@
 # apt-get install openjdk-7-jdk
 # apt-get -y install postgresql libpq-dev
 # apt-get install imagemagick
+# apt-get install nginx
 
 # 1. Add `gem 'capistrano'` to your Gemfile.
 # 2. Run `bundle install --binstubs --path=vendor/bundles`.
@@ -57,7 +58,7 @@ set :rails_env,                  "production"
 
 set :user,                       "deploy"
 set :deploy_to,                  "/home/#{user}/app"
-
+set :server_name,                LINODE_SERVER_HOSTNAME
 
 # Password-less Deploys (Optional)
 #
@@ -70,7 +71,10 @@ set :deploy_to,                  "/home/#{user}/app"
 #
 # ssh_options[:keys] = ["~/.ssh/id_rsa"]
 
-set :use_sudo, false
+set :use_sudo, true
+set :sudo_user, "deploy"
+
+default_run_options[:pty] = true
 
 # SCM Options
 set :scm,        :git
