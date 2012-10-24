@@ -13,9 +13,9 @@
 # run  ssh -T -oStrictHostKeyChecking=no git@bitbucket.org
 # copy public key to bitbucket
 # apt-get install openjdk-7-jdk
-# apt-get -y install postgresql libpq-dev
 # apt-get install imagemagick
 # apt-get install nginx
+#  apt-get remove apache2
 
 # 1. Add `gem 'capistrano'` to your Gemfile.
 # 2. Run `bundle install --binstubs --path=vendor/bundles`.
@@ -111,21 +111,31 @@ end
 
 after "deploy", "rvm:trust_rvmrc"
 
-deploy.task :solr_start do
-  run "cd #{current_path}; RAILS_ENV=production bundle exec rake sunspot:solr:start"
+namespace :deploy do
+  task :setup_solr_data_dir do
+    run "mkdir -p #{shared_path}/solr/data"
+  end
 end
 
-deploy.task :solr_stop do
-  run "cd #{current_path}; RAILS_ENV=production bundle exec rake sunspot:solr:stop"
+namespace :solr do
+  desc "start solr"
+  task :start, :roles => :app, :except => { :no_release => true } do
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec sunspot-solr start --port=8983 --data-directory=#{shared_path}/solr/data --pid-dir=#{shared_path}/pids"
+  end
+  desc "stop solr"
+  task :stop, :roles => :app, :except => { :no_release => true } do
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec sunspot-solr stop --port=8983 --data-directory=#{shared_path}/solr/data --pid-dir=#{shared_path}/pids"
+  end
+  desc "reindex the whole database"
+  task :reindex, :roles => :app do
+    stop
+    run "rm -rf #{shared_path}/solr/data"
+    start
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake sunspot:solr:reindex"
+  end
 end
 
-deploy.task :solr_reindex do
-  run "cd #{current_path}; RAILS_ENV=production bundle exec rake sunspot:solr:reindex"
-end
-
-deploy.task :seed do
-  run "cd #{current_path}; RAILS_ENV=production bundle exec rake db:seed"
-end
+after 'deploy:setup', 'deploy:setup_solr_data_dir'
 
 require "rvm/capistrano"
 require "bundler/capistrano"
