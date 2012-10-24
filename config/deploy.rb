@@ -1,4 +1,8 @@
+# Add RVM's lib directory to the load path.
+$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+
 require 'bundler/capistrano'
+require 'rvm/capistrano'
 
 
 # This capistrano deployment recipe is made to work with the optional
@@ -14,6 +18,7 @@ require 'bundler/capistrano'
 # copy public key to bitbucket
 # apt-get install openjdk-7-jdk
 # apt-get -y install postgresql libpq-dev
+# apt-get install imagemagick
 
 # 1. Add `gem 'capistrano'` to your Gemfile.
 # 2. Run `bundle install --binstubs --path=vendor/bundles`.
@@ -79,7 +84,7 @@ set :branch,     "master"
 
 #set :rvm_type, :system
 set :rvm_ruby_string, 'ruby-1.9.3-p194@senchatouch2'
-require 'rvm/capistrano'
+
 
 # Roles
 role :app, LINODE_SERVER_HOSTNAME
