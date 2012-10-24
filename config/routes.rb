@@ -31,9 +31,6 @@ TodosSt2::Application.routes.draw do
 
   end
 
-  #resources :users, :only => [:index, :show], :controller => 'registrations' do
-  #  resources :follows, :only => [:create, :destroy]
-  #end
 
   resources :histories
 
