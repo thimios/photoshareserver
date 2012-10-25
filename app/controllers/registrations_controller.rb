@@ -56,7 +56,6 @@ class RegistrationsController < Devise::RegistrationsController
 
     @activities = PublicActivity::Activity.where(:owner_id =>params[:id])
 
-
     @users[0] = @user
 
     # set current_user on all users before calling voted_by_current_user
@@ -82,7 +81,7 @@ class RegistrationsController < Devise::RegistrationsController
     current_user.follow(@user)
     respond_to do |format|
       format.html { redirect_to "/users/#{@user.id}", notice: 'You are now following '+@user.username }
-      format.json { render status: 200}
+      format.json { render json: {notice: 'You are now following '+@user.username}, status: 200}
     end
   end
 
@@ -92,7 +91,7 @@ class RegistrationsController < Devise::RegistrationsController
     current_user.stop_following(@user)
     respond_to do |format|
       format.html { redirect_to "/users/#{@user.id}", notice: 'You are not following '+@user.username + " any more." }
-      format.json { render status: 200}
+      format.json { render  json: {notice: 'You are not following '+@user.username + " any more." }, status: 200}
     end
   end
 
