@@ -45,14 +45,14 @@ user2.geocode
 user2.save
 
 
-photo1 = Photo.find_or_create_by_title(title: "fashion photo test", description: "belonging to fashion category", category_id: "1", user_id: "1", address: "Urbanstrasse 66, Berlin, Germany", image: imagefile)
-photo2 = Photo.find_or_create_by_title(title: "fashion photo test2", description: "belonging to fashion category", category_id: "1", user_id: "2", address: "Urbanstraße 30, Berlin, Deutschland", image: imagefile)
+photo1 = Photo.find_or_create_by_title!( title: "fashion photo test", description: "belonging to fashion category", category_id: "1", user_id: "1", address: "Urbanstrasse 66, Berlin, Germany", image: imagefile)
+photo2 = Photo.find_or_create_by_title!( title: "fashion photo test2", description: "belonging to fashion category", category_id: "1", user_id: "2", address: "Urbanstraße 30, Berlin, Deutschland", image: imagefile)
 
-photo3 = Photo.find_or_create_by_title(title: "place photo test", description: "belonging to place category", category_id: "2", user_id: "1", address: "Dieffenbachstraße 54, 10967 Berlin, Germany", image: imagefile)
-photo4 = Photo.find_or_create_by_title(title: "place photo test2", description: "belonging to place category", category_id: "2", user_id: "2", address: "Dieffenbachstraße 62, 10967 Berlin, Germany", image: imagefile)
+photo3 = Photo.find_or_create_by_title!( title: "place photo test", description: "belonging to place category", category_id: "2", user_id: "1", address: "Dieffenbachstraße 54, 10967 Berlin, Germany", image: imagefile)
+photo4 = Photo.find_or_create_by_title!( title: "place photo test2", description: "belonging to place category", category_id: "2", user_id: "2", address: "Dieffenbachstraße 62, 10967 Berlin, Germany", image: imagefile)
 
-photo5 = Photo.find_or_create_by_title(title: "design photo test", description: "belonging to design category", category_id: "3", user_id: "1", address: "Graefestraße 71, 10967 Berlin, Germany", image: imagefile)
-photo6 = Photo.find_or_create_by_title(title: "design photo test2", description: "belonging to design category", category_id: "3", user_id: "2", address: "Grimmstraße 24, 10967 Berlin, Germany", image: imagefile)
+photo5 = Photo.find_or_create_by_title!(title: "design photo test", description: "belonging to design category", category_id: "3", user_id: "1", address: "Graefestraße 71, 10967 Berlin, Germany", image: imagefile)
+photo6 = Photo.find_or_create_by_title!(title: "design photo test2", description: "belonging to design category", category_id: "3", user_id: "2", address: "Grimmstraße 24, 10967 Berlin, Germany", image: imagefile)
 
 generator = Random.new
 
