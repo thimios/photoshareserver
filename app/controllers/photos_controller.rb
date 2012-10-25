@@ -39,35 +39,30 @@ class PhotosController < ApplicationController
       end
     end
 
-    if params[:category_id].nil? and params[:search_string].blank? and  params[:feed].blank?
-      @photos = Photo.page(params[:page]).per(params[:limit])
-      @total = @photos.total_count
-    elsif !params[:feed].blank? and current_user.following_users_count == 0
-      @photos = Photo.where(:id => nil).page(params[:page]).per(params[:limit])
-      @total = 0
-    else
-      @search = Sunspot.search (Photo) do
-        if !params[:search_string].blank?
-          fulltext params[:search_string]
-        end
-        if !params[:category_id].nil?
-          with(:category_id,  params[:category_id])
-        end
-        if !params[:feed].blank? and current_user.following_users_count > 0
+    @search = Sunspot.search (Photo) do
+      if !params[:search_string].blank?
+        fulltext params[:search_string]
+      end
+      if !params[:category_id].nil?
+        with(:category_id,  params[:category_id])
+      end
+      if !params[:feed].blank?
+        if current_user.following_users_count > 0
           with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
-        end
-        if !params[:page].blank?
-          paginate(:page => params[:page], :per_page => params[:limit])
-          order_by_geodist :coordinates, current_user.latitude, current_user.longitude, :asc
-        end
-        if (params[:sw_y] && params[:sw_x] && params[:ne_y] && params[:ne_x])
-          with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
+        else
+          with(:user_id).equal_to(nil)
         end
       end
-
-      @photos = Photo.where(:id => @search.results.map{|photo| photo.id}).page(params[:page]).per(params[:limit])
-      @total = @search.total
+      if !params[:page].blank?
+        paginate(:page => params[:page], :per_page => params[:limit])
+        order_by_geodist :coordinates, current_user.latitude, current_user.longitude, :asc
+      end
+      if (params[:sw_y] && params[:sw_x] && params[:ne_y] && params[:ne_x])
+        with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
+      end
     end
+
+    @photos = @search.results
 
     @googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
       marker.title   photo.title
@@ -80,9 +75,9 @@ class PhotosController < ApplicationController
     }
 
     respond_to do |format|
-      format.html {@googleMapsJson }# index.html.erb
+      format.html { @googleMapsJson }# index.html.erb
       format.json {
-        render :json =>  { :records => @photos.as_json, :total_count => @total }
+        render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total }
       }
     end
   end
@@ -177,12 +172,12 @@ class PhotosController < ApplicationController
       current_user.vote_for(@photo)
       respond_to do |format|
         format.html { redirect_to @photo, notice: 'Photo was successfully voted.' }
-        format.json { render :json => @photo}
+        format.json { render json: [ {notice: 'Photo was successfully voted.' }  ]}
       end
     rescue ActiveRecord::RecordInvalid
       respond_to do |format|
         format.html { redirect_to @photo, notice: 'Photo was not voted.'}
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
+        format.json { render json: [ {notice: 'Photo was not voted.' }  ] , status: :unprocessable_entity }
       end
     end
 
