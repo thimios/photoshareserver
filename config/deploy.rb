@@ -115,10 +115,6 @@ namespace :deploy do
   task :setup_solr_data_dir do
     run "mkdir -p #{shared_path}/solr/data"
   end
-
-  task :seed do
-    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake db:seed"
-  end
 end
 
 namespace :db do
@@ -128,6 +124,10 @@ namespace :db do
 
   task :setup,:roles => :db do
     run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake db:setup"
+  end
+
+  task :load,:roles => :db do
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake db:schema.load"
   end
 
   task :seed,:roles => :db do
