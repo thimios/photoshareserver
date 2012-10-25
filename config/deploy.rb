@@ -84,7 +84,7 @@ set :branch,     "master"
 set :rvm_type, :user  # Copy the exact line. I really mean :user here
 set :normalize_asset_timestamps, false  # Убирает сёр ошибок со старыми папками жаваскрипта и имаджов
 
-set :rvm_ruby_string, 'ruby-1.9.3-p194@soberlin'
+set :rvm_ruby_string, 'ruby-1.9.3-p194@senchatouch2'
 set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 
 
