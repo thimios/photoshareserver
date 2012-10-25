@@ -3,6 +3,7 @@ class RegistrationsController < Devise::RegistrationsController
   # GET /users
   # GET /users.json
   def index
+    warden.authenticate!
     if params[:search_string].blank?
       @users = User.page(params[:page]).per(params[:limit])
       @total_count = @users.total_count
@@ -18,6 +19,11 @@ class RegistrationsController < Devise::RegistrationsController
       @users = User.find(@search.results.map{|user| user.id})
       @total_count = @search.total
     end
+
+    # set current_user on all users before calling voted_by_current_user
+    @users.each { |user|
+      user.current_user = current_user
+    }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -50,8 +56,13 @@ class RegistrationsController < Devise::RegistrationsController
 
     @activities = PublicActivity::Activity.where(:owner_id =>params[:id])
 
-    # set current_user on all photos before calling voted_by_current_user
+
     @users[0] = @user
+
+    # set current_user on all users before calling voted_by_current_user
+    @users.each { |user|
+      user.current_user = current_user
+    }
     respond_to do |format|
       format.html # show.html.erb
       format.json {
@@ -66,6 +77,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def follow
+    warden.authenticate!
     @user = User.find(params[:id])
     current_user.follow(@user)
     respond_to do |format|
@@ -75,6 +87,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def unfollow
+    warden.authenticate!
     @user = User.find(params[:id])
     current_user.stop_following(@user)
     respond_to do |format|

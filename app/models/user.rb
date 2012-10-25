@@ -47,6 +47,17 @@ class User < ActiveRecord::Base
     avatar.url(:thumb)
   end
 
+  attr_accessor :current_user
+
+  def followed_by_current_user
+    # add whether the current user is following this user or not
+    if self.followed_by?(self.current_user)
+      return "true"
+    else
+      return "false"
+    end
+  end
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :birth_date, :gender, :email, :password, :password_confirmation, :remember_me, :address, :latitude, :longitude, :avatar
 
@@ -85,7 +96,7 @@ class User < ActiveRecord::Base
   #end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :thumb_size_url ]))
+    super(options.reverse_merge(:methods => [ :thumb_size_url, :followed_by_current_user ]))
   end
 
   private
