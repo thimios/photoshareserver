@@ -84,6 +84,9 @@ group :development do
   gem 'capistrano-unicorn'
   gem 'capistrano-nginx'
   gem 'rvm-capistrano'
+  gem 'linecache19'
+  gem 'ruby-debug19', :require => false
+  gem 'ruby-debug-base19', :git => 'https://github.com/tribune/ruby-debug-base19.git', :require => false
 end
 
 # Gems used only for assets and not required

@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/tribune/ruby-debug-base19.git
+  revision: fb0c03823944d2165edfc5e4d37c441c003eac5c
+  specs:
+    ruby-debug-base19 (0.11.26)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      rake (>= 0.8.1)
+      ruby_core_source (>= 0.1.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -29,6 +39,7 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     acts_as_follower (0.1.1)
+    archive-tar-minitar (0.5.2)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
@@ -49,6 +60,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
+    columnize (0.3.6)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -75,6 +87,8 @@ GEM
       activesupport (>= 3.0.0)
     kgio (2.7.4)
     libv8 (3.3.10.4)
+    linecache19 (0.5.13)
+      ruby_core_source (>= 0.1.4)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -147,6 +161,12 @@ GEM
       json (~> 1.4)
     rsolr (1.0.8)
       builder (>= 2.1.2)
+    ruby-debug19 (0.11.6)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby-debug-base19 (>= 0.11.19)
+    ruby_core_source (0.1.5)
+      archive-tar-minitar (>= 0.5.2)
     rvm-capistrano (1.2.7)
       capistrano (>= 2.0.0)
     sass (3.2.1)
@@ -204,6 +224,7 @@ DEPENDENCIES
   gmaps4rails
   jquery-rails
   kaminari (= 0.14.1)
+  linecache19
   mysql2
   newrelic_rpm
   opinio (= 0.6)
@@ -214,6 +235,8 @@ DEPENDENCIES
   rack-cors
   rack-jsonp-middleware
   rails (= 3.2.3)
+  ruby-debug-base19!
+  ruby-debug19
   rvm-capistrano
   sass-rails (~> 3.2.3)
   sqlite3
