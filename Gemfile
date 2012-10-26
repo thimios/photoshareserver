@@ -2,11 +2,12 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.3'
 
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
-gem 'pg'
+# gem 'sqlite3'
+# gem 'pg'
 
 gem 'jquery-rails'
 
@@ -84,9 +85,11 @@ group :development do
   gem 'capistrano-unicorn'
   gem 'capistrano-nginx'
   gem 'rvm-capistrano'
-  gem 'linecache19'
-  gem 'ruby-debug19', :require => false
-  gem 'ruby-debug-base19', :git => 'https://github.com/tribune/ruby-debug-base19.git', :require => false
+  # gem 'linecache19'
+  gem 'ruby-debug19', :require => 'ruby-debug'
+  # gem 'ruby-debug19', :require => false
+  #gem 'ruby-debug-base19', :git => 'https://github.com/tribune/ruby-debug-base19.git', :require => false
+  gem 'thin'
 end
 
 # Gems used only for assets and not required
