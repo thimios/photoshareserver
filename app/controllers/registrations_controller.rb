@@ -4,7 +4,19 @@ class RegistrationsController < Devise::RegistrationsController
   # GET /users.json
   def index
     warden.authenticate!
-    if params[:search_string].blank?
+
+    if params[:filter]
+      @filter_params = HashWithIndifferentAccess.new
+      @filter = ActiveSupport::JSON.decode(params[:filter])
+      @filter_params[@filter[0].values[0]] = @filter[0].values[1]
+      if @filter_params[:followed_by_current_user]
+        params[:followed_by_current_user] = @filter_params[:followed_by_current_user]
+      end
+    end
+
+    if params[:followed_by_current_user] == "true"
+      @users = User.where(:id => current_user.all_following.map{|following_user| following_user.id}).page(params[:page]).per(params[:limit])
+    elsif params[:search_string].blank?
       @users = User.page(params[:page]).per(params[:limit])
       @total_count = @users.total_count
     else
@@ -12,6 +24,7 @@ class RegistrationsController < Devise::RegistrationsController
         if !params[:search_string].blank?
           fulltext params[:search_string]
         end
+
         if !params[:page].blank?
           paginate(:page => params[:page], :per_page => params[:limit])
         end
@@ -33,7 +46,6 @@ class RegistrationsController < Devise::RegistrationsController
       }
     end
   end
-
 
   def create
     user = User.new(params[:registration])
