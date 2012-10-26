@@ -1,5 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
-
+  respond_to :json
   # GET /users
   # GET /users.json
   def index
@@ -34,7 +34,7 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
- # respond_to :json
+
   def create
     user = User.new(params[:registration])
     if user.save
@@ -94,5 +94,7 @@ class RegistrationsController < Devise::RegistrationsController
       format.json { render  json: [ notice => 'You are not following '+@user.username + " any more."  ], status: 200}
     end
   end
+
+
 
 end

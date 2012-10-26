@@ -30,7 +30,7 @@ production:
   database: railsrumble_production
   pool: 5
   username: root
-  password: s03rl1n!TS!
+  password:
   host: localhost
   socket: /var/run/mysqld/mysqld.sock
 

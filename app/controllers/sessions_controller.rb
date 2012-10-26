@@ -29,7 +29,6 @@ class SessionsController < Devise::SessionsController
         else
           render :json => {:error => "Invalid username or password"}, status: :unauthorized, :callback => params[:callback]
         end
-
       }
     end
 
