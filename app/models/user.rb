@@ -49,6 +49,15 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_user
 
+  # count users that are following this user
+  def total_followers
+    self.count_user_followers
+  end
+  # count users followed by this user
+  def total_following
+    self.following_users_count
+  end
+
   def followed_by_current_user
     # add whether the current user is following this user or not
     if self.followed_by?(self.current_user)
@@ -96,7 +105,7 @@ class User < ActiveRecord::Base
   #end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :thumb_size_url, :followed_by_current_user ]))
+    super(options.reverse_merge(:methods => [ :thumb_size_url, :followed_by_current_user, :total_followers, :total_following ]))
   end
 
   private
