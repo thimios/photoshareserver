@@ -43,7 +43,7 @@ module TodosSt2
         resource '*', :headers => :any, :methods => [:get, :post, :options, :put, :delete]
       end
     end
-    
+
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
