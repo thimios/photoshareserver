@@ -19,29 +19,28 @@ class SessionsController < Devise::SessionsController
   end
 
   def create
-    logger.debug("login attempt")
-    logger.debug(params)
-    respond_to do |format|
-      format.html { super}
-      format.json {
-        warden.custom_failure!
-        user = warden.authenticate(:scope => :user)
+    if request.format == "text/html"
+      super
+    else
+      respond_to do |format|
+        format.json {
+          warden.custom_failure!
+          user = warden.authenticate(:scope => :user)
 
-        if !user.nil?
-          user.reset_authentication_token!
-          render :json => {:auth_token => user.authentication_token, :token_type => "persistant", :user_id => user.id}, :callback => params[:callback]
-        else
-          user = User.find_by_email (params['user']['email'])
-          if !user.nil? and !user.confirmed?
-            render :json => {:error => "Please confirm your email address before logging in. Check your email!"}, status: :unauthorized
+          if !user.nil?
+            user.reset_authentication_token!
+            render :json => {:auth_token => user.authentication_token, :token_type => "persistant", :user_id => user.id}, :callback => params[:callback]
           else
-            render :json => {:error => "Invalid username or password"}, status: :unauthorized
+            user = User.find_by_email (params['user']['email'])
+            if !user.nil? and !user.confirmed?
+              render :json => {:error => "Please confirm your email address before logging in. Check your email!"}, status: :unauthorized
+            else
+              render :json => {:error => "Invalid username or password"}, status: :unauthorized
+            end
           end
-        end
-      }
-    end
-
-
+        }
+      end
+     end
   end
 
 end

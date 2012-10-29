@@ -48,13 +48,17 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    user = User.new(params[:registration])
-    if user.save
-      render :json=> user.as_json, :status=>201
-      return
+    if request.format == "text/html"
+      super
     else
-      warden.custom_failure!
-      render :json => { :errors =>user.errors },:status=>422
+      user = User.new(params[:registration])
+      if user.save
+        render :json=> user.as_json, :status=>201
+        return
+      else
+        warden.custom_failure!
+        render :json => { :errors =>user.errors },:status=>422
+      end
     end
   end
 
