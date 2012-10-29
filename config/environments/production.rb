@@ -83,4 +83,14 @@ TodosSt2::Application.configure do
   # :authentication       => 'plain',
   # :enable_starttls_auto => true  }
 
+  config.paperclip_defaults = {
+      :storage => :s3,
+      :s3_permissions => :private,
+      :s3_credentials => {
+          :bucket => "com.wantedpixel.soberlin.development",
+          :access_key_id => "AKIAJ5QSBBOX6DD2PWDA",
+          :secret_access_key => "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"
+      }
+  }
+
 end
