@@ -36,15 +36,15 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, :styles => { :full => "800x800", :medium => "300x300>", :thumb => "80x80>" }
 
   def full_size_url
-    avatar.url
+    avatar.expiring_url(60)
   end
 
   def medium_size_url
-    avatar.url(:medium)
+    avatar.expiring_url(60, :medium)
   end
 
   def thumb_size_url
-    avatar.url(:thumb)
+    avatar.expiring_url(60, :thumb)
   end
 
   attr_accessor :current_user

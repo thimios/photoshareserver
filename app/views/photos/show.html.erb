@@ -34,10 +34,9 @@
 
 <%= comments_for @photo %>
 
-<%= image_tag @photo.image.url %>
-<%= image_tag @photo.image.url(:medium) %>
-<%= image_tag @photo.image.url(:thumb) %>
-<%= image_tag @photo.image.url(:full) %>
+<%= image_tag @photo.full_size_url %>
+<%= image_tag @photo.medium_size_url %>
+<%= image_tag @photo.thumb_size_url %>
 
 <%= gmaps4rails(@googleMapsJson) %>
 

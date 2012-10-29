@@ -6,7 +6,7 @@ gem 'rails', '3.2.3'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-# gem 'sqlite3'
+  gem 'sqlite3'
 # gem 'pg'
 
 gem 'jquery-rails'
@@ -32,6 +32,9 @@ gem 'rack-jsonp-middleware',  :require => 'rack/jsonp'
 
 # file uploads
 gem "paperclip", "~> 3.0"
+
+# s3 storage for paperclip
+gem 'aws-sdk', '~> 1.3.4'
 
 # solr searching
 gem 'sunspot_rails', "~> 2.0.0.pre"

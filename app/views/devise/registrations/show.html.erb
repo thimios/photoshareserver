@@ -10,7 +10,7 @@
 
 <p>
   <b>Avatar:</b>
-<%= image_tag @user.avatar.url(:thumb) %>
+<%= image_tag @user.thumb_size_url%>
 </p>
 
 <% if user_signed_in? %>
