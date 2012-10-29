@@ -126,7 +126,9 @@ class PhotosController < ApplicationController
     unless params[:category_id].nil?
       @photo.category_id = params[:category_id]
     end
-    
+
+    @photo.user = current_user
+
     respond_to do |format|
       if @photo.save
         format.html { redirect_to @photo, notice: 'Photo was successfully created.' }

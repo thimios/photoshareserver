@@ -64,8 +64,9 @@ class Photo < ActiveRecord::Base
 
   validates :category_id, :presence => true
   validates :title, :presence => true
+  validates :user_id, :presence => true
   #validate :address_or_coordinates
-  #validates :image, :attachment_presence => true
+  validates :image, :attachment_presence => true
 
   geocoded_by :address
   reverse_geocoded_by :latitude, :longitude
