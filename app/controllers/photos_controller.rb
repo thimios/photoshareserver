@@ -132,6 +132,7 @@ class PhotosController < ApplicationController
     end
 
     @photo.user = current_user
+    @photo.current_user = current_user
 
     respond_to do |format|
       if @photo.save
