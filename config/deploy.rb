@@ -154,6 +154,9 @@ namespace :solr do
 end
 
 after 'deploy:setup', 'deploy:setup_solr_data_dir'
+after 'unicorn:stop', 'solr:stop'
+before 'inicorn:start', 'solr:start'
+
 
 require "rvm/capistrano"
 require "bundler/capistrano"
