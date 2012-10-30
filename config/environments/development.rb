@@ -56,8 +56,8 @@ TodosSt2::Application.configure do
       :s3_permissions => :private,
       :s3_credentials => {
           :bucket => "com.wantedpixel.soberlin.development",
-          :access_key_id => "AKIAJ5QSBBOX6DD2PWDA",
-          :secret_access_key => "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"
+          :access_key_id => "AKIAI4KGTEOUVZZZFCLA",
+          :secret_access_key => "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"
       }
   }
   
