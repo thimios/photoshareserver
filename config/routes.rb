@@ -1,5 +1,7 @@
 TodosSt2::Application.routes.draw do
 
+  get "home/index"
+
   opinio_model :controller => 'comments'
 
   match 'photos/indexbbox(.:format)' => 'photos#indexbbox'
@@ -38,7 +40,7 @@ TodosSt2::Application.routes.draw do
   #  resources :users
   #end
 
-  root :to => "photos#index"
+  root :to => "home#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
