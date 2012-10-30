@@ -9,6 +9,16 @@
 </p>
 
 <p>
+  <b>Number of users that are following this user:</b>
+  <%= @user.total_followers %>
+</p>
+
+<p>
+  <b>Number of users followed by this user:</b>
+  <%= @user.total_following %>
+</p>
+
+<p>
   <b>Avatar:</b>
 <%= image_tag @user.thumb_size_url%>
 </p>
