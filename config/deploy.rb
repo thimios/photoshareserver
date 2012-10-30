@@ -165,7 +165,6 @@ after 'deploy:update_code',  'install_unicorn_init_script'
 after 'unicorn:stop', 'solr:stop'
 before 'inicorn:start', 'solr:start'
 
-
 require "rvm/capistrano"
 require "bundler/capistrano"
 require "capistrano-unicorn"
