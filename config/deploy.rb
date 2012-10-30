@@ -153,7 +153,14 @@ namespace :solr do
   end
 end
 
+task :install_unicorn_init_script, :roles => :app do
+  set :user, sudo_user
+  run "#{sudo} cp #{current_path}/config/deploy/unicorn /etc/init.d/unicorn.#{application}"
+  run "#{sudo} chmod 755 /etc/init.d/unicorn.#{application}"
+end
+
 after 'deploy:setup', 'deploy:setup_solr_data_dir'
+after 'deploy:update_code',  'install_unicorn_init_script'
 after 'unicorn:stop', 'solr:stop'
 before 'inicorn:start', 'solr:start'
 
