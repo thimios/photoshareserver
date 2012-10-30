@@ -160,8 +160,16 @@ task :install_unicorn_init_script, :roles => :app do
   run "#{sudo} update-rc.d unicorn.#{application} defaults"
 end
 
+task :install_solr_init_script, :roles => :app do
+  set :user, sudo_user
+  run "#{sudo} cp #{latest_release}/config/deploy/solr /etc/init.d/solr.#{application}"
+  run "#{sudo} chmod 755 /etc/init.d/solr.#{application}"
+  run "#{sudo} update-rc.d solr.#{application} defaults"
+end
+
 after 'deploy:setup', 'deploy:setup_solr_data_dir'
 after 'deploy:update_code',  'install_unicorn_init_script'
+after 'deploy:update_code',  'install_solr_init_script'
 after 'unicorn:stop', 'solr:stop'
 before 'inicorn:start', 'solr:start'
 
