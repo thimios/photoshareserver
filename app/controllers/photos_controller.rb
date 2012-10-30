@@ -140,7 +140,9 @@ class PhotosController < ApplicationController
         format.json { render json: @photo, status: :created}
       else
         format.html { render action: "new" }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
+        format.json {
+          render :json => { :errors =>@photo.errors },:status=> :ok #phonegap fileuploader cannot handle data on failure
+        }
       end
     end
   end
