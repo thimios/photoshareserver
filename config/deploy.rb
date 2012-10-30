@@ -157,7 +157,7 @@ task :install_unicorn_init_script, :roles => :app do
   set :user, sudo_user
   run "#{sudo} cp #{current_path}/config/deploy/unicorn /etc/init.d/unicorn.#{application}"
   run "#{sudo} chmod 755 /etc/init.d/unicorn.#{application}"
-  run "#{sudo} update-rc.d /etc/init.d/unicorn.#{application} defaults"
+  run "#{sudo} update-rc.d unicorn.#{application} defaults"
 end
 
 after 'deploy:setup', 'deploy:setup_solr_data_dir'
