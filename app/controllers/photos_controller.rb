@@ -84,16 +84,15 @@ class PhotosController < ApplicationController
   # GET /photos/1
   # GET /photos/1.json
   def show
-    @photos = Array.new
     @photo = (Photo.find(params[:id]))
 
     # set current_user on all photos before calling voted_by_current_user
     @photo.current_user = current_user
-    @photos[0] = @photo
+
     respond_to do |format|
       format.html { @googleMapsJson = @photo.to_gmaps4rails }# show.html.erb
       format.json {
-        render :json =>  { :records => @photos }
+        render :json =>  { :records => [@photo ] }
       }
     end
   end
@@ -137,7 +136,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       if @photo.save
         format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
-        format.json { render json: @photo, status: :created}
+        format.json { render json: [ @photo ], status: :created}
       else
         format.html { render action: "new" }
         format.json {
