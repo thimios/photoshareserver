@@ -136,7 +136,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       if @photo.save
         format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
-        format.json { render json: { :success => "true", :data => @photo }, status: :created}
+        format.json { render json: {:id => @photo.id}, :status => :created }
       else
         format.html { render action: "new" }
         format.json {
