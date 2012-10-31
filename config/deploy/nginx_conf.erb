@@ -2,11 +2,17 @@ upstream <%= application %> {
   server <%= "unix:#{shared_path}/pids/unicorn.socket fail_timeout=0" %>;
 }
 
+server {
+  server_name _;
+  rewrite ^ $scheme://<%= server_name %>$request_uri?;
+}
+
+
 
 server {
   client_max_body_size 4G;
   server_name <%= server_name %>;
-  rewrite ^ http://www.soberlin.org$request_uri? permanent;
+
 
   keepalive_timeout 5;
   root <%= "#{deploy_to}/current/public" %>;
