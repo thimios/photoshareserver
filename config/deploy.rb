@@ -43,7 +43,7 @@
 #############################################
 
 GIT_REPOSITORY_URL = 'git@bitbucket.org:thimios/engineyardhipster.git'
-LINODE_SERVER_HOSTNAME = 'soberlin.wantedpixel.com'
+LINODE_SERVER_HOSTNAME = 'soberlin.org'
 
 #############################################
 #############################################
