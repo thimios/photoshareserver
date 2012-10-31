@@ -3,7 +3,7 @@ upstream <%= application %> {
 }
 
 server {
-  server_name _;
+  server_name _ default_server;
   rewrite ^ $scheme://<%= server_name %>$request_uri?;
 }
 
