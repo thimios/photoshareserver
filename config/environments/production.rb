@@ -25,6 +25,7 @@ TodosSt2::Application.configure do
 
   config.assets.precompile += %w( *.js *.css )
 
+  # ssl everywhere except home page
   config.middleware.use Rack::SslEnforcer, :except => ['/']
 
   # Specifies the header that your server uses for sending files
