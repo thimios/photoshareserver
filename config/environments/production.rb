@@ -67,7 +67,6 @@ TodosSt2::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  # TODO: Configure mailer options for the other envs as well
   config.action_mailer.default_url_options = { :host => 'www.soberlin.org' }
 
   config.action_mailer.delivery_method = :sendmail
