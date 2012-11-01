@@ -48,9 +48,13 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
+    imagefile = File.open(Rails.root.join('app/assets', 'images', "Soberlin.png"))
+
     if request.format == "text/html"
+      params[:user][:avatar] = imagefile
       super
     else
+      params[:registration][:avatar] = imagefile
       user = User.new(params[:registration])
       if user.save
         render :json=> user.as_json, :status=>201
