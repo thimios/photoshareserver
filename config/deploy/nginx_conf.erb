@@ -4,7 +4,7 @@ upstream <%= application %> {
 
 server {
   server_name _;
-  rewrite ^ $scheme://<%= server_name %>$request_uri?;
+  return 301 $scheme://<%= server_name %>$request_uri;
 }
 
 
