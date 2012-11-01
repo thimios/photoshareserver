@@ -34,7 +34,7 @@ TodosSt2::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-  
+
   # TODO: Configure mailer options for the other envs as well
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   

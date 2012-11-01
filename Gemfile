@@ -75,9 +75,9 @@ gem "acts_as_follower"
 
 group :production do
   gem 'newrelic_rpm'
-  gem 'rack-ssl-enforcer'
 end
 
+gem 'rack-ssl-enforcer'
 
 gem 'unicorn'                 # Use unicorn as the app server
 
