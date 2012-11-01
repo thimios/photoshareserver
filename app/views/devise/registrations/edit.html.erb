@@ -27,6 +27,16 @@
   <div><%= f.label :birth_date %><br />
   <%= f.date_select :birth_date, :start_year => 1950%></div>
 
+  <p>
+    <b>Avatar:</b>
+    <%= image_tag @user.thumb_size_url%>
+  </p>
+
+  <div class="field">
+    <%= f.label :avatar %><br />
+    <%= f.file_field :avatar %>
+  </div>
+
   <div><%= f.submit "Update" %></div>
 <% end %>
 
