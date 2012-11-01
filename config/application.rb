@@ -34,7 +34,7 @@ module TodosSt2
     # config.i18n.default_locale = :de
 
     # ssl everywhere except home page
-    config.middleware.use Rack::SslEnforcer, :except => ['/']
+    config.middleware.use Rack::SslEnforcer, :except => ['/'], :strict => true
     
     # This removes the requirement of setting the callback parameter on every json responce
     config.middleware.use Rack::JSONP
