@@ -15,6 +15,7 @@
 # apt-get install openjdk-7-jdk
 # apt-get install imagemagick
 # apt-get install nginx
+# copy config/deploy/ssl to /etc/nginx/ssl (only keys are needed, see config/deploy/nginx_conf.erb)
 # rm /etc/nginx/sites-enabled/default
 #  apt-get remove apache2
 
