@@ -4,19 +4,23 @@ upstream <%= application %> {
 
 server {
   listen 80 default;
+  listen 443 default_server ssl;
+
+  ssl_certificate /etc/nginx/ssl/soberlin.org_chain.pem;
+  ssl_certificate_key /etc/nginx/ssl/soberlin.org.key;
+
   server_name _;
   return 301 $scheme://www.soberlin.org$request_uri;
 }
 
 server {
   listen 80;
-  listen 443 default_server ssl;
+  listen 443 ssl;
 
   ssl_certificate /etc/nginx/ssl/soberlin.org_chain.pem;
   ssl_certificate_key /etc/nginx/ssl/soberlin.org.key;
   client_max_body_size 4G;
-  server_name soberlin.org www.soberlin.org;
-
+  server_name www.soberlin.org;
 
   keepalive_timeout 5;
   root <%= "#{deploy_to}/current/public" %>;
