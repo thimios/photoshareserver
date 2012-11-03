@@ -103,7 +103,12 @@ class RegistrationsController < Devise::RegistrationsController
       respond_with resource, :location => after_update_path_for(resource)
     else
       clean_up_passwords resource
-      respond_with resource
+      respond_to do |format|
+        format.html { respond_with resource }
+        format.json {
+          render :json => { :errors =>resource.errors },:status=> :ok #phonegap fileuploader cannot handle data on failure
+        }
+      end
     end
   end
 
