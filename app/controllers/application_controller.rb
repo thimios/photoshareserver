@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+
   opinio_identifier do |params|
     next Photo.find(params[:photo_id]) if params[:photo_id]
   end

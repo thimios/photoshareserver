@@ -65,13 +65,6 @@ class HistoriesController < ApplicationController
     else
       # TODO: respond with error
     end
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json {
-        render :json =>  { :records => @histories, :total_count => @activities.total_count }
-      }
-    end
   end
 
 end

@@ -1,43 +1,9 @@
 class PhotosController < ApplicationController
   before_filter :my_authenticate_user
-
-  #http://localhost:3000/photos/indexbbox.json?sw_y=48.488334&sw_x=6.416342&ne_y=57.492658&ne_x=18.428616
-  def indexbbox
-    @search = Sunspot.search (Photo) do
-      with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
-    end
-    @photos = Photo.find(@search.results.map{|photo| photo.id})
-    #@googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
-    #  marker.title   photo.title
-    #  marker.infowindow photo.address
-    #end
-    # set current_user on all photos before calling voted_by_current_user
-    @photos.each { |photo|
-      photo.current_user = current_user
-    }
-    respond_to do |format|
-      format.html {@googleMapsJson }# index.html.erb
-      format.json {
-        render :json => @photos
-      }
-    end
-  end
+  respond_to :html
 
   # GET /photos
-  # GET /photos.json
   def index
-    if params[:filter]
-      @filter_params = HashWithIndifferentAccess.new
-      @filter = ActiveSupport::JSON.decode(params[:filter])
-      @filter_params[@filter[0].values[0]] = @filter[0].values[1]
-      if @filter_params[:feed]
-        params[:feed] = @filter_params[:feed]
-      end
-      if @filter_params[:category_id]
-        params[:category_id] = @filter_params[:category_id]
-      end
-    end
-
     @search = Sunspot.search (Photo) do
       if !params[:search_string].blank?
         fulltext params[:search_string]
@@ -60,41 +26,25 @@ class PhotosController < ApplicationController
         with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
       end
     end
-
     @photos = @search.results
-
     @googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
       marker.title   photo.title
       marker.infowindow photo.address
     end
-
     # set current_user on all photos before calling voted_by_current_user
     @photos.each { |photo|
       photo.current_user = current_user
     }
 
-    respond_to do |format|
-      format.html { @googleMapsJson }# index.html.erb
-      format.json {
-        render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total }
-      }
-    end
   end
 
   # GET /photos/1
-  # GET /photos/1.json
+
   def show
     @photo = (Photo.find(params[:id]))
-
     # set current_user on all photos before calling voted_by_current_user
     @photo.current_user = current_user
-
-    respond_to do |format|
-      format.html { @googleMapsJson = @photo.to_gmaps4rails }# show.html.erb
-      format.json {
-        render :json =>  { :records => [@photo ] }
-      }
-    end
+    @googleMapsJson = @photo.to_gmaps4rails # show.html.erb
   end
 
   # GET /photos/new
@@ -104,13 +54,6 @@ class PhotosController < ApplicationController
 
     # set current_user on all photos before calling voted_by_current_user
     @photo.current_user = current_user
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json {
-        render :json =>  { :records => @photos}
-      }
-    end
   end
 
   # GET /photos/1/edit
@@ -132,33 +75,20 @@ class PhotosController < ApplicationController
 
     @photo.user = current_user
     @photo.current_user = current_user
-
-    respond_to do |format|
-      if @photo.save
-        format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
-        format.json { render json: {:id => @photo.id}, :status => :created }
-      else
-        format.html { render action: "new" }
-        format.json {
-          render :json => { :errors =>@photo.errors },:status=> :ok #phonegap fileuploader cannot handle data on failure
-        }
-      end
+    if @photo.save
+      redirect_to @photo, notice: 'Photo was successfully created.'
+    else
+      render action: "new"
     end
   end
 
   # PUT /photos/1
-  # PUT /photos/1.json
   def update
     @photo = Photo.find(params[:id])
-
-    respond_to do |format|
-      if @photo.update_attributes(params[:photo])
-        format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
-        format.json { render json: @photo, status: :updated  }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
-      end
+    if @photo.update_attributes(params[:photo])
+      redirect_to @photo, notice: 'Photo was successfully updated.'
+    else
+      render action: "edit"
     end
   end
 
@@ -168,27 +98,16 @@ class PhotosController < ApplicationController
     @photo = Photo.find(params[:id])
     logger.debug "no photos can be deleted"
     #@photo.destroy
-    respond_to do |format|
-      format.html { redirect_to photos_url }
-      format.json { head :no_content }
-    end
+    redirect_to photos_url
   end
 
   def vote_up
     begin
       @photo = Photo.find(params[:id])
       current_user.vote_for(@photo)
-      respond_to do |format|
-        format.html { redirect_to @photo, notice: 'Photo was successfully voted.' }
-        format.json { render json: [ {notice: 'Photo was successfully voted.' }  ]}
-      end
+      redirect_to @photo, notice: 'Photo was successfully voted.'
     rescue ActiveRecord::RecordInvalid
-      respond_to do |format|
-        format.html { redirect_to @photo, notice: 'Photo was not voted.'}
-        format.json { render json: [ {notice: 'Photo was not voted.' }  ] , status: :unprocessable_entity }
-      end
+      redirect_to @photo, notice: 'Photo was not voted.'
     end
-
   end
-
 end

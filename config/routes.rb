@@ -2,9 +2,10 @@ TodosSt2::Application.routes.draw do
 
   get "home/index"
 
+  root :to => "home#index"
+
   opinio_model :controller => 'comments'
 
-  match 'photos/indexbbox(.:format)' => 'photos#indexbbox'
   resources :photos do
     opinio :controller => 'comments'
     resource :category
@@ -16,13 +17,11 @@ TodosSt2::Application.routes.draw do
   resources :categories do
     resources :photos
   end
-  
+
   devise_for :users, :controllers => {:sessions => 'sessions', :registrations => "registrations", :confirmations => "confirmations"}, :path_names => { :sign_in => 'login', :sign_out => 'logout'} do
     match 'login' => 'sessions#create', :via => [:post]
     match 'login' => 'sessions#new', :via => [:get]
     get 'logout' => 'sessions#destroy', :as => :destroy_user_session
-
-
   end
 
   devise_scope :user do
@@ -30,19 +29,45 @@ TodosSt2::Application.routes.draw do
     match 'users/:id/follow' => 'registrations#follow'
     match 'users/:id/unfollow' => 'registrations#unfollow'
     match 'users' => 'registrations#index'
-
   end
-
-  # resources :users
-
 
   resources :histories
 
-  #scope "/admin" do
-  #  resources :users
-  #end
 
-  root :to => "home#index"
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+      opinio_model :controller => 'comments'
+
+      match 'photos/indexbbox(.:format)' => 'photos#indexbbox'
+      resources :photos do
+        opinio :controller => 'comments'
+        resource :category
+        member do
+          get 'vote_up'
+        end
+      end
+
+      resources :categories do
+        resources :photos
+      end
+
+      devise_for :users, :controllers => {:sessions => 'sessions', :registrations => "registrations", :confirmations => "confirmations"}, :path_names => { :sign_in => 'login', :sign_out => 'logout'} do
+        match 'login' => 'sessions#create', :via => [:post]
+        match 'login' => 'sessions#new', :via => [:get]
+        get 'logout' => 'sessions#destroy', :as => :destroy_user_session
+      end
+
+      devise_scope :user do
+        match 'users/:id' => 'registrations#show'
+        match 'users/:id/follow' => 'registrations#follow'
+        match 'users/:id/unfollow' => 'registrations#unfollow'
+        match 'users' => 'registrations#index'
+      end
+
+      resources :histories
+    end
+  end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
