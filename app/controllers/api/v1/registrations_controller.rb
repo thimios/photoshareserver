@@ -52,22 +52,16 @@ module Api
 
       def create
         imagefile = File.open(Rails.root.join('app/assets', 'images', "Soberlin.png"))
-
-        if request.format == "text/html"
-          params[:user][:avatar] = imagefile
-          super
+        params[:registration][:avatar] = imagefile
+        params[:registration].delete( :thumb_size_url)
+        params[:address] = "Urbanstrasse 66, 10967, Berlin, Germany"
+        user = User.new(params[:registration])
+        if user.save
+          render :json=> user.as_json, :status=>201
+          return
         else
-          params[:registration][:avatar] = imagefile
-          params[:registration].delete( :thumb_size_url)
-          params[:address] = "Urbanstrasse 66, 10967, Berlin, Germany"
-          user = User.new(params[:registration])
-          if user.save
-            render :json=> user.as_json, :status=>201
-            return
-          else
-            warden.custom_failure!
-            render :json => { :errors =>user.errors },:status=>422
-          end
+          warden.custom_failure!
+          render :json => { :errors =>user.errors },:status=>422
         end
       end
 
@@ -163,6 +157,8 @@ module Api
           format.json { render  json: [ notice => 'You are not following '+@user.username + " any more."  ], status: 200}
         end
       end
+
+
     end
   end
 end

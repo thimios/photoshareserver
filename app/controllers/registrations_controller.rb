@@ -40,8 +40,28 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    imagefile = File.open(Rails.root.join('app/assets', 'images', "Soberlin.png"))
-    params[:user][:avatar] = imagefile
+
+    if params[:signed_request].blank?
+      imagefile = File.open(Rails.root.join('app/assets', 'images', "Soberlin.png"))
+      params[:user][:avatar] = imagefile
+    else
+      signed_request = params[:signed_request]
+      signature, str = signed_request.split('.')
+      str += '=' * (4 - str.length.modulo(4))
+      params_decoded = ActiveSupport::JSON.decode(Base64.decode64(str.gsub("-", "+").gsub("_", "/")))
+
+      params[:user] = params_decoded['registration']
+      params[:user][:birth_date] = params[:user][:birthday]
+      logger.debug(params)
+      imagefile = File.open(Rails.root.join('app/assets', 'images', "Soberlin.png"))
+      params[:user][:avatar] = imagefile
+
+      params[:user][:address] = "Urbanstrasse 66, 10967, Berlin, Germany"
+      params[:user].delete('name')
+      params[:user].delete('birthday')
+      params[:user].delete('repeat_password')
+    end
+
     super
   end
 

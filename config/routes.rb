@@ -65,6 +65,8 @@ TodosSt2::Application.routes.draw do
       end
 
       resources :histories
+
+
     end
   end
 
