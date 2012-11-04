@@ -72,7 +72,7 @@ class Photo < ActiveRecord::Base
   reverse_geocoded_by :latitude, :longitude
 
   after_validation :geocode, :if => :address_changed?  # auto-fetch coordinates
-  after_validation :reverse_geocode, :if => :longitude_changed? or :latitude_changed? # auto-fetch address
+    after_validation :reverse_geocode, :if => :longitude_changed? or :latitude_changed? # auto-fetch address
 
   def as_json(options={})
     super(options.reverse_merge(:methods => [ :author_name, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count ]))

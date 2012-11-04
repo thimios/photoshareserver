@@ -100,11 +100,8 @@ module Api
       # POST /photos
       # POST /photos.json
       def create
-        if !params[:photo].nil?
-          photo = Photo.new(params[:photo])
-        else
-          photo = Photo.new(:title => params[:title], :description => params[:description], :category_id => params[:category_id], :address => params[:address], :image => params[:image]  )
-        end
+        params[:photo] = params.reject{|key, value| key.in?(["_method","authenticity_token","commit","auth_token","action","controller","format"])}
+        photo = Photo.new(params[:photo])
         unless params[:category_id].nil?
           photo.category_id = params[:category_id]
         end
