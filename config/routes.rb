@@ -25,6 +25,7 @@ TodosSt2::Application.routes.draw do
   end
 
   devise_scope :user do
+    match 'users/messages' => 'registrations#messages'
     match 'users/:id' => 'registrations#show'
     match 'users/:id/follow' => 'registrations#follow'
     match 'users/:id/unfollow' => 'registrations#unfollow'

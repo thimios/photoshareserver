@@ -1,7 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
-  respond_to :json
+  layout "home"
+
   # GET /users
-  # GET /users.json
   def index
     warden.authenticate!
 
@@ -42,9 +42,13 @@ class RegistrationsController < Devise::RegistrationsController
   def create
 
     if params[:signed_request].blank?
+
+      # this is not a facebook callback, we just set the default avatar and call super
       imagefile = File.open(Rails.root.join('app/assets', 'images', "Soberlin.png"))
       params[:user][:avatar] = imagefile
     else
+
+      # this is a facebook callback, we decode the user params and proceed with super
       signed_request = params[:signed_request]
       signature, str = signed_request.split('.')
       str += '=' * (4 - str.length.modulo(4))
@@ -64,6 +68,14 @@ class RegistrationsController < Devise::RegistrationsController
 
     super
   end
+
+
+
+
+  def messages
+     render 'devise/registrations/messages'
+  end
+
 
   ## PUT /resource
   ## We need to use a copy of the resource because we don't want to change
@@ -136,4 +148,19 @@ class RegistrationsController < Devise::RegistrationsController
     current_user.stop_following(@user)
     redirect_to "/users/#{@user.id}", notice: 'You are not following '+@user.username + " any more."
   end
+
+  protected
+
+  # The path used after sign up. You need to overwrite this method
+  # in your own RegistrationsController.
+  def after_sign_up_path_for(resource)
+    '/users/messages'
+  end
+
+  # The path used after sign up for inactive accounts. You need to overwrite
+  # this method in your own RegistrationsController.
+  def after_inactive_sign_up_path_for(resource)
+    '/users/messages'
+  end
+
 end
