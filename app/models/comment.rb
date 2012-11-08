@@ -9,8 +9,12 @@ class Comment < ActiveRecord::Base
     self.owner.username
   end
 
+  def owner_thumb_size_url
+    self.owner.thumb_size_url
+  end
+
   def as_json(options={})
-    super(options.reverse_merge(:methods => :owner_username))
+    super(options.reverse_merge(:methods => [:owner_username, :owner_thumb_size_url]))
   end
 
 end
