@@ -57,11 +57,31 @@ module Api
           end
           if !params[:page].blank?
             paginate(:page => params[:page], :per_page => params[:limit])
-            order_by_geodist :coordinates, current_user.latitude, current_user.longitude, :asc
+            adjust_solr_params do |solr_params|
+              solr_params[:sort] = "product(
+                                      sum(plusminus_i,1),
+                                      exp(
+                                        div(1,
+                                          geodist(
+                                            coordinates_ll,
+                                            #{params[:user_latitude]},
+                                            #{params[:user_longitude]}
+                                          )
+                                        )
+                                      ),
+                                      exp(
+                                        div(1,
+                                            ms(created_at_dt)
+                                        )
+                                      )
+                                   ) desc".gsub(/\s+/, " ").strip
+            end
+
           end
           if (params[:sw_y] && params[:sw_x] && params[:ne_y] && params[:ne_x])
             with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
           end
+
         end
 
         @photos = @search.results
