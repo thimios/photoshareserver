@@ -7,4 +7,9 @@ class HomeController < ApplicationController
   def production
     # production.html.erb
   end
+
+  def facebook
+    # facebookq.html.erb
+  end
+
 end

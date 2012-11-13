@@ -2,6 +2,7 @@ TodosSt2::Application.routes.draw do
 
   get "home/index"
   get "home/production"
+  get "home/facebook"
 
   root :to => "home#index"
 
