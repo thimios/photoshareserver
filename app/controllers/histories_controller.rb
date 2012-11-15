@@ -15,7 +15,7 @@ class HistoriesController < ApplicationController
     end
 
     unless params[:user_id].nil?
-      @activities = PublicActivity::Activity.where("owner_id = ? AND activities.key IN ('photo.create', 'vote.create', 'comment.create')",params[:user_id]).page(params[:page]).per(params[:limit])
+      @activities = PublicActivity::Activity.where("owner_id = ? AND activities.key IN ('photo.create', 'vote.create', 'comment.create')",params[:user_id]).order("created_at DESC").page(params[:page]).per(params[:limit])
       @histories = Array.new
       @activities.each do |activity|
 
