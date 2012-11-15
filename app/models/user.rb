@@ -21,12 +21,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   default_scope :conditions => { :deleted_at => nil }
-  validates_presence_of     :email
-  validates_presence_of     :password, :on => :create
-  validates_confirmation_of :password, :on => :create
-  validates_length_of       :password, :within => 6..30, :allow_blank => true
+
+  # commented out validations are already performed by devise and should not be done twice
+  #validates_presence_of     :email
+  #validates_presence_of     :password, :on => :create
+  #validates_confirmation_of :password, :on => :create
+  #validates_length_of       :password, :within => 6..30, :allow_blank => true
   #validates_uniqueness_of   :email, :case_sensitive => false, :scope => :deleted_at
-  validates_format_of       :email, :with => Devise::email_regexp
+  #validates_format_of       :email, :with => Devise::email_regexp
   validates_presence_of     :username
   validates_uniqueness_of   :username
   validates_presence_of     :birth_date
