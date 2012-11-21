@@ -13,8 +13,12 @@ class Comment < ActiveRecord::Base
     self.owner.thumb_size_url
   end
 
+  def created_at_date
+    self.created_at.strftime("%d %b. %Y")
+  end
+
   def as_json(options={})
-    super(options.reverse_merge(:methods => [:owner_username, :owner_thumb_size_url]))
+    super(options.reverse_merge(:methods => [:owner_username, :owner_thumb_size_url, :created_at_date]))
   end
 
 end
