@@ -54,7 +54,7 @@ module Api
         imagefile = File.open(Rails.root.join('app/assets', 'images', "Soberlin.png"))
         params[:registration][:avatar] = imagefile
         params[:registration].delete( :thumb_size_url)
-        params[:address] = "Urbanstrasse 66, 10967, Berlin, Germany"
+        params[:registration][:address] = "Urbanstrasse 66, 10967, Berlin, Germany"
         user = User.new(params[:registration])
         if user.save
           render :json=> user.as_json, :status=>201
