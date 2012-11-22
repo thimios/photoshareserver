@@ -11,7 +11,8 @@ class Photo < ActiveRecord::Base
   attr_accessible :category_id, :user_id, :description, :title, :image, :address, :latitude, :longitude
 
   searchable do
-  	text :description, :title
+  	text :description, :as => :description_textp
+    text :title, :as => :title_textp
     integer :category_id, :references => Category, :multiple => false
     integer :user_id, :references => User, :multiple => false
     latlon :coordinates do

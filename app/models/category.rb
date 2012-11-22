@@ -3,8 +3,4 @@ class Category < ActiveRecord::Base
   has_many :photos, :inverse_of => :category
   validates :title, :presence => true
 
-  searchable do
-    text :description, :title
-  end
-
 end

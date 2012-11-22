@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
   after_validation :reverse_geocode, :if => :longitude_changed? or :latitude_changed? # auto-fetch address
 
   searchable do
-    text :username
+    text :username, :as => :username_textp
     latlon :coordinates do
       Sunspot::Util::Coordinates.new(latitude, longitude)
     end
