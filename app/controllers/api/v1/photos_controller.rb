@@ -28,6 +28,7 @@ module Api
 
       # GET /photos
       # GET /photos.json
+      # http://localhost:3000/api/v1/photos?utf8=%E2%9C%93&category_id=1&page=1&user_latitude=52.488909&user_longitude=13.421728
       def index
         if params[:filter]
           @filter_params = HashWithIndifferentAccess.new
@@ -58,6 +59,9 @@ module Api
           if !params[:page].blank?
             paginate(:page => params[:page], :per_page => params[:limit])
             adjust_solr_params do |solr_params|
+             # solr_params[:fl] = "* _dist_:geodist(coordinates_ll,
+                                            #{params[:user_latitude]},
+                                            #{params[:user_longitude]})"
               solr_params[:sort] = "product(
                                       sum(plusminus_i,1),
                                       exp(
