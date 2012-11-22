@@ -35,6 +35,14 @@ class History
     "#<#{ self.to_s} #{ self.attributes.collect{ |e| ":#{ e }" }.join(', ') }>"
   end
 
+  def created_at_date
+    self.created_at.strftime("%d %b. %Y")
+  end
+
+  def as_json(options={})
+    super(options.reverse_merge(:methods => [ :created_at_date ]))
+  end
+
 
 end
 
