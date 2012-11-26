@@ -91,7 +91,7 @@ module Api
                                               -1.15,
                                               exp(-9)
                                             ),
-                                            ms(created_at_dt)
+                                            ms(NOW, created_at_dt)
                                         )
                                       )
                                    ) desc".gsub(/\s+/, " ").strip
