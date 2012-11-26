@@ -32,6 +32,7 @@ module Api
 
             @history = History.new
             @history.created_at = activity.created_at
+            @history.created_at_date = activity.created_at.strftime("%d %b. %Y")
 
             if activity.key == "comment.create"
               @comment = Comment.find(activity.trackable_id)

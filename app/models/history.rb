@@ -5,6 +5,7 @@ class History
   extend ActiveModel::Naming
 
   attr_accessor :created_at, #date, time string
+                :created_at_date,
                 :title, #Posted a photo, Commented on Jimmy's photo, Liked Jimmy's photo
                 :description, #either the comment or the photo description
                 :photo_id, # the id of the photo posted, liked or commented
@@ -34,15 +35,6 @@ class History
   def self.inspect
     "#<#{ self.to_s} #{ self.attributes.collect{ |e| ":#{ e }" }.join(', ') }>"
   end
-
-  def created_at_date
-    self.created_at.strftime("%d %b. %Y")
-  end
-
-  def as_json(options={})
-    super(options.reverse_merge(:methods => [ :created_at_date ]))
-  end
-
 
 end
 
