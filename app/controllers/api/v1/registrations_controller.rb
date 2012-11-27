@@ -5,6 +5,10 @@ module Api
       respond_to :json
       # GET /users
       # GET /users.json
+
+
+
+      # followers: http://localhost:3000/api/v1/users?followed_by_current_user=true
       def index
         warden.authenticate!
 
@@ -19,6 +23,7 @@ module Api
 
         if params[:followed_by_current_user] == "true"
           @users = User.where(:id => current_user.all_following.map{|following_user| following_user.id}).page(params[:page]).per(params[:limit])
+          @total_count = @users.total_count
         elsif params[:search_string].blank?
           @users = User.page(params[:page]).per(params[:limit])
           @total_count = @users.total_count
