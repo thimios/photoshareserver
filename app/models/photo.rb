@@ -27,15 +27,15 @@ class Photo < ActiveRecord::Base
   has_attached_file :image, :styles => { :full => "800x800", :medium => "300x300>", :thumb => "100x100>" }
 
   def full_size_url
-    image.expiring_url(60)
+    image.url
   end
 
   def medium_size_url
-    image.expiring_url(60, :medium)
+    image.url(:medium)
   end
 
   def thumb_size_url
-    image.expiring_url(60,:thumb)
+    image.url(:thumb)
   end
 
   def author_name
