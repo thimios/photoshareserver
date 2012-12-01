@@ -44,40 +44,41 @@ user2.confirm!
 user2.geocode
 user2.save
 
-
-photo1 = Photo.find_or_create_by_title!( title: "fashion photo test", description: "belonging to fashion category", category_id: "1", user_id: "1", address: "Urbanstrasse 66, Berlin, Germany", image: imagefile)
-photo2 = Photo.find_or_create_by_title!( title: "fashion photo test2", description: "belonging to fashion category", category_id: "1", user_id: "2", address: "Urbanstraße 30, Berlin, Deutschland", image: imagefile)
-
-photo3 = Photo.find_or_create_by_title!( title: "place photo test", description: "belonging to place category", category_id: "2", user_id: "1", address: "Dieffenbachstraße 54, 10967 Berlin, Germany", image: imagefile)
-photo4 = Photo.find_or_create_by_title!( title: "place photo test2", description: "belonging to place category", category_id: "2", user_id: "2", address: "Dieffenbachstraße 62, 10967 Berlin, Germany", image: imagefile)
-
-photo5 = Photo.find_or_create_by_title!(title: "design photo test", description: "belonging to design category", category_id: "3", user_id: "1", address: "Graefestraße 71, 10967 Berlin, Germany", image: imagefile)
-photo6 = Photo.find_or_create_by_title!(title: "design photo test2", description: "belonging to design category", category_id: "3", user_id: "2", address: "Grimmstraße 24, 10967 Berlin, Germany", image: imagefile)
-
 generator = Random.new
 
-60.times do
-   Photo.create(title: Faker::Lorem.sentence(2), description: Faker::Lorem.sentence(3), category_id: generator.rand(1..3), user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile)
+30.times do
+  photo = Photo.create(title: Faker::Lorem.sentence(2), description: Faker::Lorem.sentence(3), category_id: 1, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
+  20.times do
+   comment = photo.comments.build( body: Faker::Lorem.sentence(3) )
+   comment.owner = user1
+   comment.save
+  end
+
+  user1.vote_for ( photo)
+  user2.vote_for( photo)
+
+end
+
+30.times do
+  photo = Photo.create(title: Faker::Lorem.sentence(2), description: Faker::Lorem.sentence(3), category_id: 2, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
+  20.times do
+    comment = photo.comments.build( body: Faker::Lorem.sentence(3) )
+    comment.owner = user1
+    comment.save
+  end
+
+  user1.vote_for ( photo)
+end
+
+30.times do
+  photo = Photo.create(title: Faker::Lorem.sentence(2), description: Faker::Lorem.sentence(3), category_id: 3, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
+  20.times do
+    comment = photo.comments.build( body: Faker::Lorem.sentence(3) )
+    comment.owner = user1
+    comment.save
+
+  end
+  user2.vote_for( photo)
 end
 
 
-
-
-unless user1.voted_on? (photo1)
-  user1.vote_for (photo1)
-end
-
-unless user1.voted_on? (photo2)
-  user1.vote_for(photo2)
-end
-
-unless user2.voted_on? (photo2)
-  user2.vote_for(photo2)
-end
-
-
-100.times do
-  comment = photo1.comments.build( body: Faker::Lorem.sentence(3) )
-  comment.owner = user1
-  comment.save
-end

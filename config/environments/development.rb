@@ -53,12 +53,11 @@ TodosSt2::Application.configure do
 
   config.paperclip_defaults = {
       :storage => :s3,
-      :s3_permissions => :private,
+      :s3_host_name => "s3-eu-west-1.amazonaws.com",
       :s3_credentials => {
-          :bucket => "com.wantedpixel.soberlin.development",
+          :bucket => "com.wantedpixel.soberlin.devel",
           :access_key_id => "AKIAI4KGTEOUVZZZFCLA",
           :secret_access_key => "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"
       }
   }
-  
 end

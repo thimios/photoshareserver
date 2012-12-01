@@ -35,18 +35,19 @@ class User < ActiveRecord::Base
   validates_presence_of     :gender
   validates_inclusion_of    :gender, :in => %w(male female)
 
-  has_attached_file :avatar, :styles => { :full => "800x800", :medium => "300x300>", :thumb => "80x80>" }
+  has_attached_file :avatar,
+                    :styles => { :full => "640x640", :medium => "460x460>", :thumb => "80x80>" }
 
   def full_size_url
-    avatar.expiring_url(60)
+    avatar.url
   end
 
   def medium_size_url
-    avatar.expiring_url(60, :medium)
+    avatar.url(:medium)
   end
 
   def thumb_size_url
-    avatar.expiring_url(60, :thumb)
+    avatar.url(:thumb)
   end
 
   attr_accessor :current_user
