@@ -14,7 +14,7 @@ Category.find_or_create_by_title(title: "fashion", description: "fashion passion
 Category.find_or_create_by_title(title: "place", description: "places category")
 Category.find_or_create_by_title(title: "design", description: "design")
 
-imagefile = File.open(File.join(Rails.root, 'test', 'fixtures','seed.png'))
+imagefile = File.open(File.join(Rails.root, 'test', 'fixtures','seed.jpg'))
 
 user1 =
     User.find_or_create_by_email(
