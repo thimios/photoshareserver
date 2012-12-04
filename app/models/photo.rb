@@ -25,13 +25,13 @@ class Photo < ActiveRecord::Base
   belongs_to :category, :touch => true, :inverse_of => :photos
   belongs_to :user, :touch => false, :inverse_of => :photos
   has_attached_file :image,
-                    :styles => { :max=> "2048x2048", :full => "640x640", :medium => "460x460>", :thumb => "80x80>" }
-  def max_size_url
-    image.url(:max)
+                    :styles => { :full => "640x640", :medium => "460x460>", :thumb => "80x80>" }
+  def original_size_url
+    image.url
   end
 
   def full_size_url
-    image.url
+    image.url(:full)
   end
 
   def medium_size_url
