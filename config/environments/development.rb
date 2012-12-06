@@ -60,4 +60,6 @@ TodosSt2::Application.configure do
           :secret_access_key => "perhM6bovVIMqs9axO0fUoTtbM4WP9SEanerLlrg"
       }
   }
+
+  config.watchable_dirs['lib'] = [:rb]
 end

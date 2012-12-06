@@ -1,11 +1,18 @@
 class HomeController < ApplicationController
-  layout "home"
-  def index
-    # index.html.erb
+  layout "frontend",  :except => [:launchrock]
+  require_dependency 'photo_search'
+
+  def launchrock
+    # launchrock.html.erb
   end
 
-  def production
-    # production.html.erb
+  def home
+    # home.html.erb
+    @photos = PhotoSearch.category_created_at(1, 1, 30)
+
+    @photos
+
+
   end
 
   def facebook

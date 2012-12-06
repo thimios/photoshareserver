@@ -1,10 +1,11 @@
 TodosSt2::Application.routes.draw do
 
-  get "home/index"
-  get "home/production"
+  get "home/launchrock"
+  get "home/home"
   get "home/facebook"
 
-  root :to => "home#index"
+  root :to => "home#launchrock"
+  #root :to => "home#home"  # production home page
 
   opinio_model :controller => 'comments'
 
