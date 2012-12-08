@@ -104,6 +104,8 @@ group :assets do
   gem 'uglifier'
   gem 'compass-rails'
   gem 'compass-h5bp'
+  gem "therubyracer", :require => 'v8'
+  gem 'libv8', '~> 3.11.8'
 end
 
 
