@@ -14,3 +14,22 @@
 //= require jquery_ujs
 //= require h5bp
 
+
+$('.photoContainer').each(function (index) {
+    var min = 1;
+    var max = 4;
+    var random = Math.floor(Math.random() * (max - min + 1)) + min;
+    $(this).addClass('random' + random);
+});
+
+$("#downloadButton").hover(
+
+    function () {
+        $("#downloadButton").animate({"background-size": "100%"}, "fast");
+    },
+
+    function () {
+        $("#downloadButton").animate({"background-size": "90%"}, "fast");
+    }
+);
+

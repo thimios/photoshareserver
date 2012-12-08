@@ -31,3 +31,297 @@
 //-----------------------------------------
 @include h5bp-helpers;
 @include h5bp-media;
+
+/*my styles*/
+@font-face {
+  font-family: 'FuturaBT-Book';
+  src: url("futura/webfonts/245CB7_0_0.eot");
+  src: url("futura/webfonts/245CB7_0_0.eot?#iefix") format("embedded-opentype"), url("futura/webfonts/245CB7_0_0.woff") format("woff"), url("futura/webfonts/245CB7_0_0.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'FuturaBT-Heavy';
+  src: url("futura/webfonts/245CB7_3_0.eot");
+  src: url("futura/webfonts/245CB7_3_0.eot?#iefix") format("embedded-opentype"), url("futura/webfonts/245CB7_3_0.woff") format("woff"), url("futura/webfonts/245CB7_3_0.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'satisfy';
+  src: url("Satisfy/Satisfy-Regular.ttf") format("truetype");
+}
+
+
+#storeLinkText{
+  font-family: FuturaBT-Book;
+  font-size: 17px;
+  color: black;
+  position: relative;
+  top: 21px;
+  left: 10px;
+  font-style: italic;
+  width: 169px;
+  line-height: 23px;
+
+}
+
+#maincontainer{
+  width: 1100px;
+  margin: 0 auto;
+  padding-top: 50px;
+  position: relative;
+  left: 70px;
+}
+#storeLink{
+  width: 188px;
+  background: url('/assets/storeLinkBorder.png');
+  height: 132px;
+  margin-left:110px;
+}
+
+#downloadButton{
+  background: url('/assets/download.png');
+  width: 169px;
+  height: 60px;
+  position: relative;
+  top: 30px;
+  left: 11px;
+}
+#topRight{
+  width:612px;
+  padding-bottom: 32px;
+
+}
+#logo, #topRight, #slogan, #storeLink{
+  display:inline-block;
+  vertical-align:top;
+}
+
+#topRight{
+  margin-left:70px;
+  width:670px;
+}
+#slogan{
+  margin-top:18px;
+}
+#logo{
+  padding-top:10px;
+
+}
+.lastItem{
+  position:relative;left:-26px;
+}
+#menu{
+  font-family: satisfy;
+  margin-top: 24px;
+  font-size: 24px;
+  margin-left: -1px;
+}
+
+
+
+#topRightTop{
+  background: url('/assets/toprightbg.png');
+  background-repeat: repeat-x;
+  background-position: bottom;
+  padding-bottom: 35px;
+  background-size: 107%;
+}
+
+.photoTitle{
+
+  font-family: 'FuturaBT-Heavy';
+  font-size: 14px;
+  position: relative;
+  margin-top: 9px;
+  margin-bottom: 0px;
+
+}
+.photoAuthor{
+  font-family: 'FuturaBT-Book';
+  font-size:12px;
+  position:relative;
+
+}
+
+#photosPart{
+  margin-left: 13px;
+  margin-top:20px;
+}
+
+
+.menuItem span:hover{
+  color:#516a16;
+  background:url('/assets/greendot.png');
+  background-repeat:repeat-x;
+  background-position:bottom;
+}
+.blastItem{
+  position:relative;
+  left:-10px;
+}
+#downloadButton{
+  cursor:pointer;
+  background: url('/assets/download.png');
+  width: 185px;
+  height: 66px;
+  position: relative;
+  top: 30px;
+  left: 2px;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:90%;
+}
+
+
+#downloadButton:hover{
+  width:185px;
+  height:66px;
+  background-position:center;
+  background-repeat:no-repeat;
+
+  //background-size:100%;
+  left:2px;
+}
+
+.menuItem{
+  width: 102px;
+  display: inline-block;
+  text-align: center;
+}
+#active{
+  background:url('/assets/activeBg.png');
+  color:#516a16;
+  height:71px;
+
+  padding-top: 6px;
+  padding-left: 3px;
+  margin-top: -6px;
+  margin-left: -3px;
+  background-repeat: no-repeat;
+}
+#active span:hover{
+  color:#516a16;
+
+  background:none!important;
+}
+
+.photoContainer:nth-child(4n){
+  margin-right:0px!important;
+}
+.random1{
+  position:relative;
+  top:10px;
+}
+.random1 .overlay{
+  position: absolute;
+  top: -14px;
+  left: -24px;
+  background:url(/assets/polaroid-01.png);
+  width:245px;
+  height:273px;
+}
+
+.random2{
+  position:relative;
+  top:15px;
+}
+.random2 .overlay{
+  position: absolute;
+  top: -14px;
+  left: -24px;
+  background:url(/assets/polaroid-02.png);
+  width:245px;
+  height:273px;
+}
+
+.scotch{
+
+  width: 77px;
+  height: 36px;
+  position: absolute;
+  left: 29%;
+  top: -29px;
+  z-index: 12;
+}
+
+.random2 .scotch{
+  background: url(/assets/scotch-02.png);
+}
+.random4 .scotch{
+  background: url(/assets/scotch-04.png);
+}
+.random3 .scotch{
+  background: url(/assets/scotch-03.png);
+}
+.random1 .scotch{
+  background: url(/assets/scotch-01.png);
+}
+
+
+.random3{
+  position:relative;
+  top:-10px;
+}
+.random3 .overlay{
+  position: absolute;
+  top: -11px;
+  left: -16px;
+  background: url(/assets/polaroid-03.png);
+  width: 245px;
+  height: 273px;
+}
+.random3 .photoAuthor{
+  left:8px;
+}
+.random3 .photoTitle{
+  left:8px;
+
+}
+.random4{
+  position:relative;
+  top:0px;
+}
+.random4 .overlay{
+  position: absolute;
+  top: -14px;
+  left: -24px;
+  background:url(/assets/polaroid-04.png);
+  width:245px;
+  height:273px;
+}
+
+.photoContainer{
+  display:inline-block;
+  position:relative;
+  margin-right:35px;
+
+}
+a{
+  text-decoration:none!important;
+  color:inherit!important;
+}
+.photosRow{
+  margin-bottom:60px;
+}
+
+#footer{
+  background: url(/assets/footerBg.png);
+  background-repeat: no-repeat;
+  background-position: top;
+  font-family:satisfy;
+  color:#696969;
+  text-align:center;
+  padding-top:13px;
+  width:960px;
+}
+
+#footer span{
+  display:inline-block;
+  margin-left:3px;
+  margin-right:3px;
+}
+
+.dot{
+  position:relative;
+  top:-3px;
+}
