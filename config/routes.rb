@@ -51,6 +51,7 @@ TodosSt2::Application.routes.draw do
         resource :category
         member do
           get 'vote_up'
+          get 'report'
         end
       end
 

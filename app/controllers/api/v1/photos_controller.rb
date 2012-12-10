@@ -186,6 +186,22 @@ module Api
           render json: [ {notice: 'Photo was not voted.' }  ] , status: :unprocessable_entity
         end
       end
+
+      def report
+          report = PhotoReport.where("user_id = ? AND photo_id = ?", current_user.id,params[:id] )
+          if !report.empty?
+            render json: [ {notice: 'You have already reported this photo.' }  ] , status: :unprocessable_entity
+          else
+            photo = Photo.find(params[:id])
+            report = PhotoReport.create(:photo_id => photo.id, :user_id => current_user.id)
+            if report.save
+              render json: [ {notice: 'Photo was successfully reported.' }  ]
+            else
+              render json: [ {notice: 'Photo was not reported, an error occured. Please contact the site admin' }  ] , status: :unprocessable_entity
+
+            end
+          end
+      end
     end
   end
 end

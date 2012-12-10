@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
 
   has_many :histories, :inverse_of => :owner
 
+  has_many :reports, :inverse_of => :user, :dependent => :destroy
+
   acts_as_gmappable :lat => 'latitude', :lng => 'longitude', :process_geocoding => :geocode?,
                     :address => "address", :normalized_address => "address",
                     :msg => "Sorry, not even Google could figure out where that is"
