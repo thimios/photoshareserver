@@ -1,3 +1,4 @@
+<div id="maincontainer">
 <header id="header">
   <div id="topPart">
     <div id="logo">
@@ -9,27 +10,27 @@
           <img src="/assets/slogan.png" />
         </div>
         <div id="storeLink">
-          <div id="storeLinkText">In laoreet velit ac nisl venenatis nemit tepum dapibus by SoBerlin !</div>
+          <div id="storeLinkText">In laoreet velit ac nisl venenatis nemit tepum dapibus by SoBerlin !</div>
           <div
           id="downloadButton"></div>
         </div>
       </div>
       <div id="menu">
         <span style="margin:0px;padding:0px;">Last updates:</span>
-								<span class="menuItem" id="active">
-									<span><a href="?show=all">All</a></span>
+								<span class="menuItem" <% if @active == "all" %>id="active" <%end %> >
+									<span><%= link_to "All",  "/home?show=all" %></span>
 								</span>
-								<span class="menuItem">
-									<span><a href="?show=fashion">Fashion</a></span>
+								<span class="menuItem"  <% if @active == "fashion" %>id="active" <%end %> >
+									<span><a href="/home?show=fashion">Fashion</a></span>
 								</span>
-                                <span class="menuItem">
-                                	<span><a href="?show=places">Places</a></span>
+                                <span class="menuItem"  <% if @active == "places" %>id="active" <%end %> >
+                                	<span><a href="/home?show=places">Places</a></span>
                                 </span>
-                                <span class="menuItem blastItem">
-                                	<span><a href="?show=design">Design</a></span>
+                                <span class="menuItem blastItem"  <% if @active == "design" %> id="active" <%end %> >
+                                	<span><a href="/home?show=design">Design</a></span>
                                 </span>
-                                <span class="menuItem lastItem">
-                                	<span><a href="?show=best">Best</a></span>
+                                <span class="menuItem lastItem" <% if @active == "best" %> id="active" <%end %> >
+                                	<span><a href="/home?show=best">Best</a></span>
                                 </span>
       </div>
     </div>

@@ -8,15 +8,36 @@ class HomeController < ApplicationController
 
   def home
     # home.html.erb
-    @photos = PhotoSearch.category_created_at(1, 1, 30)
 
-    @photos
-
-
+    case params["show"]
+      when "fashion"
+        @photos = PhotoSearch.category_created_at(1, 1, 24)
+        @active = "fashion"
+      when "places"
+        @photos = PhotoSearch.category_created_at(2, 1, 24)
+        @active = "places"
+      when "design"
+        @photos = PhotoSearch.category_created_at(3, 1, 24)
+        @active = "design"
+      when "best"
+        @photos = PhotoSearch.best(1, 24)
+        @active = "best"
+      else
+        @photos = PhotoSearch.all(1,24)
+        @active = "all"
+    end
   end
 
   def facebook
-    # facebookq.html.erb
+    # facebook.html.erb
+  end
+
+  def about
+    # about.html.erb
+  end
+
+  def about
+    # terms.html.erb
   end
 
 end

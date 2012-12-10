@@ -293,8 +293,9 @@
 .photoContainer{
   display:inline-block;
   position:relative;
-  margin-right:35px;
-
+  margin-right:45px;
+  margin-bottom: 60px;
+  width: 200px;
 }
 a{
   text-decoration:none!important;
@@ -324,4 +325,8 @@ a{
 .dot{
   position:relative;
   top:-3px;
+}
+
+.photoThumb img{
+  width: 200px;
 }

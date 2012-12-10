@@ -15,4 +15,28 @@ class PhotoSearch
 
     return photos
   end
+
+  def self.all(page, limit)
+    search = Sunspot.search (Photo) do
+      if !page.blank?
+        paginate(:page => page, :per_page => limit)
+        order_by :created_at, :desc
+      end
+    end
+    photos = search.results
+
+    return photos
+  end
+
+  def self.best(page, limit)
+    search = Sunspot.search (Photo) do
+      if !page.blank?
+        paginate(:page => page, :per_page => limit)
+        order_by :plusminus, :desc
+      end
+    end
+    photos = search.results
+
+    return photos
+  end
 end

@@ -1,8 +1,11 @@
 TodosSt2::Application.routes.draw do
 
   get "home/launchrock"
-  get "home/home"
   get "home/facebook"
+
+  match 'home' => "home#home", :as => :home
+  match 'about' => 'home#about', :as => :about
+  match 'terms' => 'home#terms', :as => :terms
 
   root :to => "home#launchrock"
   #root :to => "home#home"  # production home page
