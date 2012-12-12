@@ -47,7 +47,7 @@ module Api
             elsif activity.key == "photo.create"
               @photo = Photo.find(activity.trackable_id)
               @history.title = "Posted a photo."
-              @history.description = @photo.description
+              @history.description = @photo.title
               @history.photo_id = @photo.id
               @history.comment_id = ""
               @history.thumb_url = @photo.thumb_size_url
@@ -56,7 +56,7 @@ module Api
               @vote = Vote.find(activity.trackable_id)
               @photo = Photo.find(@vote.voteable_id)
               @history.title = "Liked "+@photo.author_name+"'s photo."
-              @history.description = @photo.description
+              @history.description = @photo.title
               @history.photo_id = @photo.id
               @history.comment_id = ""
               @history.thumb_url = @photo.thumb_size_url
