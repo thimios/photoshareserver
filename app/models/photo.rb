@@ -75,7 +75,7 @@ class Photo < ActiveRecord::Base
   tracked :owner => proc { |controller, model| controller.current_user }
 
   validates :category_id, :presence => true
-  validates :title, :presence => true
+  #validates :title, :presence => true
   validates :user_id, :presence => true
   #validate :address_or_coordinates
   validates :image, :attachment_presence => true
