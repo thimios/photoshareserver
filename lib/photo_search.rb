@@ -40,7 +40,7 @@ class PhotoSearch
     return photos
   end
 
-  def self.reported(page, limit)
-
+  def self.reported
+    Photo.joins(:photo_reports).uniq.order("photo_reports.created_at DESC")
   end
 end

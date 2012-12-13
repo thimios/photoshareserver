@@ -7,33 +7,9 @@ class PhotosController < ApplicationController
 
   # GET /photos
   def index
-    @search = Sunspot.search (Photo) do
-      if !params[:search_string].blank?
-        fulltext params[:search_string]
-      end
-      if !params[:category_id].nil?
-        with(:category_id,  params[:category_id])
-      end
-      if !params[:feed].blank?
-        if current_user.following_users_count > 0
-          with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
-        else
-          with(:user_id).equal_to(nil)
-        end
-      end
-      if !params[:page].blank?
-        paginate(:page => params[:page], :per_page => params[:limit])
-        order_by_geodist :coordinates, current_user.latitude, current_user.longitude, :asc
-      end
-      if (params[:sw_y] && params[:sw_x] && params[:ne_y] && params[:ne_x])
-        with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
-      end
-    end
-    @photos = @search.results
-    @googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
-      marker.title   photo.title
-      marker.infowindow photo.address
-    end
+
+    @photos = PhotoSearch.reported.page(params[:page]).per(params[:limit])
+
     # set current_user on all photos before calling voted_by_current_user
     @photos.each { |photo|
       photo.current_user = current_user

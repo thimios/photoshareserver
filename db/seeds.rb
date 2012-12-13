@@ -91,6 +91,9 @@ end
   end
 
   user1.vote_for ( photo)
+
+  report = PhotoReport.create(:photo_id => photo.id, :user_id => user1.id)
+  report.save
 end
 
 30.times do
@@ -102,6 +105,12 @@ end
 
   end
   user2.vote_for( photo)
+  report = PhotoReport.create(:photo_id => photo.id, :user_id => user1.id)
+  report.save
+  report = PhotoReport.create(:photo_id => photo.id, :user_id => user2.id)
+  report.save
 end
+
+
 
 

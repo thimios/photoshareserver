@@ -5,6 +5,9 @@ module Api
       protect_from_forgery
       respond_to :json
 
+      # the api is always available to all logged in users
+      skip_authorization_check
+
       opinio_identifier do |params|
         next Photo.find(params[:photo_id]) if params[:photo_id]
       end

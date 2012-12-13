@@ -2,28 +2,6 @@
 
 
 
-<%= form_tag(photos_path, :method => "get") do %>
-  <%= label_tag(:search_string, "Search for:") %>
-  <%= text_field_tag(:search_string) %>
-  <%= submit_tag("Search") %>
-<% end %>
-
-<%= form_tag(photos_path, :method => "get") do %>
-    <%= hidden_field_tag "category_id", "1" %>
-    <%= submit_tag("fashion category filter and sort") %>
-<% end %>
-
-<%= form_tag(photos_path, :method => "get") do %>
-    <%= hidden_field_tag "feed", "true" %>
-    <%= submit_tag("Photos posted by people i follow") %>
-<% end %>
-
-<br />
-
 <%= render 'index_table' %>
 
-<%= gmaps4rails(@googleMapsJson) %>
-<br />
 
-<%= link_to 'back', photos_path %>
-<%= link_to 'New Photo', new_photo_path %>

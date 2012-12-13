@@ -1,7 +1,7 @@
 class Photo < ActiveRecord::Base
   acts_as_voteable
 
-  has_many :reports, :inverse_of => :photo, :dependent => :destroy
+  has_many :photo_reports, :inverse_of => :photo, :dependent => :destroy
 
   # comments
   opinio_subjectum
