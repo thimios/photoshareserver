@@ -70,6 +70,15 @@ class Photo < ActiveRecord::Base
     end
   end
 
+  def author_followed_by_current_user
+    if self.current_user == user
+      return 'self'
+    else
+      return self.current_user.following?(user)
+    end
+
+  end
+
   # tracked for user's activity feeds
   include PublicActivity::Model
   tracked :owner => proc { |controller, model| controller.current_user }
@@ -91,7 +100,7 @@ class Photo < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date ]))
+    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user ]))
   end
 
   private
