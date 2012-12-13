@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121213160648) do
+ActiveRecord::Schema.define(:version => 20121213193801) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(:version => 20121213160648) do
     t.float    "longitude"
     t.integer  "user_id"
     t.string   "track_location"
+    t.boolean  "banned"
   end
 
   create_table "tasks", :force => true do |t|
