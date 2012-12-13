@@ -1,6 +1,9 @@
 class PhotosController < ApplicationController
   before_filter :my_authenticate_user
   respond_to :html
+  load_and_authorize_resource
+  layout "admin"
+  require_dependency 'photo_search'
 
   # GET /photos
   def index

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SoBerlin</title>
+  <meta property="og:title" content="so Berlin! - How Berlin is your neighbourhood? Inspire, get inspired!" />
+  <meta property="og:type" content="company" />
+  <meta property="og:site_name" content="so Berlin!" />
+  <meta property="og:url" content="http://www.soberlin.org" />
+  <meta property="og:image" content="null" />
+  <meta property="og:description" content="I just signed up on So Berlin (soberlin.org)! - So inspiring and fresh " />
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag 'gmaps4rails' %>
+  <%= csrf_meta_tags %>
+  <%= yield :head %>
+</head>
+<body>
+
+<%= render "devise/menu/login_items" %>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+<%= yield %>
+<%= yield :scripts %>
+
+</body>
+</html>

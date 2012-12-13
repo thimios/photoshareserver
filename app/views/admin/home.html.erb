@@ -1,0 +1,14 @@
+
+    <h1>So Berlin Administration panel</h1>
+
+
+
+    <% if can? :magage, Photo %>
+        <li>
+            <%= link_to('Manage Photos ', photos_path) %>
+        </li>
+    <% end %>
+
+
+
+

@@ -39,4 +39,8 @@ class PhotoSearch
 
     return photos
   end
+
+  def self.reported(page, limit)
+
+  end
 end

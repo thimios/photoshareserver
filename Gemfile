@@ -112,6 +112,9 @@ end
 gem 'jquery-rails'
 gem 'html5-rails'
 
+#authorization
+gem "cancan"
+
 
 
 
