@@ -1,0 +1,16 @@
+
+    <h1>So Berlin</h1>
+
+    <%= render 'devise/menu/login_items' %>
+
+    <p>Soberlin administration</p>
+
+    <% if can? :magage, Photo %>
+        <li>
+            <%= link_to('Manage Photos ', photos_path) %>
+        </li>
+    <% end %>
+
+
+
+

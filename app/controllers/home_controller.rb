@@ -2,6 +2,9 @@ class HomeController < ApplicationController
   layout "frontend",  :except => [:launchrock]
   require_dependency 'photo_search'
 
+  skip_authorization_check
+
+
   def launchrock
     # launchrock.html.erb
   end

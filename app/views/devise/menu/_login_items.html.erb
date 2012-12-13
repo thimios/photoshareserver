@@ -3,12 +3,6 @@
   <li>
     <%= link_to('Logout '+ current_user.username, destroy_user_session_path) %>
   </li>
-  <li>
-    <%= link_to "Edit your account", edit_user_registration_path %>
-  </li>
-  <li>
-    <%= link_to "View your pulic profile", "/users/"+ current_user.id.to_s %>
-  </li>
 
 <% else %>
   <li>

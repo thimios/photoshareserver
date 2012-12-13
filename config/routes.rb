@@ -7,6 +7,10 @@ TodosSt2::Application.routes.draw do
   match 'about' => 'home#about', :as => :about
   match 'terms' => 'home#terms', :as => :terms
 
+  # admin routes
+  match 'admin' => "photos#index", :as => :admin
+
+
   root :to => "home#launchrock"
   #root :to => "home#home"  # production home page
 
