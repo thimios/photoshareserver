@@ -10,10 +10,10 @@ class Photo < ActiveRecord::Base
                     :address => "address", :normalized_address => "address",
                     :msg => "Sorry, not even Google could figure out where that is"
 
-  attr_accessible :category_id, :user_id, :description, :title, :image, :address, :latitude, :longitude, :track_location, :banned
+  attr_accessible :category_id, :user_id, :title, :image, :address, :latitude, :longitude, :track_location, :banned
 
   searchable do
-  	text :description, :as => :description_textp
+  	# text :description, :as => :description_textp
     text :title, :as => :title_textp
     integer :category_id, :references => Category, :multiple => false
     integer :user_id, :references => User, :multiple => false
