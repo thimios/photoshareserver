@@ -3,6 +3,9 @@ module Api
 
     class CategoriesController < ApplicationController
       before_filter :my_authenticate_user
+      # the api is always available to all logged in users
+      skip_authorization_check
+
 
       # GET /categories
       # GET /categories.json

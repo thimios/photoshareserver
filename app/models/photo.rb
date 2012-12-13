@@ -48,6 +48,10 @@ class Photo < ActiveRecord::Base
     user.username
   end
 
+  def reported_count
+    self.photo_reports.count
+  end
+
   def author_avatar_thumb_size_url
     user.thumb_size_url
   end

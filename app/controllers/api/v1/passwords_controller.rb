@@ -3,6 +3,9 @@ module Api
 
     class PasswordsController < Devise::PasswordsController
       prepend_before_filter :require_no_authentication
+      # the api is always available to all logged in users
+      skip_authorization_check
+
       respond_to :json
 
       # POST /resource/password

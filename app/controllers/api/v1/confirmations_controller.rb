@@ -2,6 +2,9 @@ module Api
   module V1
 
     class ConfirmationsController < Devise::ConfirmationsController
+      # the api is always available to all logged in users
+      skip_authorization_check
+
       # GET /resource/confirmation?confirmation_token=abcdef
       def show
         self.resource = resource_class.confirm_by_token(params[:confirmation_token])

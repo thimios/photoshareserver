@@ -3,6 +3,9 @@ module Api
 
     class HistoriesController < ApplicationController
       before_filter :my_authenticate_user
+      # the api is always available to all logged in users
+      skip_authorization_check
+
 
       # GET /histories
       # GET /histories.json

@@ -2,6 +2,9 @@ module Api
   module V1
     class CommentsController < Opinio::CommentsController
       before_filter :my_authenticate_user
+      # the api is always available to all logged in users
+      skip_authorization_check
+
 
       def index
         if  params[:filter]

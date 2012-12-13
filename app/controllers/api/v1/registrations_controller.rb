@@ -2,6 +2,9 @@ module Api
   module V1
 
     class RegistrationsController < Devise::RegistrationsController
+      # the api is always available to all logged in users
+      skip_authorization_check
+
       respond_to :json
       # GET /users
       # GET /users.json

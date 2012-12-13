@@ -3,6 +3,8 @@ module Api
 
     class PhotosController < ApplicationController
       before_filter :my_authenticate_user
+      # the api is always available to all logged in users
+      skip_authorization_check
 
       #http://localhost:3000/photos/indexbbox.json?sw_y=48.488334&sw_x=6.416342&ne_y=57.492658&ne_x=18.428616
       def indexbbox

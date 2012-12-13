@@ -41,6 +41,6 @@ class PhotoSearch
   end
 
   def self.reported
-    Photo.joins(:photo_reports).uniq.order("photo_reports.created_at DESC")
+    Photo.joins(:photo_reports).order("photo_reports.created_at DESC").uniq
   end
 end

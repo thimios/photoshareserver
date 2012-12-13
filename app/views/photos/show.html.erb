@@ -1,13 +1,9 @@
+
+<%= link_to 'Back', photos_path %>
 <p>
   <b>Title:</b>
   <%= @photo.title %>
 </p>
-
-<p>
-  <b>Description:</b>
-  <%= @photo.description %>
-</p>
-
 <p>
   <b>Category:</b>
   <%= @photo.category.title %>
@@ -19,33 +15,13 @@
 </p>
 
 <p>
-  <b>Address:</b>
-  <%= @photo.address %>
-</p>
-
-<p>
   <b>Votes:</b>
   <%= @photo.plusminus %>
 </p>
-
-<p>
-  <b>Voted by current user:</b>
-  <%= @photo.voted_by_current_user %>
-</p>
-
-<%= form_tag(photo_path+"/vote_up", :method => "get") do %>
-    <%= submit_tag("Vote up") %>
-<% end %>
-
-<%= comments_for @photo %>
-
-<%= image_tag @photo.original_size_url %>
-<%= image_tag @photo.full_size_url %>
 <%= image_tag @photo.medium_size_url %>
-<%= image_tag @photo.thumb_size_url %>
 
-<%= gmaps4rails(@googleMapsJson) %>
+<%= render 'photo_reports_table' %>
 
 
-<%= link_to 'Edit', edit_photo_path(@photo) %> |
-<%= link_to 'Back', photos_path %>
+
+
