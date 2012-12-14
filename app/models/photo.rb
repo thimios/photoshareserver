@@ -74,6 +74,15 @@ class Photo < ActiveRecord::Base
     end
   end
 
+  def reported_by_current_user
+    # add whether the current user has voted for it
+    if PhotoReport.where("user_id = ? AND photo_id = ?", self.current_user.id, self.id).first
+      return true
+    else
+      return false
+    end
+  end
+
   def author_followed_by_current_user
     if self.current_user == user
       return 'self'
@@ -104,7 +113,7 @@ class Photo < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user ]))
+    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user ]))
   end
 
   private
