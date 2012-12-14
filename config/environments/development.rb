@@ -61,5 +61,10 @@ TodosSt2::Application.configure do
       }
   }
 
+  Rails.configuration.banned_original_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.devel/system_photos/images/000/000/001/original/bannedphoto.png"
+  Rails.configuration.banned_full_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.devel/system_photos/images/000/000/001/full/bannedphoto.png"
+  Rails.configuration.banned_medium_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.devel/system_photos/images/000/000/001/medium/bannedphoto.png"
+  Rails.configuration.banned_thumb_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.devel/system_photos/images/000/000/001/thumb/bannedphoto.png"
+
   config.watchable_dirs['lib'] = [:rb]
 end
