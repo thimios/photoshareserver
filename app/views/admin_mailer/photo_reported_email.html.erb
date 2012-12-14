@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+<h1>User: <%= @user.username %> reported a photo titled: <%= @photo.title %></h1>
+
+<%= image_tag @photo.image.url(:medium) %>
+
+<p>
+  To login to the So Berlin administration and manage reported photos, just follow this link: <%= link_to "So Berlin Admin panel", @admin_url %>.
+</p>
+<p>Have a great day!</p>
+</body>
+</html>

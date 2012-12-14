@@ -197,6 +197,8 @@ module Api
             photo = Photo.find(params[:id])
             report = PhotoReport.create(:photo_id => photo.id, :user_id => current_user.id)
             if report.save
+              # email all admin users
+              AdminMailer.photo_reported_email(photo, current_user).deliver
               render json: [ {notice: 'Photo was successfully reported.' }  ]
             else
               render json: [ {notice: 'Photo was not reported, an error occured. Please contact the site admin' }  ] , status: :unprocessable_entity
