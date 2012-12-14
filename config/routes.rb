@@ -21,6 +21,8 @@ TodosSt2::Application.routes.draw do
     resource :category
     member do
       get 'vote_up'
+      post 'toggle_ban'
+      post 'refuse_ban'
     end
   end
 

@@ -80,6 +80,28 @@ class PhotosController < ApplicationController
     redirect_to photos_url
   end
 
+  def toggle_ban
+    photo = Photo.find(params[:id])
+    unless photo.banned?
+      photo.banned=true
+      photo.save
+      redirect_to @photo, notice: 'Photo was successfully banned.'
+    else
+      photo.banned=false
+      photo.save
+      redirect_to @photo, notice: 'Photo was successfully unbanned.'
+    end
+  end
+
+  def refuse_ban
+    reports = PhotoReport.where(:photo_id => params[:id])
+    reports.each { |report|
+      report.destroy
+    }
+    redirect_to @photo, notice: 'All reports of this photo have been successfully deleted.'
+  end
+
+
   def vote_up
     begin
       @photo = Photo.find(params[:id])
