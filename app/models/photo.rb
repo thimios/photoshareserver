@@ -29,19 +29,19 @@ class Photo < ActiveRecord::Base
   has_attached_file :image,
                     :styles => { :full => "640x640", :medium => "460x460>", :thumb => "80x80>" }
   def original_size_url
-    image.url
+    self.banned? ? Rails.configuration.banned_original_size_url : self.image.url
   end
 
   def full_size_url
-    image.url(:full)
+    self.banned? ? Rails.configuration.banned_full_size_url : image.url(:full)
   end
 
   def medium_size_url
-    image.url(:medium)
+    self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium)
   end
 
   def thumb_size_url
-    image.url(:thumb)
+    self.banned? ? Rails.configuration.banned_thumb_size_url : image.url(:thumb)
   end
 
   def author_name

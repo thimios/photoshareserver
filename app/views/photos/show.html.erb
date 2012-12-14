@@ -1,5 +1,10 @@
 
 <%= link_to 'Back', photos_path %>
+
+<% if @photo.banned? %>
+
+    <h2>This Photo is banned!</h2>
+<% end %>
 <p>
   <b>Title:</b>
   <%= @photo.title %>
@@ -18,7 +23,7 @@
   <b>Votes:</b>
   <%= @photo.plusminus %>
 </p>
-<%= image_tag @photo.medium_size_url %>
+<%= image_tag @photo.image.url(:medium) %>
 
 <%= render 'photo_reports_table' %>
 
