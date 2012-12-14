@@ -70,7 +70,7 @@ user3.save
 generator = Random.new
 
 30.times do
-  photo = Photo.create(title: Faker::Lorem.sentence(2), description: Faker::Lorem.sentence(3), category_id: 1, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
+  photo = Photo.create(title: Faker::Lorem.sentence(2), category_id: 1, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
   20.times do
    comment = photo.comments.build( body: Faker::Lorem.sentence(3) )
    comment.owner = user1
@@ -83,7 +83,7 @@ generator = Random.new
 end
 
 30.times do
-  photo = Photo.create(title: Faker::Lorem.sentence(2), description: Faker::Lorem.sentence(3), category_id: 2, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
+  photo = Photo.create(title: Faker::Lorem.sentence(2), category_id: 2, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
   20.times do
     comment = photo.comments.build( body: Faker::Lorem.sentence(3) )
     comment.owner = user1
@@ -97,7 +97,7 @@ end
 end
 
 30.times do
-  photo = Photo.create(title: Faker::Lorem.sentence(2), description: Faker::Lorem.sentence(3), category_id: 3, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
+  photo = Photo.create(title: Faker::Lorem.sentence(2), category_id: 3, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
   20.times do
     comment = photo.comments.build( body: Faker::Lorem.sentence(3) )
     comment.owner = user1
