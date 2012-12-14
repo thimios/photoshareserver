@@ -1,4 +1,5 @@
 class ConfirmationsController < Devise::ConfirmationsController
+  skip_authorization_check
   # GET /resource/confirmation?confirmation_token=abcdef
   def show
     self.resource = resource_class.confirm_by_token(params[:confirmation_token])

@@ -1,7 +1,7 @@
 
 class PasswordsController < Devise::PasswordsController
   prepend_before_filter :require_no_authentication
-
+  skip_authorization_check
 
   # PUT /resource/password
   def update
