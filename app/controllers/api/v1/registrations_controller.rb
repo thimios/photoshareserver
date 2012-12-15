@@ -11,7 +11,8 @@ module Api
 
 
 
-      # followers: http://localhost:3000/api/v1/users?followed_by_current_user=true
+      # list users you are following: http://localhost:3000/api/v1/users?followed_by_current_user=true
+      # list users following you: http://localhost:3000/api/v1/users?following_the_current_user=true
       def index
         warden.authenticate!
 
@@ -21,11 +22,16 @@ module Api
           @filter_params[@filter[0].values[0]] = @filter[0].values[1]
           if @filter_params[:followed_by_current_user]
             params[:followed_by_current_user] = @filter_params[:followed_by_current_user]
+          elsif @filter_params[:following_the_current_user]
+            params[:following_the_current_user] = @filter_params[:following_the_current_user]
           end
         end
 
         if params[:followed_by_current_user] == "true"
           @users = User.where(:id => current_user.all_following.map{|following_user| following_user.id}).page(params[:page]).per(params[:limit])
+          @total_count = @users.total_count
+        elsif params[:following_the_current_user] == "true"
+          @users = User.where(:id => current_user.followers.map{|follower_user| follower_user.id}).page(params[:page]).per(params[:limit])
           @total_count = @users.total_count
         elsif params[:search_string].blank?
           @users = User.page(params[:page]).per(params[:limit])
