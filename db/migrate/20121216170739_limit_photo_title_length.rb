@@ -1,9 +1,12 @@
 class LimitPhotoTitleLength < ActiveRecord::Migration
   def up
+    # disable activity logging
+    PublicActivity.enabled= false
+
     Photo.all.each{|photo|
       if photo.title.length > 23
-        photo.title.truncate(23)
-        photo.save
+        photo.title = photo.title.truncate(23)
+        photo.save!
       end
 
     }
