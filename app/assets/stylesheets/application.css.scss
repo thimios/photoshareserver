@@ -42,14 +42,17 @@
 @font-face {
   font-family: 'FuturaBT-Heavy';
   src: url("futura/webfonts/245CB7_3_0.eot");
-  src: url("futura/webfonts/245CB7_3_0.eot?#iefix") format("embedded-opentype"), url("futura/webfonts/245CB7_3_0.woff") format("woff"), url("futura/webfonts/245CB7_3_0.ttf") format("truetype");
+  src: url("futura/webfonts/245CB7_3_0.eot?#iefix") format("embedded-opentype"),
+       url("futura/webfonts/245CB7_3_0.woff") format("woff"),
+       url("futura/webfonts/245CB7_3_0.ttf") format("truetype");
 }
 
 @font-face {
   font-family: 'satisfy';
-  src: font-url('Satisfy/Satisfy-Regular.eot');
-  src: font-url('Satisfy/Satisfy-Regular.eot?#iefix') format('embedded-opentype');
-  src: font-url("Satisfy/Satisfy-Regular.ttf") format("truetype");
+  src: url('satisfy/satisfy-regular.eot');
+  src: url('satisfy/satisfy-regular.eot?#iefix') format('embedded-opentype'),
+       url("satisfy/satisfy-regular.woff") format("woff"),
+       url("satisfy/satisfy-regular.ttf") format("truetype");
 }
 
 
