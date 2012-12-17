@@ -47,7 +47,9 @@
 
 @font-face {
   font-family: 'satisfy';
-  src: asset-url("Satisfy/Satisfy-Regular.ttf", font) format("truetype");
+  src: font-url('Satisfy/Satisfy-Regular.eot');
+  src: font-url('Satisfy/Satisfy-Regular.eot?#iefix') format('embedded-opentype');
+  src: font-url("Satisfy/Satisfy-Regular.ttf") format("truetype");
 }
 
 
