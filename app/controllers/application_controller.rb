@@ -44,4 +44,13 @@ class ApplicationController < ActionController::Base
     #end
   end
 
+  def after_sign_in_path_for(resource)
+    sign_in_url = url_for(:action => 'new', :controller => 'sessions', :only_path => false, :protocol => 'http')
+    if resource.admin?
+      admin_path
+    else
+      root_path
+    end
+  end
+
 end
