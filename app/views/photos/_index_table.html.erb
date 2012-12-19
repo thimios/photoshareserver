@@ -1,5 +1,6 @@
 <table>
   <tr>
+    <th></th>
     <th>id</th>
     <th>Title</th>
     <th>Votes</th>
@@ -13,6 +14,7 @@
 
   <% @photos.each do |photo| %>
       <tr>
+        <td><img src=<%= photo.image.url(:thumb) %> /></td>
         <td><%= photo.id %></td>
         <td><%= photo.title %></td>
         <td><%= photo.plusminus %></td>

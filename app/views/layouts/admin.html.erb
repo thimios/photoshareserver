@@ -16,12 +16,15 @@
 </head>
 <body>
 
+<div id="photosPart">
 <%= render "devise/menu/login_items" %>
 
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 <%= yield %>
 <%= yield :scripts %>
+
+</div>
 
 </body>
 </html>

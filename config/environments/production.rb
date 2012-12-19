@@ -32,8 +32,8 @@ TodosSt2::Application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
-  # ssl everywhere except home page
-  config.middleware.use Rack::SslEnforcer, :strict => true, :except => [/\/$/]
+  # ssl everywhere except home page and /home
+  config.middleware.use Rack::SslEnforcer, :strict => true, :except => [/\/$/, ]
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
@@ -88,6 +88,7 @@ TodosSt2::Application.configure do
   config.paperclip_defaults = {
       :storage => :s3,
       :s3_host_name => "s3-eu-west-1.amazonaws.com",
+      :s3_protocol => "https",
       :s3_credentials => {
           :bucket => "com.wantedpixel.soberlin.production",
           :access_key_id => "AKIAI4KGTEOUVZZZFCLA",

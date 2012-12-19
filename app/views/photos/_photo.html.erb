@@ -2,7 +2,7 @@
   <div class="scotch"></div>
   <div class="overlay"></div>
   <div class="photoThumb">
-    <img src=<%= photo.medium_size_url %> />
+    <img src=<%= photo.image.url(:medium) %> />
   </div>
   <div class="photoTitle">
     <%= truncate(photo.title, :length => 27, :separator => ' ') %>
