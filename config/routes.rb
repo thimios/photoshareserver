@@ -30,13 +30,12 @@ TodosSt2::Application.routes.draw do
     resources :photos
   end
 
-  devise_for :users, :controllers => {:sessions => 'sessions', :registrations => "registrations", :confirmations => "confirmations", :passwords => "passwords"}, :path_names => { :sign_in => 'login', :sign_out => 'logout'} do
+  devise_for :users, :controllers => {:sessions => 'sessions', :registrations => "registrations", :confirmations => "confirmations", :passwords => "passwords"}, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
+
+  devise_scope :user do
     match 'login' => 'sessions#create', :via => [:post]
     match 'login' => 'sessions#new', :via => [:get]
     get 'logout' => 'sessions#destroy', :as => :destroy_user_session
-  end
-
-  devise_scope :user do
     match 'users/messages' => 'registrations#messages'
     match 'users/:id' => 'registrations#show'
     match 'users/:id/follow' => 'registrations#follow'
@@ -65,13 +64,12 @@ TodosSt2::Application.routes.draw do
         resources :photos
       end
 
-      devise_for :users, :controllers => {:sessions => 'Api::V1::sessions', :registrations => "Api::V1::registrations", :confirmations => "Api::V1::confirmations"}, :path_names => { :sign_in => 'login', :sign_out => 'logout'} do
+      devise_for :users, :controllers => {:sessions => 'Api::V1::sessions', :registrations => "Api::V1::registrations", :confirmations => "Api::V1::confirmations"}, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
+
+      devise_scope :user do
         match 'login' => 'sessions#create', :via => [:post]
         match 'login' => 'sessions#new', :via => [:get]
         get 'logout' => 'sessions#destroy', :as => :destroy_user_session
-      end
-
-      devise_scope :user do
         match 'users/:id' => 'registrations#show'
         match 'users/:id/follow' => 'registrations#follow'
         match 'users/:id/unfollow' => 'registrations#unfollow'
