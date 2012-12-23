@@ -117,6 +117,23 @@ class Photo < ActiveRecord::Base
     super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user ]))
   end
 
+  #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
+  #
+  #c1 and c2 are negative constants.
+  #Distance is the distance between the current location and the picture
+  #time the time between the current time and the time the picture was taken.
+  #Clicks is the amount of "so berlin" votes the photo has received
+  #
+  #The constants are:
+  #c1 = -7e-4
+  #c2 = -1.15e-09
+  #Assuming distance in km for c1 and milliseconds for c2.
+
+  def sorting_rate(latitude, longitude)
+
+    (self.plusminus + 1) * exp(-7 * exp(-4) * distance) * exp(-1.15 * exp(-9) * time)
+  end
+
   private
 
     def geocode?
