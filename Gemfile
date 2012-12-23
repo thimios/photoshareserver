@@ -84,6 +84,10 @@ gem 'unicorn'                 # Use unicorn as the app server
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
+group :testing do
+  gem 'test-unit'
+end
+
 
 group :development do
   gem 'capistrano'

@@ -193,6 +193,7 @@ GEM
       nokogiri
       sunspot (= 2.0.0.pre.120925)
     sunspot_solr (2.0.0.pre.120925)
+    test-unit (2.5.3)
     therubyracer (0.11.0)
       ref
     thin (1.5.0)
@@ -255,6 +256,7 @@ DEPENDENCIES
   sass-rails
   sunspot_rails (~> 2.0.0.pre)
   sunspot_solr (~> 2.0.0.pre)
+  test-unit
   therubyracer
   thin
   thumbs_up

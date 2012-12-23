@@ -1,16 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
+fashion:
   id: 1
   title: fashion
   description: fashion category description
 
-two:
+place:
   id: 2
   title: place
   description: place category description
 
-three:
+design:
   id: 3
   title: design
   description: design cat descr
