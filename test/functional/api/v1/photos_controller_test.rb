@@ -1,10 +1,14 @@
 require 'test_helper'
+
 include Devise::TestHelpers
+
 
 module Api
   module V1
 
     class PhotosControllerTest < ActionController::TestCase
+      include TestSunspot
+
       setup do
         sign_in User.first
         @photo_one = photos(:one)
@@ -22,8 +26,8 @@ module Api
           order_by(:score, :asc)
         end
 
-        post = results.hits.first.result
-        distance = results.hits.first.score
+        photos = results.hits.map{ |hit| hit.result }
+        distances = results.hits.map{ |hit| hit.score }
 
         geocoder_distance = Geocoder::Calculations::distance_between(photos(:one), photos(:two), :units => :km)
 
