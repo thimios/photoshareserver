@@ -32,7 +32,23 @@
 @include h5bp-helpers;
 @include h5bp-media;
 
+
+
 /*my styles*/
+
+@font-face {
+  font-family: 'satisfy';
+  src: url('Satisfy-IE8/satisfy-regular-webfont.eot');
+  src: url('Satisfy-IE8/satisfy-regular-webfont.eot?#iefix') format('embedded-opentype'),
+        url('Satisfy-IE8/satisfy-regular-webfont.woff') format('woff'),
+        url('Satisfy-IE8/satisfy-regular-webfont.ttf') format('truetype'),
+        url('Satisfy-IE8/satisfy-regular-webfont.svg#satisfy') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+
 @font-face {
   font-family: 'FuturaBT-Book';
   src: url("futura/webfonts/245CB7_0_0.eot");
@@ -46,15 +62,6 @@
        url("futura/webfonts/245CB7_3_0.woff") format("woff"),
        url("futura/webfonts/245CB7_3_0.ttf") format("truetype");
 }
-
-@font-face {
-  font-family: 'satisfy';
-  src: url('satisfy/satisfy-regular.eot');
-  src: url('satisfy/satisfy-regular.eot?#iefix') format('embedded-opentype'),
-       url("satisfy/satisfy-regular.woff") format("woff"),
-       url("satisfy/satisfy-regular.ttf") format("truetype");
-}
-
 
 #storeLinkText{
   font-family: FuturaBT-Book;
