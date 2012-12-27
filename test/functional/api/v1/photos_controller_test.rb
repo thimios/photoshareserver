@@ -17,10 +17,19 @@ module Api
       test "test photo sorting algorithm, random distances" do
         # /api/v1/photos.json?_dc=1356628364027&auth_token=Hy4JzyV8XVxpDtt7rStj&user_latitude=37.0435203&user_longitude=22.110219000000004&page=1&start=0&limit=10&filter=%5B%7B%22property%22%3A%22category_id%22%2C%22value%22%3A%221%22%7D%5D
 
+        photo_count = 300
+
         generator = Random.new
         imagefile = File.open(File.join(Rails.root, 'app', 'assets', 'images', 'seed.jpg'))
-        3.times do
+        photo_count.times do
           photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
+          photo.created_at = rand(1..20000).hours.ago
+          photo.save
+
+          users = User.order('RAND()').limit(rand(0..10))
+          users.each {|user|
+            user.vote_for (photo)
+          }
         end
 
         Photo.reindex
@@ -28,13 +37,13 @@ module Api
 
         first_photo = Photo.first
 
-        get :index , {'category_id' => 1, 'page' => 1, 'start' => 0, 'limit' => 50, 'user_latitude' => first_photo.latitude, 'user_longitude' => first_photo.longitude }
+        get :index , {'category_id' => 1, 'page' => 1, 'start' => 0, 'limit' => photo_count, 'user_latitude' => first_photo.latitude, 'user_longitude' => first_photo.longitude }
         assert_response :success
 
         photos = assigns(:photos)
 
         csv = CSV.generate(:force_quotes => true) do |line|
-          line <<["id", "title", "latitude", "longitude", "plusminus", "created_at", "sorting_rate"]
+          line <<["id", "title", "latitude", "longitude", "distance", "time", "votes", "created_at", "sorting_rate"]
 
           previous_photo_rate = photos.first.sorting_rate first_photo.latitude, first_photo.longitude
           photos.each { |photo|
