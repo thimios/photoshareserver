@@ -7,7 +7,7 @@
 one:
   id: 1
   username: userone
-  email: thimios@wantedpixel.com
+  email: userone@wantedpixel.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   gender: male
   birth_date: <%= 20.years.ago %>
@@ -16,7 +16,79 @@ one:
 two:
   id: 2
   username: usertwo
-  email: info@wantedpixel.com
+  email: usertwo@wantedpixel.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  gender: male
+  birth_date: <%= 20.years.ago %>
+  confirmed_at: <%= Time.now %>
+
+three:
+  id: 3
+  username: userthree
+  email: userthree@wantedpixel.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  gender: male
+  birth_date: <%= 20.years.ago %>
+  confirmed_at: <%= Time.now %>
+
+four:
+  id: 4
+  username: userfour
+  email: userfour@wantedpixel.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  gender: male
+  birth_date: <%= 20.years.ago %>
+  confirmed_at: <%= Time.now %>
+
+five:
+  id: 5
+  username: userfive
+  email: userfive@wantedpixel.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  gender: male
+  birth_date: <%= 20.years.ago %>
+  confirmed_at: <%= Time.now %>
+
+six:
+  id: 6
+  username: usersix
+  email: usersix@wantedpixel.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  gender: male
+  birth_date: <%= 20.years.ago %>
+  confirmed_at: <%= Time.now %>
+
+seven:
+  id: 7
+  username: userseven
+  email: userseven@wantedpixel.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  gender: male
+  birth_date: <%= 20.years.ago %>
+  confirmed_at: <%= Time.now %>
+
+eight:
+  id: 8
+  username: usereight
+  email: usereight@wantedpixel.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  gender: male
+  birth_date: <%= 20.years.ago %>
+  confirmed_at: <%= Time.now %>
+
+nine:
+  id: 9
+  username: usernine
+  email: usernine@wantedpixel.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  gender: male
+  birth_date: <%= 20.years.ago %>
+  confirmed_at: <%= Time.now %>
+
+ten:
+  id: 10
+  username: userten
+  email: userten@wantedpixel.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   gender: male
   birth_date: <%= 20.years.ago %>
