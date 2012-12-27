@@ -35,14 +35,9 @@ TodosSt2::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  config.paperclip_defaults = {
-      :storage => :s3,
-      :s3_permissions => :private,
-      :s3_credentials => {
-          :bucket => "com.wantedpixel.soberlin.test",
-          :access_key_id => "AKIAI4KGTEOUVZZZFCLA",
-          :secret_access_key => "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"
-      }
-  }
+  #config.paperclip_defaults = {
+  #    :storage => :fog, :fog_credentials => {:provider => "Local", :local_root => "#{Rails.root}/public"}, :fog_directory => "", :fog_host => "localhost"
+  #}
+
 
 end

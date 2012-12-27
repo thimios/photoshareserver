@@ -130,8 +130,9 @@ class Photo < ActiveRecord::Base
   #Assuming distance in km for c1 and milliseconds for c2.
 
   def sorting_rate(latitude, longitude)
-
-    (self.plusminus + 1) * exp(-7 * exp(-4) * distance) * exp(-1.15 * exp(-9) * time)
+    distance_in_km = Geocoder::Calculations::distance_between(self, [latitude, longitude], :units => :km)
+    time_in_millis = (Time.zone.now - self.created_at)  * 1000
+    (self.plusminus + 1) * Math.exp(-7 * Math.exp(-4) * distance_in_km) * Math.exp(-1.15 * Math.exp(-9) * time_in_millis)
   end
 
   private
