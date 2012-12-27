@@ -12,7 +12,7 @@ PublicActivity.enabled= false
 
 Category.find_or_create_by_title(title: "fashion", description: "fashion passion")
 Category.find_or_create_by_title(title: "place", description: "places category")
-Category.find_or_create_by_title(title: "design", description: "design")
+Category.find_or_create_by_title(title: "art", description: "art")
 
 imagefile = File.open(File.join(Rails.root, 'app', 'assets', 'images', 'seed.jpg'))
 
