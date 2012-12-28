@@ -17,7 +17,7 @@ module Api
       test "test photo sorting algorithm, random distances" do
         # /api/v1/photos.json?_dc=1356628364027&auth_token=Hy4JzyV8XVxpDtt7rStj&user_latitude=37.0435203&user_longitude=22.110219000000004&page=1&start=0&limit=10&filter=%5B%7B%22property%22%3A%22category_id%22%2C%22value%22%3A%221%22%7D%5D
 
-        photo_count = 300
+        photo_count = 3
 
         generator = Random.new
         imagefile = File.open(File.join(Rails.root, 'app', 'assets', 'images', 'seed.jpg'))

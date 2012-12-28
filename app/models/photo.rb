@@ -129,10 +129,36 @@ class Photo < ActiveRecord::Base
   #Assuming distance in km for c1 and milliseconds for c2.
 
   def sorting_rate(lat, long)
-    distance_in_km = Geocoder::Calculations::distance_between(self, [lat, long], :units => :km)
-    time_in_millis = (Time.zone.now - self.created_at)  * 1000
+    distance_in_km = BigDecimal.new (Geocoder::Calculations::distance_between(self, [lat, long], :units => :km).to_s)
+    time_in_millis = BigDecimal.new ((Time.zone.now - self.created_at).to_s)  * BigDecimal.new(1000)
 
-    return (plusminus + 1) * Math.exp(-7 * Math.exp(-4) * distance_in_km ) * Math.exp(-1.15 * Math.exp(-9) * time_in_millis )
+
+    #"product(
+    #    sum(plusminus_i,1),
+    #    exp(
+    #      product(
+    #        product(
+    #          -7, exp(-4)
+    #        ),
+    #        geodist(
+    #          coordinates_ll,
+    #          #{params[:user_latitude]},
+    #          #{params[:user_longitude]}
+    #        )
+    #      )
+    #    ),
+    #    exp(
+    #      product(
+    #          product(
+    #            -1.15,
+    #            exp(-9)
+    #          ),
+    #          ms(NOW, created_at_dt)
+    #      )
+    #    )
+    # )"
+
+    return BigDecimal.new(plusminus + 1) * Math.exp( BigDecimal.new( -7 ) * Math.exp( BigDecimal.new (-4)) * distance_in_km) * Math.exp( BigDecimal.new ( -1.15.to_s ) * Math.exp( BigDecimal.new (-9)) * time_in_millis)
   end
 
   def to_csv(lat, long)
