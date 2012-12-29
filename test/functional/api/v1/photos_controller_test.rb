@@ -45,8 +45,8 @@ module Api
         end
 
         photo_count_low_rate.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), track_location: "yes")
-          photo.created_at = rand(0..2000).hours.ago
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: generator.rand(1..2), latitude: generator.rand(52.2..56.7), longitude: generator.rand(12.3..17.5), track_location: "yes")
+          photo.created_at = rand(0..20000).hours.ago
           photo.save
 
           users = User.order('RAND()').limit(rand(0..10))
