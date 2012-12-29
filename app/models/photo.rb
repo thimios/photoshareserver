@@ -100,7 +100,11 @@ class Photo < ActiveRecord::Base
   validates :title, :length => { :maximum => 23 }
   validates :user_id, :presence => true
   #validate :address_or_coordinates
-  validates :image, :attachment_presence => true
+  validates :image, :attachment_presence => true, :unless => :skip_attachment_validation
+
+  def skip_attachment_validation
+    return Rails.env == "test"
+  end
 
   geocoded_by :address
   reverse_geocoded_by :latitude, :longitude
@@ -129,9 +133,10 @@ class Photo < ActiveRecord::Base
   #Assuming distance in km for c1 and milliseconds for c2.
 
   def sorting_rate(lat, long)
-    distance_in_km = BigDecimal.new (Geocoder::Calculations::distance_between(self, [lat, long], :units => :km).to_s)
-    time_in_millis = BigDecimal.new ((Time.zone.now - self.created_at).to_s)  * BigDecimal.new(1000)
-
+    distance_in_km = Geocoder::Calculations::distance_between(self, [lat, long], :units => :km)
+    time_in_millis = (Time.zone.now - self.created_at) * 1000
+    time_in_minutes = time_in_millis / 1000 / 60
+    Math.exp( -0.00014192127 * 1000 * 60 * time_in_minutes)
 
     #"product(
     #    sum(plusminus_i,1),
@@ -158,7 +163,7 @@ class Photo < ActiveRecord::Base
     #    )
     # )"
 
-    return BigDecimal.new(plusminus + 1) * Math.exp( BigDecimal.new( -7 ) * Math.exp( BigDecimal.new (-4)) * distance_in_km) * Math.exp( BigDecimal.new ( -1.15.to_s ) * Math.exp( BigDecimal.new (-9)) * time_in_millis)
+    return (plusminus + 1) * Math.exp( -7e-4 * distance_in_km) * Math.exp( -1.15e-09 *  time_in_millis)
   end
 
   def to_csv(lat, long)

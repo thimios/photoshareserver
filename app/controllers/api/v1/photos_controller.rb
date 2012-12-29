@@ -73,13 +73,8 @@ module Api
               #c1 = -7e-4
               #c2 = -1.15e-09
               #Assuming distance in km for c1 and milliseconds for c2.
-              solr_params[:sort] = "product(
-                                      sum(plusminus_i,1),
-                                      exp(
-                                        product(
-                                          product(
-                                            -7, exp(-4)
-                                          ),
+              solr_params[:sort] = "product( sum(plusminus_i,1), exp( product(
+                                         -7e-4,
                                           geodist(
                                             coordinates_ll,
                                             #{params[:user_latitude]},
@@ -89,10 +84,7 @@ module Api
                                       ),
                                       exp(
                                         product(
-                                            product(
-                                              -1.15,
-                                              exp(-9)
-                                            ),
+                                            -1.15e-09,
                                             ms(NOW, created_at_dt)
                                         )
                                       )
