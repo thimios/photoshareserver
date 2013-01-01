@@ -175,6 +175,7 @@ module Api
         begin
           photo = Photo.find(params[:id])
           current_user.vote_for(photo)
+          Sunspot.index! photo
           render json: [ {notice: 'Photo was successfully voted.' }  ]
         rescue ActiveRecord::RecordInvalid
           render json: [ {notice: 'Photo was not voted.' }  ] , status: :unprocessable_entity
