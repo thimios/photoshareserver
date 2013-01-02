@@ -7,6 +7,7 @@
     <th>Category</th>
     <th>Posted by</th>
     <th>Times reported</th>
+    <th>Banned</th>
     <th></th>
     <th></th>
     <th></th>
@@ -21,6 +22,7 @@
         <td><%= photo.category.title %></td>
         <td><%= photo.user.username %></td>
         <td><%= photo.reported_count %></td>
+        <td><%= photo.banned? ? 'yes' : 'no' %></td>
         <td><%= link_to 'Show', photo %></td>
       </tr>
   <% end %>
