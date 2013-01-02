@@ -1,5 +1,7 @@
 TodosSt2::Application.routes.draw do
 
+  resources :quotes
+
   get "home/launchrock"
   get "home/facebook"
 
@@ -49,6 +51,9 @@ TodosSt2::Application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
       opinio_model :controller => 'comments'
+
+      #resources :quotes
+      match 'quote(.:format)' => 'quotes#show'
 
       match 'photos/indexbbox(.:format)' => 'photos#indexbbox'
       resources :photos do

@@ -88,7 +88,6 @@ class Photo < ActiveRecord::Base
     else
       return self.current_user.following?(user)
     end
-
   end
 
   # tracked for user's activity feeds
