@@ -5,6 +5,7 @@ class PhotoSearch
     search = Sunspot.search (Photo) do
       if !category_id.nil?
         with(:category_id, category_id)
+        with(:banned, false)
       end
       if !page.blank?
         paginate(:page => page, :per_page => limit)
@@ -39,6 +40,7 @@ class PhotoSearch
 
   def self.all(page, limit)
     search = Sunspot.search (Photo) do
+      with(:banned, false)
       if !page.blank?
         paginate(:page => page, :per_page => limit)
         order_by :created_at, :desc
@@ -51,6 +53,7 @@ class PhotoSearch
 
   def self.best(page, limit)
     search = Sunspot.search (Photo) do
+      with(:banned, false)
       if !page.blank?
         paginate(:page => page, :per_page => limit)
         order_by :plusminus, :desc

@@ -21,6 +21,7 @@ class Photo < ActiveRecord::Base
       Sunspot::Util::Coordinates.new(latitude, longitude)
     end
     integer :plusminus
+    boolean :banned
     time :created_at, :trie => true
   end
 

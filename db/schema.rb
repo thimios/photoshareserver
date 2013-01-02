@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130102150739) do
+ActiveRecord::Schema.define(:version => 20130102203801) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -68,8 +68,8 @@ ActiveRecord::Schema.define(:version => 20130102150739) do
   create_table "photos", :force => true do |t|
     t.string   "title"
     t.integer  "category_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(:version => 20130102150739) do
     t.float    "longitude"
     t.integer  "user_id"
     t.string   "track_location"
-    t.boolean  "banned"
+    t.boolean  "banned",             :default => false
   end
 
   create_table "quotes", :force => true do |t|
