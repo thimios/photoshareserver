@@ -27,10 +27,11 @@ module Api
       def create
         warden.custom_failure!
         user = warden.authenticate(:scope => :user)
+        first_login = current_user.last_sign_in_at > 3.seconds.ago ? true : false
 
         if !user.nil?
           user.reset_authentication_token!
-          render :json => {:auth_token => user.authentication_token, :token_type => "persistant", :user_id => user.id}, :callback => params[:callback]
+          render :json => {:auth_token => user.authentication_token, :first_login => first_login, :token_type => "persistant", :user_id => user.id}, :callback => params[:callback]
         else
           user = User.find_by_email (params['user']['email'])
           if !user.nil? and !user.confirmed?
