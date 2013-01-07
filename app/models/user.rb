@@ -40,6 +40,17 @@ class User < ActiveRecord::Base
   has_attached_file :avatar,
                     :styles => { :full => "640x640", :medium => "460x460>", :thumb => "80x80>" }
 
+  # if params not nil, will update the location attributes in the database. A solr reindex of that user will be triggered
+  def update_location(lat, long)
+    unless lat.nil? or long.nil?
+      self.update_attribute "latitude", lat
+      self.update_attribute "longitude", long
+      logger.debug "Updated user coordinates"
+    else
+      logger.warn "Cannot update user location, since coordinate params are nil."
+    end
+  end
+
   def full_size_url
     avatar.url
   end

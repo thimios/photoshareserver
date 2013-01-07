@@ -32,6 +32,9 @@ module Api
       # GET /photos.json
       # http://localhost:3000/api/v1/photos?utf8=%E2%9C%93&category_id=1&page=1&user_latitude=52.488909&user_longitude=13.421728
       def index
+        # update current user location, if coordinates not empty
+        current_user.update_location(params[:user_latitude], params[:user_longitude])
+
         if params[:filter]
           @filter_params = HashWithIndifferentAccess.new
           @filter = ActiveSupport::JSON.decode(params[:filter])
