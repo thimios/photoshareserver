@@ -45,6 +45,10 @@ module Api
         assert_equal(loaded_photo.comments_count, 0, "Destoyed photo should have no comments")
         assert_equal(loaded_photo.plusminus, 0, "Destroyed photo should have no votes")
         assert_equal(loaded_photo.photo_reports.count, 0, "Destoyed photo should have no photo report")
+        assert_equal(Comment.all.count, 0, "Destoyed photo should have no comments")
+        assert_equal(Vote.all.count, 0, "Destroyed photo should have no votes")
+        assert_equal(PhotoReport.all.count, 0, "Destoyed photo should have no photo report")
+
 
         activities = PublicActivity::Activity.all
         assert_equal(activities.count, 7, "There should have been 7 activities tracked")
