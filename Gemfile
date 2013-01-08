@@ -65,7 +65,7 @@ gem 'faker'
 gem 'opinio', '0.6'
 
 # activity feeds
-gem 'public_activity', '0.5.0'
+gem 'public_activity'
 
 gem 'bundler'
 
@@ -110,7 +110,7 @@ group :assets do
   gem 'compass-rails'
   gem 'compass-h5bp'
   gem "therubyracer", :require => 'v8'
-  gem 'libv8', '~> 3.11.8'
+  gem 'libv8'
 end
 
 

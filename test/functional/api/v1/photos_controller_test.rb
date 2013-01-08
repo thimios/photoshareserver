@@ -14,6 +14,50 @@ module Api
         sign_in User.first
       end
 
+      test "delete photo and all comments, votes, photo_reports" do
+        generator = Random.new
+        PublicActivity.enabled= true
+        PublicActivity.set_controller(@controller)
+        user2 = User.all.second
+
+        first_photo  = Photo.create(title: "first photo", category_id: 1, user_id: generator.rand(1..2), latitude: 52.2, longitude: 12.3, track_location: "yes")
+        first_photo.save
+
+        comment = first_photo.comments.build( body: Faker::Lorem.sentence(3) )
+        comment.owner = user2
+        comment.save
+
+        user2.vote_for( first_photo)
+
+        report = PhotoReport.create(:photo_id => first_photo.id, :user_id => user2.id)
+        report.save
+
+        # until now there should be one photo, one comment, one vote and one report created
+        loaded_photo = Photo.find(first_photo.id)
+        assert_not_nil(loaded_photo, "Created photo not found in db")
+        assert_equal(loaded_photo.comments_count, 1, "Photo should have exactly one comment")
+        assert_equal(loaded_photo.plusminus, 1, "Photo should have exactly one vote")
+        assert_equal(loaded_photo.photo_reports.count, 1, "Photo should have exactly one report")
+
+        loaded_photo.destroy
+
+        assert_true loaded_photo.destroyed?, "Photo not destroyed"
+        assert_equal(loaded_photo.comments_count, 0, "Destoyed photo should have no comments")
+        assert_equal(loaded_photo.plusminus, 0, "Destroyed photo should have no votes")
+        assert_equal(loaded_photo.photo_reports.count, 0, "Destoyed photo should have no photo report")
+
+        activities = PublicActivity::Activity.all
+        assert_equal(activities.count, 7, "There should have been 7 activities tracked")
+        assert_equal(activities[0].key, "photo.create", "Activity tracking error")
+        assert_equal(activities[1].key, "photo.update", "Activity tracking error")
+        assert_equal(activities[2].key, "comment.create", "Activity tracking error")
+        assert_equal(activities[3].key, "vote.create", "Activity tracking error")
+        assert_equal(activities[4].key, "vote.destroy", "Activity tracking error")
+        assert_equal(activities[5].key, "comment.destroy", "Activity tracking error")
+        assert_equal(activities[6].key, "photo.destroy", "Activity tracking error")
+
+      end
+
       test "test photo sorting algorithm, random distances" do
         # /api/v1/photos.json?_dc=1356628364027&auth_token=Hy4JzyV8XVxpDtt7rStj&user_latitude=37.0435203&user_longitude=22.110219000000004&page=1&start=0&limit=10&filter=%5B%7B%22property%22%3A%22category_id%22%2C%22value%22%3A%221%22%7D%5D
 
@@ -22,7 +66,6 @@ module Api
         photo_count = photo_count_low_rate + photo_count_high_rate
 
         generator = Random.new
-        imagefile = File.open(File.join(Rails.root, 'app', 'assets', 'images', 'seed.jpg'))
 
         #creating first photo
         first_photo  = Photo.create(title: "first photo", category_id: 1, user_id: generator.rand(1..2), latitude: 52.2, longitude: 12.3, track_location: "yes")

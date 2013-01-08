@@ -170,8 +170,8 @@ module Api
       # DELETE /photos/1.json
       def destroy
         photo = Photo.find(params[:id])
-        logger.debug "no photos can be deleted"
-        head :no_content
+        photo.destroy
+        render json: [ {notice: 'Photo was successfully deleted.' }  ]
       end
 
       def vote_up

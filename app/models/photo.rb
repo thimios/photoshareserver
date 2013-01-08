@@ -10,7 +10,7 @@ class Photo < ActiveRecord::Base
                     :address => "address", :normalized_address => "address",
                     :msg => "Sorry, not even Google could figure out where that is"
 
-  attr_accessible :category_id, :user_id, :title, :image, :address, :latitude, :longitude, :track_location, :banned
+  attr_accessible :category_id, :user_id, :title, :image, :address, :latitude, :longitude, :track_location, :banned, :photo_reports
 
   searchable do
   	# text :description, :as => :description_textp
@@ -93,7 +93,9 @@ class Photo < ActiveRecord::Base
 
   # tracked for user's activity feeds
   include PublicActivity::Model
-  tracked :owner => proc { |controller, model| controller.current_user }
+  tracked :owner => proc { |controller, model|
+    controller.current_user
+  }
 
   validates :category_id, :presence => true
   validates :title, :presence => true

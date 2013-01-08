@@ -21,7 +21,7 @@ module Api
         end
 
         unless params[:user_id].nil?
-          @activities = PublicActivity::Activity.where("owner_id = ? AND activities.key IN ('photo.create', 'vote.create', 'comment.create')",params[:user_id]).order("created_at DESC").page(params[:page]).per(params[:limit])
+          @activities = PublicActivity::Activity.where("owner_id = ? AND activities.key IN ('photo.create', 'photo.destroy', 'vote.create', 'comment.create')",params[:user_id]).order("created_at DESC").page(params[:page]).per(params[:limit])
           @histories = Array.new
           @activities.each do |activity|
 
@@ -50,6 +50,14 @@ module Api
             elsif activity.key == "photo.create"
               @photo = Photo.find(activity.trackable_id)
               @history.title = "Posted a photo."
+              @history.description = @photo.title
+              @history.photo_id = @photo.id
+              @history.comment_id = ""
+              @history.thumb_url = @photo.thumb_size_url
+
+            elsif activity.key == "photo.destroy"
+              @photo = Photo.find(activity.trackable_id)
+              @history.title = "Deleted a photo."
               @history.description = @photo.title
               @history.photo_id = @photo.id
               @history.comment_id = ""
