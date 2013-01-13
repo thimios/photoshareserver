@@ -25,8 +25,8 @@ module Api
 
         assert_equal User.first.following_user_ids[0], User.all.second.id, "Unable to assign following user"
 
-        photo_count_low_rate = 6
-        photo_count_high_rate = 6
+        photo_count_low_rate = 60
+        photo_count_high_rate = 60
         photo_count = photo_count_low_rate + photo_count_high_rate
 
         photo_count_high_rate.times do
@@ -73,7 +73,7 @@ module Api
             previous_user_rate = rate
           }
         end
-
+        FileUtils.mkdir_p File.join(Rails.root, 'test', 'results', 'users')
         File.open(File.join(Rails.root, 'test', 'results', 'users', "#{Time.now.to_s}.csv"), "w"){ |file| file.write csv }
 
       end

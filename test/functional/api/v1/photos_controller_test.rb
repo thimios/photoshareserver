@@ -121,7 +121,7 @@ module Api
             previous_photo_rate = rate
           }
         end
-
+        FileUtils.mkdir_p File.join(Rails.root, 'test', 'results', 'photos')
         File.open(File.join(Rails.root, 'test', 'results', 'photos', "#{Time.now.to_s}.csv"), "w"){ |file| file.write csv }
       end
     end
