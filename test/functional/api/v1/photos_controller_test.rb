@@ -1,6 +1,4 @@
 require 'test_helper'
-
-
 include Devise::TestHelpers
 
 
@@ -124,7 +122,7 @@ module Api
           }
         end
 
-        File.open(File.join(Rails.root, 'test', 'results', "#{Time.now.to_s}.csv"), "w"){ |file| file.write csv }
+        File.open(File.join(Rails.root, 'test', 'results', 'photos', "#{Time.now.to_s}.csv"), "w"){ |file| file.write csv }
       end
     end
   end

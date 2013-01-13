@@ -108,20 +108,41 @@ class User < ActiveRecord::Base
 
   searchable do
     text :username, :as => :username_textp
+    integer :following_user_ids, :multiple => true
+    integer :plusminus
+    integer :id
     latlon :coordinates do
       Sunspot::Util::Coordinates.new(latitude, longitude)
     end
   end
 
-  #def as_json(options={})
-  #  super(
-  #      :methods => [ :thumb_size_url],
-  #      :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ]
-  #  )
-  #end
+  def plusminus
+    Vote.joins('LEFT OUTER JOIN photos ON photos.id = votes.voteable_id').where("votes.vote = true AND photos.user_id = ?", self.id).count
+  end
+
+  def following_user_ids
+    self.following_user.map {|user| user.id}
+  end
+
+  def follower_ids
+    self.followers.map {|follower| follower.id}
+  end
+
+  def sorting_rate(lat, long)
+    distance_in_km = Geocoder::Calculations::distance_between(self, [lat, long], :units => :km)
+
+    return (plusminus + 1) * Math.exp( -7e-4 * distance_in_km)
+  end
 
   def as_json(options={})
     super(options.reverse_merge(:methods => [ :thumb_size_url, :followed_by_current_user, :total_followers, :total_following ]))
+  end
+
+  def to_csv(lat, long)
+    distance_in_km = Geocoder::Calculations::distance_between(self, [lat, long], :units => :km)
+
+    csv = []
+    csv += [self.id, self.username, self.latitude, self.longitude, distance_in_km, self.plusminus.to_s, self.sorting_rate( lat, long).to_s ]
   end
 
   private

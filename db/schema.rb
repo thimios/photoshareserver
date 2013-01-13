@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130103170739) do
+ActiveRecord::Schema.define(:version => 20130111153038) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -54,6 +54,14 @@ ActiveRecord::Schema.define(:version => 20130103170739) do
 
   add_index "follows", ["followable_id", "followable_type"], :name => "fk_followables"
   add_index "follows", ["follower_id", "follower_type"], :name => "fk_follows"
+
+  create_table "named_locations", :force => true do |t|
+    t.string   "reference"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "named_locations", ["reference"], :name => "index_named_locations_on_reference", :unique => true
 
   create_table "photo_reports", :force => true do |t|
     t.integer  "user_id"

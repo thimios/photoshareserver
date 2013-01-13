@@ -1,5 +1,7 @@
 TodosSt2::Application.routes.draw do
 
+  resources :named_locations
+
   resources :quotes
 
   get "home/launchrock"
@@ -75,6 +77,7 @@ TodosSt2::Application.routes.draw do
         match 'login' => 'sessions#create', :via => [:post]
         match 'login' => 'sessions#new', :via => [:get]
         get 'logout' => 'sessions#destroy', :as => :destroy_user_session
+        match 'users/suggested' => 'registrations#suggested_followable_users'
         match 'users/:id' => 'registrations#show'
         match 'users/:id/follow' => 'registrations#follow'
         match 'users/:id/unfollow' => 'registrations#unfollow'

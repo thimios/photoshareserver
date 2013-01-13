@@ -25,8 +25,10 @@ class Photo < ActiveRecord::Base
     time :created_at, :trie => true
   end
 
+
   belongs_to :category, :touch => true, :inverse_of => :photos
   belongs_to :user, :touch => false, :inverse_of => :photos
+  belongs_to :named_location,:touch => true, :inverse_of => :photos
   has_attached_file :image,
                     :styles => { :full => "640x640", :medium => "460x460>", :thumb => "80x80>" }
   def original_size_url

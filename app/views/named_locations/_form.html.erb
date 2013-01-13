@@ -1,0 +1,21 @@
+<%= form_for(@named_location) do |f| %>
+  <% if @named_location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@named_location.errors.count, "error") %> prohibited this named_location from being saved:</h2>
+
+      <ul>
+      <% @named_location.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :reference %><br />
+    <%= f.text_field :reference %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

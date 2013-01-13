@@ -2,14 +2,12 @@ module Api
   module V1
 
     class RegistrationsController < Devise::RegistrationsController
+      require_dependency 'user_search'
+
       # the api is always available to all logged in users
       skip_authorization_check
 
       respond_to :json
-      # GET /users
-      # GET /users.json
-
-
 
       # list users you are following: http://localhost:3000/api/v1/users?followed_by_current_user=true
       # list users following you: http://localhost:3000/api/v1/users?following_the_current_user=true
@@ -55,14 +53,18 @@ module Api
           user.current_user = current_user
         }
 
-        respond_to do |format|
-          format.html # index.html.erb
-          format.json {
-            @records_as_json = @users.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ] )
-            render :json =>  { :records => @records_as_json, :total_count => @total_count }
-          }
-        end
+        @records_as_json = @users.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ] )
+        render :json =>  { :records => @records_as_json, :total_count => @total_count }
       end
+
+      def suggested_followable_users
+        @users, @total_count = UserSearch.suggest_followable_users(current_user, params[:page], params[:limit])
+
+        @records_as_json = @users.map{|user| user.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date, :admin, :superadmin ] )  }
+        render :json =>  { :records => @records_as_json, :total_count => @total_count }
+
+      end
+
 
       def create
         imagefile = File.open(Rails.root.join('app/assets', 'images', "Soberlin.png"))
