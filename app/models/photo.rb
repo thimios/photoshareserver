@@ -15,6 +15,7 @@ class Photo < ActiveRecord::Base
   searchable do
   	# text :description, :as => :description_textp
     text :title, :as => :title_textp
+    text :location_reference
     integer :category_id, :references => Category, :multiple => false
     integer :user_id, :references => User, :multiple => false
     latlon :coordinates do
