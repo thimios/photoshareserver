@@ -129,7 +129,7 @@ namespace :db do
     run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake db:setup"
   end
 
-  task :load,:roles => :db do
+  task :load_schema,:roles => :db do
     run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake db:schema.load"
   end
 
