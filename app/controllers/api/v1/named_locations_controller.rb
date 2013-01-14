@@ -1,6 +1,23 @@
-#module Api
-#  module V1
-#    class NamedLocationsController < ApplicationController
+module Api
+  module V1
+    class NamedLocationsController < ApplicationController
+      before_filter :my_authenticate_user
+      # the api is always available to all logged in users
+      skip_authorization_check
+
+      def follow
+        location = NamedLocation.find_or_create_by_reference params[:reference]
+        current_user.follow(location)
+        current_user.reindex
+        render json: [notice: 'You are now following this location.'], status: 200
+      end
+
+      def unfollow
+        location = NamedLocation.find_or_create_by_reference params[:reference]
+        current_user.stop_following(location)
+        current_user.reindex
+        render  json: [ notice => 'You are not following this location any more.'  ], status: 200
+      end
 #
 #      # GET /named_locations/1
 #      # GET /named_locations/1.json
@@ -72,7 +89,7 @@
 #          format.json { head :no_content }
 #        end
 #      end
-#    end
-#  end
-#end
-#
+    end
+  end
+end
+

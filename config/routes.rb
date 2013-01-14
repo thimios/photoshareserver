@@ -1,7 +1,5 @@
 TodosSt2::Application.routes.draw do
 
-  resources :named_locations
-
   resources :quotes
 
   get "home/launchrock"
@@ -85,6 +83,10 @@ TodosSt2::Application.routes.draw do
       end
 
       resources :histories
+
+
+      match 'named_locations/:reference/follow' => 'named_locations#follow'
+      match 'named_locations/:reference/unfollow' => 'named_locations#unfollow'
 
 
     end
