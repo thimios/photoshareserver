@@ -45,6 +45,9 @@ module Api
           if @filter_params[:category_id]
             params[:category_id] = @filter_params[:category_id]
           end
+          if @filter_params[:location_reference]
+            params[:location_reference] = @filter_params[:location_reference]
+          end
         end
 
         @search = Sunspot.search (Photo) do
@@ -53,6 +56,9 @@ module Api
           end
           if !params[:category_id].nil?
             with(:category_id,  params[:category_id])
+          end
+          if !params[:location_reference].nil?
+            with(:location_reference,  params[:location_reference])
           end
           if !params[:feed].blank?
             if current_user.following_users_count > 0
