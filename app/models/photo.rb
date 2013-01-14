@@ -98,6 +98,15 @@ class Photo < ActiveRecord::Base
     end
   end
 
+  def location_followed_by_current_user
+    if self.named_location.nil?
+      return false
+    else
+      self.named_location.current_user = self.current_user
+      self.named_location.followed_by_current_user
+    end
+  end
+
   # tracked for user's activity feeds
   include PublicActivity::Model
   tracked :owner => proc { |controller, model|
@@ -126,7 +135,7 @@ class Photo < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference ]))
+    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference, :location_followed_by_current_user ]))
   end
 
   #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)

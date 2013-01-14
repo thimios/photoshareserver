@@ -58,7 +58,7 @@ module Api
             with(:category_id,  params[:category_id])
           end
           if !params[:location_reference].nil?
-            with(:location_reference,  params[:location_reference])
+            fulltext  params[:location_reference]
           end
           if !params[:feed].blank?
             if current_user.following_users_count > 0
@@ -113,7 +113,19 @@ module Api
         @photos.each { |photo|
           photo.current_user = current_user
         }
-        render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total }
+        if !params[:location_reference].nil?
+          location_followed_by_current_user = false
+          location = NamedLocation.find_by_reference params[:location_reference]
+          unless location.nil?
+            location.current_user = current_user
+            location_followed_by_current_user = location.followed_by_current_user
+          end
+
+          render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total, :location_followed_by_current_user => location_followed_by_current_user}
+
+        else
+          render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total }
+        end
       end
 
       # GET /photos/1
