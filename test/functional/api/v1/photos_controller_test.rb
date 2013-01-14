@@ -15,16 +15,13 @@ module Api
 
       test "should create photo without named location reference" do
         assert_empty Photo.find_all_by_title "photo without location", "Photo should not be there"
-        post :create, :photo => { :title => "photo without location", :category_id => 1, :user_id => @generator.rand(1..2), :latitude => 52.2, :longitude => 12.3, :track_location => "yes" }
-
-
+        post :create, { :title => "photo without location", :category_id => 1, :user_id => @generator.rand(1..2), :latitude => 52.2, :longitude => 12.3, :track_location => "yes" }
       end
 
       test "should create photo and named location" do
-
         location_reference_string = "CmRYAAAAciqGsTRX1mXRvuXSH2ErwW-jCINE1aLiwP64MCWDN5vkXvXoQGPKldMfmdGyqWSpm7BEYCgDm-iv7Kc2PF7QA7brMAwBbAcqMr5i1f4PwTpaovIZjysCEZTry8Ez30wpEhCNCXpynextCld2EBsDkRKsGhSLayuRyFsex6JA6NPh9dyupoTH3g"
         assert_empty Photo.find_all_by_title "photo with location", "Photo should not be there"
-        post :create, :photo => { :title => "photo with location", :category_id => 1, :user_id => @generator.rand(1..2), :latitude => 52.2, :longitude => 12.3, :track_location => "yes", :location_reference => location_reference_string }
+        post :create, { :title => "photo with location", :category_id => 1, :user_id => @generator.rand(1..2), :latitude => 52.2, :longitude => 12.3, :track_location => "yes", :location_reference => location_reference_string }
         assert_not_empty Photo.find_all_by_title "photo with location", "Photo should be created"
         assert_not_empty NamedLocation.find_all_by_reference location_reference_string, "Named location should be created"
         photos = Photo.find_all_by_title "photo with location"
