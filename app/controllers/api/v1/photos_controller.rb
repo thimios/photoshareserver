@@ -138,7 +138,7 @@ module Api
       # POST /photos.json
       def create
 
-        unless params[:photo][:location_reference].blank?
+        unless params[:photo][:location_reference].nil? or params[:photo][:location_reference].blank?
           named_location = NamedLocation.find_or_create_by_reference params[:photo][:location_reference]
           params[:photo][:named_location_id] = named_location.id
         end
