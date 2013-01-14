@@ -10,15 +10,34 @@ module Api
 
       setup do
         sign_in User.first
+        @generator = Random.new
+      end
+
+      test "should create photo without named location reference" do
+        assert_empty Photo.find_all_by_title "photo without location", "Photo should not be there"
+        post :create, :photo => { :title => "photo without location", :category_id => 1, :user_id => @generator.rand(1..2), :latitude => 52.2, :longitude => 12.3, :track_location => "yes" }
+
+
+      end
+
+      test "should create photo and named location" do
+
+        location_reference_string = "CmRYAAAAciqGsTRX1mXRvuXSH2ErwW-jCINE1aLiwP64MCWDN5vkXvXoQGPKldMfmdGyqWSpm7BEYCgDm-iv7Kc2PF7QA7brMAwBbAcqMr5i1f4PwTpaovIZjysCEZTry8Ez30wpEhCNCXpynextCld2EBsDkRKsGhSLayuRyFsex6JA6NPh9dyupoTH3g"
+        assert_empty Photo.find_all_by_title "photo with location", "Photo should not be there"
+        post :create, :photo => { :title => "photo with location", :category_id => 1, :user_id => @generator.rand(1..2), :latitude => 52.2, :longitude => 12.3, :track_location => "yes", :location_reference => location_reference_string }
+        assert_not_empty Photo.find_all_by_title "photo with location", "Photo should be created"
+        assert_not_empty NamedLocation.find_all_by_reference location_reference_string, "Named location should be created"
+        photos = Photo.find_all_by_title "photo with location"
+
+        assert_equal(photos.first.location_reference, location_reference_string)
       end
 
       test "delete photo and all comments, votes, photo_reports" do
-        generator = Random.new
         PublicActivity.enabled= true
         PublicActivity.set_controller(@controller)
         user2 = User.all.second
 
-        first_photo  = Photo.create(title: "first photo", category_id: 1, user_id: generator.rand(1..2), latitude: 52.2, longitude: 12.3, track_location: "yes")
+        first_photo  = Photo.create(title: "first photo", category_id: 1, user_id: @generator.rand(1..2), latitude: 52.2, longitude: 12.3, track_location: "yes")
         first_photo.save
 
         comment = first_photo.comments.build( body: Faker::Lorem.sentence(3) )
@@ -67,10 +86,8 @@ module Api
         photo_count_high_rate = 60
         photo_count = photo_count_low_rate + photo_count_high_rate
 
-        generator = Random.new
-
         #creating first photo
-        first_photo  = Photo.create(title: "first photo", category_id: 1, user_id: generator.rand(1..2), latitude: 52.2, longitude: 12.3, track_location: "yes")
+        first_photo  = Photo.create(title: "first photo", category_id: 1, user_id: @generator.rand(1..2), latitude: 52.2, longitude: 12.3, track_location: "yes")
         first_photo.save
         users = User.order('RAND()').limit(10)
         users.each {|user|
@@ -79,7 +96,7 @@ module Api
 
 
         photo_count_high_rate.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: generator.rand(1..2), latitude: generator.rand(52.2..59.7), longitude: generator.rand(12.3..17.5), track_location: "yes")
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: @generator.rand(1..2), latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), track_location: "yes")
           photo.created_at = rand(0.2..0.7).hours.ago
           photo.save
 
@@ -90,7 +107,7 @@ module Api
         end
 
         photo_count_low_rate.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: generator.rand(1..2), latitude: generator.rand(52.2..56.7), longitude: generator.rand(12.3..17.5), track_location: "yes")
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: @generator.rand(1..2), latitude: @generator.rand(52.2..56.7), longitude: @generator.rand(12.3..17.5), track_location: "yes")
           photo.created_at = rand(0..20000).hours.ago
           photo.save
 

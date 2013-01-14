@@ -137,7 +137,12 @@ module Api
       # POST /photos
       # POST /photos.json
       def create
-        params[:photo] = params.reject{|key, value| key.in?(["_method","authenticity_token","commit","auth_token","action","controller","format"])}
+
+        unless params[:photo][:location_reference].blank?
+          named_location = NamedLocation.find_or_create_by_reference params[:photo][:location_reference]
+          params[:photo][:named_location_id] = named_location.id
+        end
+        params[:photo] = params[:photo].reject{|key, value| key.in?(["_method","authenticity_token","commit","auth_token","action","controller","format", "location_reference"])}
         photo = Photo.new(params[:photo])
         unless params[:category_id].nil?
           photo.category_id = params[:category_id]

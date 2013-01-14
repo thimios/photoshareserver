@@ -10,7 +10,7 @@ class Photo < ActiveRecord::Base
                     :address => "address", :normalized_address => "address",
                     :msg => "Sorry, not even Google could figure out where that is"
 
-  attr_accessible :category_id, :user_id, :title, :image, :address, :latitude, :longitude, :track_location, :banned, :photo_reports
+  attr_accessible :category_id, :user_id, :named_location_id, :title, :image, :address, :latitude, :longitude, :track_location, :banned, :photo_reports
 
   searchable do
   	# text :description, :as => :description_textp
@@ -49,6 +49,10 @@ class Photo < ActiveRecord::Base
 
   def author_name
     user.username
+  end
+
+  def location_reference
+    self.named_location.nil? ? nil : self.named_location.reference
   end
 
   def reported_count
@@ -121,7 +125,7 @@ class Photo < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user ]))
+    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference ]))
   end
 
   #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
