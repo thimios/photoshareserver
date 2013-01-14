@@ -113,7 +113,14 @@ module Api
         @photos.each { |photo|
           photo.current_user = current_user
         }
-        render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total }
+        if !params[:location_reference].nil?
+          location = NamedLocation.find_by_reference params[:location_reference]
+          location.current_user = current_user
+          render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total, :location_followed_by_current_user => location.followed_by_current_user}
+
+        else
+          render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total }
+        end
       end
 
       # GET /photos/1
