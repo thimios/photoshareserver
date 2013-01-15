@@ -85,8 +85,8 @@ TodosSt2::Application.routes.draw do
       resources :histories
 
 
-      match 'named_locations/:reference/follow' => 'named_locations#follow'
-      match 'named_locations/:reference/unfollow' => 'named_locations#unfollow'
+      match 'named_locations/:location_google_id/follow' => 'named_locations#follow'
+      match 'named_locations/:location_google_id/unfollow' => 'named_locations#unfollow'
 
 
     end

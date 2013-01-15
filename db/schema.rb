@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130114134237) do
+ActiveRecord::Schema.define(:version => 20130115144236) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -59,8 +59,12 @@ ActiveRecord::Schema.define(:version => 20130114134237) do
     t.string   "reference"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "google_id"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
+  add_index "named_locations", ["google_id"], :name => "index_named_locations_on_google_id", :unique => true
   add_index "named_locations", ["reference"], :name => "index_named_locations_on_reference", :unique => true
 
   create_table "photo_reports", :force => true do |t|

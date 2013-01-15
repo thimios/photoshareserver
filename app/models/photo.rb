@@ -15,7 +15,7 @@ class Photo < ActiveRecord::Base
   searchable do
   	# text :description, :as => :description_textp
     text :title, :as => :title_textp
-    text :location_reference
+    text :location_google_id
     integer :category_id, :references => Category, :multiple => false
     integer :user_id, :references => User, :multiple => false
     latlon :coordinates do
@@ -50,6 +50,10 @@ class Photo < ActiveRecord::Base
 
   def author_name
     user.username
+  end
+
+  def location_google_id
+    self.named_location.nil? ? nil : self.named_location.google_id
   end
 
   def location_reference
@@ -135,7 +139,7 @@ class Photo < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference, :location_followed_by_current_user ]))
+    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference, :location_google_id, :location_followed_by_current_user ]))
   end
 
   #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)

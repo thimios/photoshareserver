@@ -45,8 +45,8 @@ module Api
           if @filter_params[:category_id]
             params[:category_id] = @filter_params[:category_id]
           end
-          if @filter_params[:location_reference]
-            params[:location_reference] = @filter_params[:location_reference]
+          if @filter_params[:location_google_id]
+            params[:location_google_id] = @filter_params[:location_google_id]
           end
         end
 
@@ -57,8 +57,8 @@ module Api
           if !params[:category_id].nil?
             with(:category_id,  params[:category_id])
           end
-          if !params[:location_reference].nil?
-            fulltext  params[:location_reference]
+          if !params[:location_google_id].nil?
+            fulltext  params[:location_google_id]
           end
           if !params[:feed].blank?
             if current_user.following_users_count > 0
@@ -113,16 +113,15 @@ module Api
         @photos.each { |photo|
           photo.current_user = current_user
         }
-        if !params[:location_reference].nil?
+        if !params[:location_google_id].nil?
           location_followed_by_current_user = false
-          location = NamedLocation.find_by_reference params[:location_reference]
+          location = NamedLocation.find_by_google_id params[:location_google_id]
           unless location.nil?
             location.current_user = current_user
             location_followed_by_current_user = location.followed_by_current_user
           end
 
-          render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total, :location_followed_by_current_user => location_followed_by_current_user}
-
+          render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total, :location_followed_by_current_user => location_followed_by_current_user, :location_google_id => location.google_id, :location_reference => location.reference}
         else
           render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total }
         end
@@ -156,8 +155,8 @@ module Api
       # POST /photos.json
       def create
 
-        unless params[:location_reference].nil? or params[:location_reference].blank?
-          named_location = NamedLocation.find_or_create_by_reference params[:location_reference]
+        unless params[:location_google_id].nil? or params[:location_google_id].blank?
+          named_location = NamedLocation.find_or_create_by_google_id params[:location_google_id], :reference => params[:location_reference], :latitude => params[:latitude], :longitude => params[:longitude]
           params[:named_location_id] = named_location.id
         end
 

@@ -6,14 +6,14 @@ module Api
       skip_authorization_check
 
       def follow
-        location = NamedLocation.find_or_create_by_reference params[:reference]
+        location = NamedLocation.find_by_google_id params[:location_google_id]
         current_user.follow(location)
         current_user.reindex
         render json: [notice: 'You are now following this location.'], status: 200
       end
 
       def unfollow
-        location = NamedLocation.find_or_create_by_reference params[:reference]
+        location = NamedLocation.find_by_google_id params[:location_google_id]
         current_user.stop_following(location)
         current_user.reindex
         render  json: [ notice => 'You are not following this location any more.'  ], status: 200
