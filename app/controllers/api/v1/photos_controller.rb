@@ -6,23 +6,71 @@ module Api
       # the api is always available to all logged in users
       skip_authorization_check
 
-      #http://localhost:3000/photos/indexbbox.json?sw_y=48.488334&sw_x=6.416342&ne_y=57.492658&ne_x=18.428616
+      #http://localhost:3000/api/v1/photos/indexbbox.json?sw_y=48.488334&sw_x=6.416342&ne_y=57.492658&ne_x=18.428616&place=true&art=true
       def indexbbox
-        @search = Sunspot.search (Photo) do
-          with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
+        # update current user location, if coordinates not empty
+
+        categories = Array.new
+
+        if params[:fashion] == "true"
+          categories << 1
         end
-        @photos = Photo.find(@search.results.map{|photo| photo.id})
-        #@googleMapsJson = @photos.to_gmaps4rails do |photo, marker|
-        #  marker.title   photo.title
-        #  marker.infowindow photo.address
-        #end
-        # set current_user on all photos before calling voted_by_current_user
-        @photos.each { |photo|
-          photo.current_user = current_user
-        }
+        if params[:place] == "true"
+          categories << 2
+        end
+        if params[:art] == "true"
+          categories << 3
+        end
 
-        render :json => @photos
+        unless categories.empty?
+          search = Sunspot.search (Photo) do
+            #y latitude
+            #x longitude
+            with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
+            with(:category_id,  categories)
+            paginate(:page => 1, :per_page => 10)
 
+            adjust_solr_params do |solr_params|
+
+              #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
+              #
+              #c1 and c2 are negative constants.
+              #Distance is the distance between the current location and the picture
+              #time the time between the current time and the time the picture was taken.
+              #Clicks is the amount of "so berlin" votes the photo has received
+              #
+              #The constants are:
+              #c1 = -7e-4
+              #c2 = -1.15e-09
+              #Assuming distance in km for c1 and milliseconds for c2.
+              solr_params[:sort] = "product( sum(plusminus_i,1), exp( product(
+                                           -7e-4,
+                                            geodist(
+                                              coordinates_ll,
+                                              #{ ( params[:sw_y].to_f + params[:ne_y].to_f ) / 2.0 },
+                                              #{ ( params[:sw_x].to_f + params[:ne_x].to_f ) / 2.0 }
+                                            )
+                                          )
+                                        ),
+                                        exp(
+                                          product(
+                                              -1.15e-09,
+                                              ms(NOW, created_at_dt)
+                                          )
+                                        )
+                                     ) desc".gsub(/\s+/, " ").strip
+            end
+          end
+          photos = search.results
+
+          # set current_user on all photos before calling voted_by_current_user
+          photos.each { |photo|
+            photo.current_user = current_user
+          }
+          render :json => photos
+        else
+          render :json => []
+        end
       end
 
       # GET /photos
@@ -98,10 +146,6 @@ module Api
             end
 
           end
-          if (params[:sw_y] && params[:sw_x] && params[:ne_y] && params[:ne_x])
-            with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
-          end
-
         end
 
         @photos = @search.results
