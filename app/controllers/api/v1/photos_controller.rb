@@ -172,7 +172,6 @@ module Api
         photo.current_user = current_user
 
         if photo.save
-          photo.named_location.reindex
           render json: {:id => photo.id}, :status => :created
         else
           render :json => { :errors =>photo.errors },:status=> :ok #phonegap fileuploader cannot handle data on failure
