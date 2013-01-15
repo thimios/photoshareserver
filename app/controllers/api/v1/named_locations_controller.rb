@@ -2,6 +2,7 @@ module Api
   module V1
     class NamedLocationsController < ApplicationController
       before_filter :my_authenticate_user
+      require_dependency 'location_search'
       # the api is always available to all logged in users
       skip_authorization_check
 
@@ -17,6 +18,14 @@ module Api
         current_user.stop_following(location)
         current_user.reindex
         render  json: [ notice => 'You are not following this location any more.'  ], status: 200
+      end
+
+      def suggested_followable_locations
+        @locations, @total_count = LocationSearch.suggest_followable_locations(current_user, params[:page], params[:limit])
+
+        @records_as_json = @locations.map{|location| location.as_json  }
+        render :json =>  { :records => @records_as_json, :total_count => @total_count }
+
       end
 #
 #      # GET /named_locations/1

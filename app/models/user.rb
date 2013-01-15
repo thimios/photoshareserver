@@ -120,6 +120,10 @@ class User < ActiveRecord::Base
     Vote.joins('LEFT OUTER JOIN photos ON photos.id = votes.voteable_id').where("votes.vote = true AND photos.user_id = ?", self.id).count
   end
 
+  def following_location_ids
+    self.following_named_location.map {|item| item.id}
+  end
+
   def following_user_ids
     self.following_user.map {|user| user.id}
   end
