@@ -9,6 +9,8 @@ TodosSt2::Application.routes.draw do
   match 'about' => 'home#about', :as => :about
   match 'terms' => 'home#terms', :as => :terms
 
+  match 'home/photo/:id' => 'home#photo_details', :as => :photo_details
+
   # admin routes
   match 'admin' => "admin#home", :as => :admin
 

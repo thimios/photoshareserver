@@ -1,0 +1,125 @@
+<div id="detailsContainer">
+  <img width="494px" height="494px" src="<%= @photo.full_size_url %>" />
+  <div id="photoInfo"">
+  <div id="authorAvatar">
+    <img width="74" height="74" src="<%= @photo.author_avatar_thumb_size_url %>">
+  </div>
+  <div id="photoText">
+    <div id="photoTextTop"><%= @photo.title %></div><div id="uploadedDate"> , <%= @photo.created_at_date %></div>
+    <div id="photoTextBottom">
+      <div>by <div id="authorUsername"><%= @photo.user.username %></div><img class="followButton" src="/assets/follow.jpg"/></div>
+
+      <% unless @photo.named_location.nil? %>
+            <div>at <div id="placeName">Paketo</div><img class="followButton" src="/assets/follow.jpg"/></div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div id="commentsCounter"><span>Newest comments</span> (of <%= @photo.comments_count %>)</div>
+<div id="commentsContainer">
+  <div id="leftColumn">
+    <div class="comment">
+      <div class="left">
+        <div class="commenterAvatar">
+          <img width="52" height="52" src="assets/photo.jpg" />
+        </div>
+      </div>
+      <div class="right">
+        <div class="commentText">Awsome!</div>
+        <div class="commentInfo">by Mike machin, 20 May 2012</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="left">
+        <div class="commenterAvatar">
+          <img width="52" height="52" src="assets/photo.jpg" />
+        </div>
+      </div>
+      <div class="right">
+        <div class="commentText">Awsome!</div>
+        <div class="commentInfo">by Mike machin, 20 May 2012</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="left">
+        <div class="commenterAvatar">
+          <img width="52" height="52" src="assets/photo.jpg" />
+        </div>
+      </div>
+      <div class="right">
+        <div class="commentText">Awsome!</div>
+        <div class="commentInfo">by Mike machin, 20 May 2012</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="left">
+        <div class="commenterAvatar">
+          <img width="52" height="52" src="assets/photo.jpg" />
+        </div>
+      </div>
+      <div class="right">
+        <div class="commentText">Awsome!</div>
+        <div class="commentInfo">by Mike machin, 20 May 2012</div>
+      </div>
+    </div>
+  </div>
+  <div id="rightColumn">
+    <div class="comment">
+      <div class="left">
+        <div class="commenterAvatar">
+          <img width="52" height="52" src="assets/photo.jpg" />
+        </div>
+      </div>
+      <div class="right">
+        <div class="commentText">Awsome!</div>
+        <div class="commentInfo">by Mike machin, 20 May 2012</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="left">
+        <div class="commenterAvatar">
+          <img width="52" height="52" src="assets/photo.jpg" />
+        </div>
+      </div>
+      <div class="right">
+        <div class="commentText">Awsome!</div>
+        <div class="commentInfo">by Mike machin, 20 May 2012</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="left">
+        <div class="commenterAvatar">
+          <img width="52" height="52" src="assets/photo.jpg" />
+        </div>
+      </div>
+      <div class="right">
+        <div class="commentText">Awsome!</div>
+        <div class="commentInfo">by Mike machin, 20 May 2012</div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="left">
+        <div class="commenterAvatar">
+          <img width="52" height="52" src="assets/photo.jpg" />
+        </div>
+      </div>
+      <div class="right">
+        <div class="commentText">Awsome!</div>
+        <div class="commentInfo">by Mike machin, 20 May 2012</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="map">
+
+</div>
+<script type="text/javascript">
+    $(document).bind('cbox_complete', function(){
+        initialize(37.983445,23.729731);
+    });
+</script>
+</div>
+
+
+
+

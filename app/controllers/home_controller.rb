@@ -31,6 +31,11 @@ class HomeController < ApplicationController
     end
   end
 
+  def photo_details
+    #photo_details.html.erb
+    @photo = Photo.find(params[:id])
+  end
+
   def facebook
     # facebook.html.erb
   end
@@ -39,7 +44,7 @@ class HomeController < ApplicationController
     # about.html.erb
   end
 
-  def about
+  def terms
     # terms.html.erb
   end
 
