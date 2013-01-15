@@ -20,12 +20,9 @@ module Api
         @photos.each { |photo|
           photo.current_user = current_user
         }
-        respond_to do |format|
-          format.html {@googleMapsJson }# index.html.erb
-          format.json {
-            render :json => @photos
-          }
-        end
+
+        render :json => @photos
+
       end
 
       # GET /photos
@@ -115,13 +112,17 @@ module Api
         }
         if !params[:location_google_id].nil?
           location_followed_by_current_user = false
+          location_google_id = nil
+          location_reference = nil
           location = NamedLocation.find_by_google_id params[:location_google_id]
           unless location.nil?
             location.current_user = current_user
             location_followed_by_current_user = location.followed_by_current_user
+            location_google_id = location.google_id
+            location_reference = location.reference
           end
 
-          render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total, :location_followed_by_current_user => location_followed_by_current_user, :location_google_id => location.google_id, :location_reference => location.reference}
+          render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total, :location_followed_by_current_user => location_followed_by_current_user, :location_google_id => location_google_id, :location_reference => location_reference}
         else
           render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total }
         end
@@ -171,6 +172,7 @@ module Api
         photo.current_user = current_user
 
         if photo.save
+          photo.named_location.reindex
           render json: {:id => photo.id}, :status => :created
         else
           render :json => { :errors =>photo.errors },:status=> :ok #phonegap fileuploader cannot handle data on failure
