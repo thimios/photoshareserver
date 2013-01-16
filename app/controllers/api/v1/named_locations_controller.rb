@@ -9,14 +9,12 @@ module Api
       def follow
         location = NamedLocation.find_by_google_id params[:location_google_id]
         current_user.follow(location)
-        current_user.reindex
         render json: [notice: 'You are now following this location.'], status: 200
       end
 
       def unfollow
         location = NamedLocation.find_by_google_id params[:location_google_id]
         current_user.stop_following(location)
-        current_user.reindex
         render  json: [ notice => 'You are not following this location any more.'  ], status: 200
       end
 
@@ -27,6 +25,29 @@ module Api
         render :json =>  { :records => @records_as_json, :total_count => @total_count }
 
       end
+
+      def index
+        if params[:filter]
+          @filter_params = HashWithIndifferentAccess.new
+          @filter = ActiveSupport::JSON.decode(params[:filter])
+          @filter_params[@filter[0].values[0]] = @filter[0].values[1]
+          if @filter_params[:followed_by_current_user]
+            params[:followed_by_current_user] = @filter_params[:followed_by_current_user]
+          end
+        end
+
+        results = NamedLocation.where(:id => current_user.following_location_ids).page(params[:page]).per(params[:limit])
+        total_count = results.total_count
+
+        # set current_user on all users before calling voted_by_current_user
+        results.each { |result|
+          result.current_user = current_user
+        }
+
+        records_as_json = results.as_json
+        render :json =>  { :records => records_as_json, :total_count => total_count }
+      end
+
 #
 #      # GET /named_locations/1
 #      # GET /named_locations/1.json

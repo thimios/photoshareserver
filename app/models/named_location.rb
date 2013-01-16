@@ -1,7 +1,7 @@
 class NamedLocation < ActiveRecord::Base
   acts_as_followable #users can follow named locations
 
-  attr_accessible :reference, :google_id, :latitude, :longitude
+  attr_accessible :reference, :google_id, :latitude, :longitude, :name, :vicinity
   has_many :photos, :inverse_of => :named_location, :dependent => :nullify
 
   validates_presence_of     :reference
@@ -12,6 +12,8 @@ class NamedLocation < ActiveRecord::Base
   validates_uniqueness_of   :latitude
   validates_presence_of     :longitude
   validates_uniqueness_of   :longitude
+  validates_presence_of     :name
+  validates_presence_of     :vicinity
 
   searchable do
     text :google_id
@@ -39,6 +41,20 @@ class NamedLocation < ActiveRecord::Base
     self.count_user_followers
   end
 
+  def small_size_url
+    search = Sunspot.search (Photo) do
+      with(:named_location_id,  self.id)
+      order_by :plusminus, :desc
+      paginate :page => 1, :per_page => 1
+    end
+
+    unless search.results.empty?
+      return search.results.first.small_size_url
+    else
+      return nil
+    end
+
+  end
 
   def followed_by_current_user
     # add whether the current user is following this user or not
@@ -47,6 +63,10 @@ class NamedLocation < ActiveRecord::Base
     else
       return "false"
     end
+  end
+
+  def as_json(options={})
+    super(options.reverse_merge(:methods => [ :small_size_url ]))
   end
 
 end

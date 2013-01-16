@@ -18,6 +18,7 @@ class Photo < ActiveRecord::Base
     text :location_google_id
     integer :category_id, :references => Category, :multiple => false
     integer :user_id, :references => User, :multiple => false
+    integer :named_location_id, :references => NamedLocation, :multiple => false
     latlon :coordinates do
       Sunspot::Util::Coordinates.new(latitude, longitude)
     end
@@ -44,6 +45,10 @@ class Photo < ActiveRecord::Base
     self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium)
   end
 
+  def small_size_url
+    self.banned? ? Rails.configuration.banned_thumb_size_url : image.url(:thumb)
+  end
+
   def thumb_size_url
     self.banned? ? Rails.configuration.banned_thumb_size_url : image.url(:thumb)
   end
@@ -55,6 +60,16 @@ class Photo < ActiveRecord::Base
   def location_google_id
     self.named_location.nil? ? nil : self.named_location.google_id
   end
+
+  def location_name
+    self.named_location.nil? ? nil : self.named_location.name
+  end
+
+  def location_vicinity
+    self.named_location.nil? ? nil : self.named_location.vicinity
+  end
+
+
 
   def location_reference
     self.named_location.nil? ? nil : self.named_location.reference
@@ -139,7 +154,7 @@ class Photo < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference, :location_google_id, :location_followed_by_current_user ]))
+    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference, :location_google_id, :location_name, :location_vicinity, :location_followed_by_current_user ]))
   end
 
   #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)

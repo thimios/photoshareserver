@@ -201,11 +201,11 @@ module Api
       def create
 
         unless params[:location_google_id].nil? or params[:location_google_id].blank?
-          named_location = NamedLocation.find_or_create_by_google_id params[:location_google_id], :reference => params[:location_reference], :latitude => params[:latitude], :longitude => params[:longitude]
+          named_location = NamedLocation.find_or_create_by_google_id params[:location_google_id], :reference => params[:location_reference], :latitude => params[:latitude], :longitude => params[:longitude], :name => params[:location_name], :vicinity => params[:location_vicinity]
           params[:named_location_id] = named_location.id
         end
 
-        params[:photo] = params.reject{|key, value| key.in?(["_method","authenticity_token","commit","auth_token","action","controller","format", "location_reference"])}
+        params[:photo] = params.reject{|key, value| key.in?(["_method","authenticity_token","commit","auth_token","action","controller","format", "location_reference", "location_vicinity", "location_google_id", "location_name"])}
 
         photo = Photo.new(params[:photo])
         unless params[:category_id].nil?
