@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
   end
   # count users followed by this user
   def total_following
-    self.following_users_count
+    self.following_users_count + self.following_named_locations_count
   end
 
   def followed_by_current_user
