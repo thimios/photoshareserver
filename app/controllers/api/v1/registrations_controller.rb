@@ -26,7 +26,7 @@ module Api
         end
 
         if params[:followed_by_current_user] == "true"
-          @users = User.where(:id => current_user.all_following.map{|following_user| following_user.id}).page(params[:page]).per(params[:limit])
+          @users = User.where(:id => current_user.following_user_ids).page(params[:page]).per(params[:limit])
           @total_count = @users.total_count
         elsif params[:following_the_current_user] == "true"
           @users = User.where(:id => current_user.followers.map{|follower_user| follower_user.id}).page(params[:page]).per(params[:limit])
@@ -44,7 +44,7 @@ module Api
               paginate(:page => params[:page], :per_page => params[:limit])
             end
           end
-          @users = User.find(@search.results.map{|user| user.id})
+          @users = @search.results
           @total_count = @search.total
         end
 
