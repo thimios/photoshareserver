@@ -34,6 +34,9 @@ class HomeController < ApplicationController
   def photo_details
     #photo_details.html.erb
     @photo = Photo.find(params[:id])
+    @commentsleft = @photo.comments.page(1).per(4)
+    @commentsright = @photo.comments.page(2).per(4)
+
   end
 
   def facebook

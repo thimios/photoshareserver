@@ -1,6 +1,6 @@
 <div id="detailsContainer">
   <img width="494px" height="494px" src="<%= @photo.full_size_url %>" />
-  <div id="photoInfo"">
+  <div id="photoInfo">
   <div id="authorAvatar">
     <img width="74" height="74" src="<%= @photo.author_avatar_thumb_size_url %>">
   </div>
@@ -10,7 +10,7 @@
       <div>by <div id="authorUsername"><%= @photo.user.username %></div><img class="followButton" src="/assets/follow.jpg"/></div>
 
       <% unless @photo.named_location.nil? %>
-            <div>at <div id="placeName">Paketo</div><img class="followButton" src="/assets/follow.jpg"/></div>
+            <div>at <div id="placeName"><%=  @photo.named_location.name %></div><img class="followButton" src="/assets/follow.jpg"/></div>
       <% end %>
     </div>
   </div>
@@ -18,96 +18,34 @@
 <div id="commentsCounter"><span>Newest comments</span> (of <%= @photo.comments_count %>)</div>
 <div id="commentsContainer">
   <div id="leftColumn">
+    <% @commentsleft.each { |comment| %>
     <div class="comment">
       <div class="left">
         <div class="commenterAvatar">
-          <img width="52" height="52" src="assets/photo.jpg" />
+          <img width="52" height="52" src="<%= comment.owner.thumb_size_url %>" />
         </div>
       </div>
       <div class="right">
-        <div class="commentText">Awsome!</div>
-        <div class="commentInfo">by Mike machin, 20 May 2012</div>
+        <div class="commentText"><%= comment.body %></div>
+        <div class="commentInfo">by <%= comment.owner.username %>, <%= comment.created_at_date %></div>
       </div>
     </div>
-    <div class="comment">
-      <div class="left">
-        <div class="commenterAvatar">
-          <img width="52" height="52" src="assets/photo.jpg" />
-        </div>
-      </div>
-      <div class="right">
-        <div class="commentText">Awsome!</div>
-        <div class="commentInfo">by Mike machin, 20 May 2012</div>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="left">
-        <div class="commenterAvatar">
-          <img width="52" height="52" src="assets/photo.jpg" />
-        </div>
-      </div>
-      <div class="right">
-        <div class="commentText">Awsome!</div>
-        <div class="commentInfo">by Mike machin, 20 May 2012</div>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="left">
-        <div class="commenterAvatar">
-          <img width="52" height="52" src="assets/photo.jpg" />
-        </div>
-      </div>
-      <div class="right">
-        <div class="commentText">Awsome!</div>
-        <div class="commentInfo">by Mike machin, 20 May 2012</div>
-      </div>
-    </div>
-  </div>
+    <% } %>
+
   <div id="rightColumn">
-    <div class="comment">
-      <div class="left">
-        <div class="commenterAvatar">
-          <img width="52" height="52" src="assets/photo.jpg" />
+    <% @commentsright.each { |comment| %>
+        <div class="comment">
+          <div class="left">
+            <div class="commenterAvatar">
+              <img width="52" height="52" src="<%= comment.owner.thumb_size_url %>" />
+            </div>
+          </div>
+          <div class="right">
+            <div class="commentText"><%= comment.body %></div>
+            <div class="commentInfo">by <%= comment.owner.username %>, <%= comment.created_at_date %></div>
+          </div>
         </div>
-      </div>
-      <div class="right">
-        <div class="commentText">Awsome!</div>
-        <div class="commentInfo">by Mike machin, 20 May 2012</div>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="left">
-        <div class="commenterAvatar">
-          <img width="52" height="52" src="assets/photo.jpg" />
-        </div>
-      </div>
-      <div class="right">
-        <div class="commentText">Awsome!</div>
-        <div class="commentInfo">by Mike machin, 20 May 2012</div>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="left">
-        <div class="commenterAvatar">
-          <img width="52" height="52" src="assets/photo.jpg" />
-        </div>
-      </div>
-      <div class="right">
-        <div class="commentText">Awsome!</div>
-        <div class="commentInfo">by Mike machin, 20 May 2012</div>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="left">
-        <div class="commenterAvatar">
-          <img width="52" height="52" src="assets/photo.jpg" />
-        </div>
-      </div>
-      <div class="right">
-        <div class="commentText">Awsome!</div>
-        <div class="commentInfo">by Mike machin, 20 May 2012</div>
-      </div>
-    </div>
+    <% } %>
   </div>
 </div>
 <div id="map">
