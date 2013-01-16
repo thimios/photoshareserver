@@ -16,6 +16,8 @@ class NamedLocation < ActiveRecord::Base
   validates_presence_of     :vicinity
 
   searchable do
+    text :name, :as => :name_textp
+    text :vicinity, :as => :vicinity_textp
     text :google_id
     latlon :coordinates do
       Sunspot::Util::Coordinates.new(latitude, longitude)

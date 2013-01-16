@@ -34,18 +34,26 @@ module Api
           if @filter_params[:followed_by_current_user]
             params[:followed_by_current_user] = @filter_params[:followed_by_current_user]
           end
+          @results = NamedLocation.where(:id => current_user.following_location_ids).page(params[:page]).per(params[:limit])
+          @total_count = @results.total_count
         end
 
-        results = NamedLocation.where(:id => current_user.following_location_ids).page(params[:page]).per(params[:limit])
-        total_count = results.total_count
+        if !params[:search_string].blank?
+          @search = Sunspot.search (NamedLocation) do
+            fulltext params[:search_string]
+            paginate(:page => params[:page], :per_page => params[:limit])
+          end
+          @results = @search.results
+          @total_count = @search.total
+        end
 
         # set current_user on all users before calling voted_by_current_user
-        results.each { |result|
+        @results.each { |result|
           result.current_user = current_user
         }
 
-        records_as_json = results.as_json
-        render :json =>  { :records => records_as_json, :total_count => total_count }
+        records_as_json = @results.as_json
+        render :json =>  { :records => records_as_json, :total_count => @total_count }
       end
 
 #
