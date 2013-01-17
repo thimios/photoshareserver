@@ -1,6 +1,6 @@
 class CreateAdminUser < ActiveRecord::Migration
   def up
-    imagefile = File.open(File.join(Rails.root, 'test', 'fixtures','seed.jpg'))
+    imagefile = File.open(File.join(Rails.root, 'assets', 'images','seed.jpg'))
     user3 =
         User.find_or_create_by_email(
             :username => "soberlin",
