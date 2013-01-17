@@ -5,8 +5,8 @@ class LimitPhotoTitleLength < ActiveRecord::Migration
 
     Photo.all.each{|photo|
       if photo.title.length > 23
-        photo.title = photo.title.truncate(23)
-        photo.save!
+        title = photo.title
+        photo.update_attribute :title, title.truncate(23)
       end
 
     }
