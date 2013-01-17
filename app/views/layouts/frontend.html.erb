@@ -15,6 +15,62 @@
     <%= render "footer" %>
 
     <%# Javascript at the bottom for fast page loading %>
-    <%= render "javascripts" %>
+    <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" %>
+    <%= javascript_include_tag "colorbox/jquery.colorbox-min.js" %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('a.photoContainer').colorbox({
+                width: 544,
+                top:40,
+                transition:"none"
+            });
+        });
+    </script>
+
+    <%= javascript_include_tag "plugins.js" %>
+    <script>
+        $(document).ready(function () {
+            $('.photoContainer').each(function (index) {
+                var min = 1;
+                var max = 4;
+                var random = Math.floor(Math.random() * (max - min + 1)) + min;
+                $(this).addClass('random' + random);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#downloadButton").hover(
+
+                    function () {
+                        $("#downloadButton").animate({
+                            "background-size": "100%"
+                        }, "fast");
+                    },
+
+                    function () {
+                        $("#downloadButton").animate({
+                            "background-size": "90%"
+                        }, "fast");
+                    });
+
+        });
+    </script>
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
+    -->
+    <script>
+        var _gaq = [
+            ['_setAccount', 'UA-XXXXX-X'],
+            ['_trackPageview']
+        ];
+        (function (d, t) {
+            var g = d.createElement(t),
+                    s = d.getElementsByTagName(t)[0];
+            g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g, s)
+        }(document, 'script'));
+    </script>
+
+
   </body>
 </html>

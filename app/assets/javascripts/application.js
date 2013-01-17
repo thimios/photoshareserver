@@ -10,6 +10,26 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require jquery
+//= require jquery_ujs
+//= require h5bp
+
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
+    -->
+
+    var _gaq = [
+    ['_setAccount', 'UA-XXXXX-X'],
+    ['_trackPageview']
+    ];
+    (function (d, t) {
+        var g = d.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+        g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g, s)
+        }(document, 'script'));
+
 
 
 $('.photoContainer').each(function (index) {
