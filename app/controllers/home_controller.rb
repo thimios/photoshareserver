@@ -36,6 +36,7 @@ class HomeController < ApplicationController
     @photo = Photo.find(params[:id])
     @commentsleft = @photo.comments.page(1).per(4)
     @commentsright = @photo.comments.page(2).per(4)
+    render :layout => 'empty'
 
   end
 
