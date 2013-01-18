@@ -90,6 +90,7 @@ TodosSt2::Application.routes.draw do
       match 'named_locations/:location_google_id/follow' => 'named_locations#follow'
       match 'named_locations/:location_google_id/unfollow' => 'named_locations#unfollow'
       match 'named_locations/suggested' => 'named_locations#suggested_followable_locations'
+      match 'named_locations/:id' => 'named_locations#show'
       get 'named_locations' => 'named_locations#index'
     end
   end

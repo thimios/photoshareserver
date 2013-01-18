@@ -6,6 +6,14 @@ module Api
       # the api is always available to all logged in users
       skip_authorization_check
 
+      def show
+        @named_locations = Array.new
+        @named_location = (NamedLocation.find(params[:id]))
+        @named_location.current_user = current_user
+        @named_locations[0] = @named_location
+        render json: @named_locations.as_json()
+      end
+
       def follow
         location = NamedLocation.find_by_google_id params[:location_google_id]
         current_user.follow(location)
