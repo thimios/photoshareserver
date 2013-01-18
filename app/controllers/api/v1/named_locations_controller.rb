@@ -8,7 +8,7 @@ module Api
 
       def show
         @named_locations = Array.new
-        @named_location = (NamedLocation.find(params[:id]))
+        @named_location = (NamedLocation.find_by_google_id(params[:id]))
         @named_location.current_user = current_user
         @named_locations[0] = @named_location
         render json: @named_locations.as_json()
