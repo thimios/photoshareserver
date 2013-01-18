@@ -17,15 +17,8 @@
     <%# Javascript at the bottom for fast page loading %>
     <%= javascript_include_tag "frontend/jquery.min.js" %>
     <%= javascript_include_tag "colorbox/jquery.colorbox-min.js" %>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('a.photoContainer').colorbox({
-                width: 544,
-                top:40,
-                transition:"none"
-            });
-        });
-    </script>
+    <%= javascript_include_tag 'frontend/jquery.inview' %>
+
 
     <%= javascript_include_tag "plugins.js" %>
     <script>
@@ -35,6 +28,43 @@
                 var max = 4;
                 var random = Math.floor(Math.random() * (max - min + 1)) + min;
                 $(this).addClass('random' + random);
+
+                $(this).colorbox({
+                    width: 544,
+                    top:40,
+                    transition:"none"
+                });
+
+                $(this).addClass("processed")
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('a.hook').bind('inview', function(e,visible) {
+                if( visible ) {
+                    $.get("/home/photos_paging", { page: parseInt($(this).attr("current_page")) + 1, show: $(this).attr("show") }, function(data) {
+                        $('#photosPart').append(data);
+                        current_page =  parseInt($('a.hook').attr("current_page"));
+                        $('a.hook').attr("current_page", current_page + 1);
+
+                        $('.photoContainer').not(".processed").each(function (index) {
+                            var min = 1;
+                            var max = 4;
+                            var random = Math.floor(Math.random() * (max - min + 1)) + min;
+                            $(this).addClass('random' + random);
+
+                            $(this).colorbox({
+                                width: 544,
+                                top:40,
+                                transition:"none"
+                            });
+
+                            $(this).addClass("processed")
+                        });
+                    });
+                }
             });
         });
     </script>

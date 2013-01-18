@@ -1,12 +1,10 @@
+
 <a class="photoContainer" href="<%= photo_details_path photo %>">
   <div class="scotch"></div>
   <div class="overlay"></div>
   <div class="photoThumb">
     <img src=<%= photo.image.url(:medium) %> />
   </div>
-  <div class="photoTitle">
-    <%= truncate(photo.title, :length => 27, :separator => ' ') %>
-  </div>
+  <div class="photoTitle"><%= truncate(photo.title, :length => 27, :separator => ' ') %></div>
   <div class="photoAuthor">by <%= truncate(photo.author_name, :length => 17 ) %></div>
-
 </a>

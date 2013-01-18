@@ -9,24 +9,46 @@ class HomeController < ApplicationController
     # launchrock.html.erb
   end
 
-  def home
-    # home.html.erb
-
+  def photos_paging
+    params[:page] = params[:page] || 1
     case params["show"]
       when "fashion"
-        @photos = PhotoSearch.category_created_at(1, 1, 24)
+        @photos = PhotoSearch.category_created_at(1, params[:page], 24)
         @active = "fashion"
       when "places"
-        @photos = PhotoSearch.category_created_at(2, 1, 24)
+        @photos = PhotoSearch.category_created_at(2, params[:page], 24)
         @active = "places"
       when "design"
-        @photos = PhotoSearch.category_created_at(3, 1, 24)
+        @photos = PhotoSearch.category_created_at(3, params[:page], 24)
         @active = "design"
       when "best"
-        @photos = PhotoSearch.best(1, 24)
+        @photos = PhotoSearch.best(params[:page], 24)
         @active = "best"
       else
-        @photos = PhotoSearch.all(1,24)
+        @photos = PhotoSearch.all(params[:page],24)
+        @active = "all"
+    end
+    render @photos
+  end
+
+  def home
+    # home.html.erb
+    params[:page] = params[:page] || 1
+    case params["show"]
+      when "fashion"
+        @photos = PhotoSearch.category_created_at(1, params[:page], 24)
+        @active = "fashion"
+      when "places"
+        @photos = PhotoSearch.category_created_at(2, params[:page], 24)
+        @active = "places"
+      when "design"
+        @photos = PhotoSearch.category_created_at(3, params[:page], 24)
+        @active = "design"
+      when "best"
+        @photos = PhotoSearch.best(params[:page], 24)
+        @active = "best"
+      else
+        @photos = PhotoSearch.all(params[:page],24)
         @active = "all"
     end
   end
