@@ -68,7 +68,7 @@ class NamedLocation < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :small_size_url ]))
+    super(options.reverse_merge(:methods => [ :small_size_url, :followed_by_current_user ]))
   end
 
 end
