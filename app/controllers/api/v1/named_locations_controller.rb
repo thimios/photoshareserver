@@ -28,6 +28,7 @@ module Api
 
       def index
         if params[:filter]
+          #get followed by current user
           @filter_params = HashWithIndifferentAccess.new
           @filter = ActiveSupport::JSON.decode(params[:filter])
           @filter_params[@filter[0].values[0]] = @filter[0].values[1]
@@ -36,15 +37,18 @@ module Api
           end
           @results = NamedLocation.where(:id => current_user.following_location_ids).page(params[:page]).per(params[:limit])
           @total_count = @results.total_count
-        end
-
-        if !params[:search_string].blank?
+        elsif !params[:search_string].blank?
+          #get fulltext resutls
           @search = Sunspot.search (NamedLocation) do
             fulltext params[:search_string]
             paginate(:page => params[:page], :per_page => params[:limit])
           end
           @results = @search.results
           @total_count = @search.total
+        else
+          #get all
+          @results = NamedLocation.page(params[:page]).per(params[:limit])
+          @total_count = @results.total_count
         end
 
         # set current_user on all users before calling voted_by_current_user
