@@ -158,7 +158,6 @@ module Api
         warden.authenticate!
         @user = User.find(params[:id])
         current_user.follow(@user)
-        current_user.reindex
         render json: [notice: 'You are now following '+@user.username], status: 200
       end
 
@@ -166,7 +165,6 @@ module Api
         warden.authenticate!
         @user = User.find(params[:id])
         current_user.stop_following(@user)
-        current_user.reindex
         render  json: [ notice => 'You are not following '+@user.username + " any more."  ], status: 200
       end
 
