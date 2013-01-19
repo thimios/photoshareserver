@@ -1,0 +1,27 @@
+<table>
+  <tr>
+    <th>id</th>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Born at</th>
+    <th>Gender</th>
+    <th>Registered at</th>
+    <th>Photos uploaded</th>
+    <th>Comments made</th>
+  </tr>
+
+  <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.username %></td>
+        <td><%= user.email %></td>
+        <td><%= user.birth_date %></td>
+        <td><%= user.gender %></td>
+        <td><%= user.created_at %></td>
+        <td><%= user.photos.count %></td>
+        <td><%= user.comments.count %></td>
+      </tr>
+  <% end %>
+</table>
+
+<%= paginate @users %>

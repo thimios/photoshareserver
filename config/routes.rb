@@ -42,11 +42,11 @@ TodosSt2::Application.routes.draw do
     match 'login' => 'sessions#new', :via => [:get]
     get 'logout' => 'sessions#destroy', :as => :destroy_user_session
     match 'users/messages' => 'registrations#messages'
-    match 'users/:id' => 'registrations#show'
     match 'users/:id/follow' => 'registrations#follow'
     match 'users/:id/unfollow' => 'registrations#unfollow'
-    match 'users' => 'registrations#index'
   end
+
+  match 'users' => 'users#index'
 
   resources :histories
 

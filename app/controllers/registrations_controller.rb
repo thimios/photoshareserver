@@ -1,44 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
   layout "home"
 
-  # GET /users
-  def index
-    warden.authenticate!
-
-    if params[:filter]
-      @filter_params = HashWithIndifferentAccess.new
-      @filter = ActiveSupport::JSON.decode(params[:filter])
-      @filter_params[@filter[0].values[0]] = @filter[0].values[1]
-      if @filter_params[:followed_by_current_user]
-        params[:followed_by_current_user] = @filter_params[:followed_by_current_user]
-      end
-    end
-
-    if params[:followed_by_current_user] == "true"
-      @users = User.where(:id => current_user.all_following.map{|following_user| following_user.id}).page(params[:page]).per(params[:limit])
-    elsif params[:search_string].blank?
-      @users = User.page(params[:page]).per(params[:limit])
-      @total_count = @users.total_count
-    else
-      @search = Sunspot.search (User) do
-        if !params[:search_string].blank?
-          fulltext params[:search_string]
-        end
-
-        if !params[:page].blank?
-          paginate(:page => params[:page], :per_page => params[:limit])
-        end
-      end
-      @users = User.find(@search.results.map{|user| user.id})
-      @total_count = @search.total
-    end
-
-    # set current_user on all users before calling voted_by_current_user
-    @users.each { |user|
-      user.current_user = current_user
-    }
-  end
-
   def create
 
     if params[:signed_request].blank?
@@ -115,25 +77,6 @@ class RegistrationsController < Devise::RegistrationsController
   #    respond_with resource
   #  end
   #end
-
-  # GET /users/1
-  # GET /users/1.json
-  # Show user's public profile
-  def show
-    warden.authenticate!
-    @users = Array.new
-    @user = (User.find(params[:id]))
-
-    @activities = PublicActivity::Activity.where(:owner_id =>params[:id])
-
-    @users[0] = @user
-
-    # set current_user on all users before calling voted_by_current_user
-    @users.each { |user|
-      user.current_user = current_user
-    }
-
-  end
 
   def follow
     warden.authenticate!

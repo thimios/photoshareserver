@@ -5,9 +5,11 @@ class User < ActiveRecord::Base
   acts_as_voter
   has_karma(:photos, :as => :submitter, :weight => 0.5)
 
-  has_many :photos, :inverse_of => :user
+  has_many :photos, :inverse_of => :user, :dependent => :destroy
 
-  has_many :histories, :inverse_of => :owner
+  has_many :comments, :inverse_of => :owner, :foreign_key => "owner_id", :dependent => :destroy
+
+  has_many :histories, :inverse_of => :owner, :dependent => :destroy
 
   has_many :reports, :inverse_of => :user, :dependent => :destroy
 

@@ -30,6 +30,7 @@ class Ability
     elsif user.admin?
       can :manage, Photo
       can :manage, Quote
+      can :manage, User
     else
       # if user is no admin or superadmin, nothing is permitted on the web interface
     end
