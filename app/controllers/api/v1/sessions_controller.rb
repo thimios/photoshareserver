@@ -27,9 +27,9 @@ module Api
       def create
         warden.custom_failure!
         user = warden.authenticate(:scope => :user)
-        first_login = user.last_sign_in_at > 3.seconds.ago ? true : false
 
         if !user.nil?
+          first_login = user.last_sign_in_at > 3.seconds.ago ? true : false
           user.reset_authentication_token!
           render :json => {:auth_token => user.authentication_token, :first_login => first_login, :token_type => "persistant", :user_id => user.id}, :callback => params[:callback]
         else
