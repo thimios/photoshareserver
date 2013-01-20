@@ -46,10 +46,10 @@ TodosSt2::Application.routes.draw do
     match 'users/:id/unfollow' => 'registrations#unfollow'
   end
 
+  match 'users/csv' => 'users#csv', :as => :users_csv
   match 'users' => 'users#index'
 
   resources :histories
-
 
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do

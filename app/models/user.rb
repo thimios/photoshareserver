@@ -144,11 +144,22 @@ class User < ActiveRecord::Base
     super(options.reverse_merge(:methods => [ :thumb_size_url, :followed_by_current_user, :total_followers, :total_following ]))
   end
 
+  # used for functional tests
   def to_csv(lat, long)
     distance_in_km = Geocoder::Calculations::distance_between(self, [lat, long], :units => :km)
 
     csv = []
     csv += [self.id, self.username, self.latitude, self.longitude, distance_in_km, self.plusminus.to_s, self.sorting_rate( lat, long).to_s ]
+  end
+
+  # used to download from web
+  def self.to_web_csv
+    CSV.generate do |csv|
+      csv << ['id', 'username', 'email', 'born on', 'gender', 'registered at', 'photos uploaded', 'comments made' ]
+      all.each do |user|
+        csv << [user.id, user.username, user.email, user.birth_date, user.gender, user.created_at, user.photos.count, user.comments.count ]
+      end
+    end
   end
 
   private

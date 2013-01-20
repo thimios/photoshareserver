@@ -7,14 +7,17 @@ class UsersController < ApplicationController
 
   # GET /admin/users
   def index
-
     @users = User.page(params[:page]).per(params[:limit])
 
     # set current_user on all photos before calling voted_by_current_user
     @users.each { |item|
       item.current_user = current_user
     }
+  end
 
+  def csv
+    @users = User.order(:username)
+    send_data @users.to_web_csv, :filename => 'soberlin-users.csv'
   end
 
 end
