@@ -27,7 +27,7 @@ module Api
       def create
         warden.custom_failure!
         user = warden.authenticate(:scope => :user)
-        first_login = current_user.last_sign_in_at > 3.seconds.ago ? true : false
+        first_login = user.last_sign_in_at > 3.seconds.ago ? true : false
 
         if !user.nil?
           user.reset_authentication_token!
