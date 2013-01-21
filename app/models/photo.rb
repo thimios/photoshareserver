@@ -132,6 +132,9 @@ class Photo < ActiveRecord::Base
     controller.current_user
   }
 
+  # destroy all activity records on destroy
+  has_many :activities, :class_name => "PublicActivity::Activity", :as => :trackable, :dependent => :destroy
+
   validates :category_id, :presence => true
   validates :title, :presence => true
   validates :title, :length => { :maximum => 23 }

@@ -65,14 +65,14 @@ module Api
 
 
         activities = PublicActivity::Activity.all
-        assert_equal(activities.count, 7, "There should have been 7 activities tracked")
-        assert_equal(activities[0].key, "photo.create", "Activity tracking error")
-        assert_equal(activities[1].key, "photo.update", "Activity tracking error")
-        assert_equal(activities[2].key, "comment.create", "Activity tracking error")
-        assert_equal(activities[3].key, "vote.create", "Activity tracking error")
-        assert_equal(activities[4].key, "vote.destroy", "Activity tracking error")
-        assert_equal(activities[5].key, "comment.destroy", "Activity tracking error")
-        assert_equal(activities[6].key, "photo.destroy", "Activity tracking error")
+        assert_equal(activities.count, 0, "all activities should be deleted")
+        #assert_equal(activities[0].key, "photo.create", "Activity tracking error")
+        #assert_equal(activities[1].key, "photo.update", "Activity tracking error")
+        #assert_equal(activities[2].key, "comment.create", "Activity tracking error")
+        #assert_equal(activities[3].key, "vote.create", "Activity tracking error")
+        #assert_equal(activities[4].key, "vote.destroy", "Activity tracking error")
+        #assert_equal(activities[5].key, "comment.destroy", "Activity tracking error")
+        #assert_equal(activities[6].key, "photo.destroy", "Activity tracking error")
 
       end
 
