@@ -15,7 +15,7 @@ class Photo < ActiveRecord::Base
   searchable do
   	# text :description, :as => :description_textp
     text :title, :as => :title_textp
-    text :location_google_id
+    integer :named_location_id, :references => NamedLocation, :multiple => false
     integer :category_id, :references => Category, :multiple => false
     integer :user_id, :references => User, :multiple => false
     integer :named_location_id, :references => NamedLocation, :multiple => false
@@ -176,7 +176,6 @@ class Photo < ActiveRecord::Base
     distance_in_km = Geocoder::Calculations::distance_between(self, [lat, long], :units => :km)
     time_in_millis = (Time.zone.now - self.created_at) * 1000
     time_in_minutes = time_in_millis / 1000 / 60
-    Math.exp( -0.00014192127 * 1000 * 60 * time_in_minutes)
 
     #"product(
     #    sum(plusminus_i,1),

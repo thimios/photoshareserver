@@ -103,15 +103,30 @@ module Api
             with(:category_id,  params[:category_id])
           end
           if !params[:location_google_id].nil?
-            fulltext  params[:location_google_id]
+            location = NamedLocation.find_by_google_id(params[:location_google_id])
+            unless location.nil?
+              with(:location_id, location.id)
+            end
           end
+
           if !params[:feed].blank?
-            if current_user.following_users_count > 0
+            following_users_count = current_user.following_users_count
+            following_location_count = current_user.following_named_locations_count
+
+            if following_users_count > 0 and following_location_count > 0
+              any_of do
+                with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
+                with(:named_location_id).any_of(current_user.following_location_ids)
+              end
+            elsif following_users_count == 0 and following_location_count > 0
+              with(:location_id).any_of(current_user.following_location_ids)
+            elsif following_users_count > 0 and following_location_count == 0
               with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
-            else
+            elsif following_users_count == 0 and following_location_count == 0
               with(:user_id).equal_to(nil)
             end
           end
+
           if !params[:page].blank?
             paginate(:page => params[:page], :per_page => params[:limit])
             adjust_solr_params do |solr_params|
@@ -201,7 +216,7 @@ module Api
       def create
 
         unless params[:location_google_id].nil? or params[:location_google_id].blank?
-          named_location = NamedLocation.find_or_create_by_google_id params[:location_google_id], :reference => params[:location_reference], :latitude => params[:latitude], :longitude => params[:longitude], :name => params[:location_name], :vicinity => params[:location_vicinity]
+          named_location = NamedLocation.where(:google_id => params[:location_google_id]).first_or_create( :reference => params[:location_reference], :latitude => params[:latitude], :longitude => params[:longitude], :name => params[:location_name], :vicinity => params[:location_vicinity])
           params[:named_location_id] = named_location.id
         end
 
