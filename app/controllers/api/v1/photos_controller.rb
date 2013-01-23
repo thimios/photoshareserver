@@ -106,6 +106,9 @@ module Api
             location = NamedLocation.find_by_google_id(params[:location_google_id])
             unless location.nil?
               with(:named_location_id, location.id)
+            else
+              # if the location is not found, just return an empty set
+              with(:user_id).equal_to(nil)
             end
           end
 
