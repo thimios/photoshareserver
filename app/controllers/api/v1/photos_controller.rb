@@ -105,7 +105,7 @@ module Api
           if !params[:location_google_id].nil?
             location = NamedLocation.find_by_google_id(params[:location_google_id])
             unless location.nil?
-              with(:location_id, location.id)
+              with(:named_location_id, location.id)
             end
           end
 
