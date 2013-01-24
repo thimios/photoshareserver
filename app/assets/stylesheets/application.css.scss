@@ -437,9 +437,13 @@ a{
 }
 
 #commentsContainer {
-  border-bottom: 1px #D4D4D4 solid;
-  padding-bottom: 13px;
-  margin-bottom: 27px;
+
+}
+
+#mapContainer {
+  border-top: 1px #d4d4d4 solid!important;
+  padding-top: 27px!important;
+  margin-top: 13px;
 }
 
 
@@ -512,6 +516,7 @@ a{
   position: relative;
   left: 213px;
   top: 22px!important;
+  display: inline-block;
 }
 
 .footerLink:hover{
