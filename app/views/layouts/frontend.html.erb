@@ -4,103 +4,104 @@
   <%= render "head" %>
 
   <body class="<%= controller.controller_name %>">
-    <%= render "chromeframe" %>
-    <%= render "header" %>
+    <div id="maincontainer">
+        <%= render "chromeframe" %>
+        <%= render "header" %>
 
-    <div id="main" role="main">
-      <%= render "flashes" %>
-      <%= yield %>
-    </div>
+        <div id="main" role="main">
+          <%= render "flashes" %>
+          <%= yield %>
+        </div>
 
-    <%= render "footer" %>
+        <%= render "footer" %>
 
-    <%# Javascript at the bottom for fast page loading %>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <%= javascript_include_tag "colorbox/jquery.colorbox-min.js" %>
-    <%= javascript_include_tag 'frontend/jquery.inview' %>
+        <%# Javascript at the bottom for fast page loading %>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <%= javascript_include_tag "colorbox/jquery.colorbox-min.js" %>
+        <%= javascript_include_tag 'frontend/jquery.inview' %>
 
 
-    <%= javascript_include_tag "plugins.js" %>
-    <script>
-        $(document).ready(function () {
-            $('.photoContainer').each(function (index) {
-                var min = 1;
-                var max = 4;
-                var random = Math.floor(Math.random() * (max - min + 1)) + min;
-                $(this).addClass('random' + random);
+        <%= javascript_include_tag "plugins.js" %>
+        <script>
+            $(document).ready(function () {
+                $('.photoContainer').each(function (index) {
+                    var min = 1;
+                    var max = 4;
+                    var random = Math.floor(Math.random() * (max - min + 1)) + min;
+                    $(this).addClass('random' + random);
 
-                $(this).colorbox({
-                    width: 544,
-                    top:40,
-                    transition:"none"
+                    $(this).colorbox({
+                        width: 544,
+                        top:40,
+                        transition:"none"
+                    });
+
+                    $(this).addClass("processed")
                 });
-
-                $(this).addClass("processed")
             });
-        });
-    </script>
+        </script>
 
-    <script>
-        $(document).ready(function() {
-            $('a.hook').bind('inview', function(e,visible) {
-                if( visible ) {
-                    $.get("/home/photos_paging", { page: parseInt($(this).attr("current_page")) + 1, show: $(this).attr("show") }, function(data) {
-                        $('#photosPart').append(data);
-                        current_page =  parseInt($('a.hook').attr("current_page"));
-                        $('a.hook').attr("current_page", current_page + 1);
+        <script>
+            $(document).ready(function() {
+                $('a.hook').bind('inview', function(e,visible) {
+                    if( visible ) {
+                        $.get("/home/photos_paging", { page: parseInt($(this).attr("current_page")) + 1, show: $(this).attr("show") }, function(data) {
+                            $('#photosPart').append(data);
+                            current_page =  parseInt($('a.hook').attr("current_page"));
+                            $('a.hook').attr("current_page", current_page + 1);
 
-                        $('.photoContainer').not(".processed").each(function (index) {
-                            var min = 1;
-                            var max = 4;
-                            var random = Math.floor(Math.random() * (max - min + 1)) + min;
-                            $(this).addClass('random' + random);
+                            $('.photoContainer').not(".processed").each(function (index) {
+                                var min = 1;
+                                var max = 4;
+                                var random = Math.floor(Math.random() * (max - min + 1)) + min;
+                                $(this).addClass('random' + random);
 
-                            $(this).colorbox({
-                                width: 544,
-                                top:40,
-                                transition:"none"
+                                $(this).colorbox({
+                                    width: 544,
+                                    top:40,
+                                    transition:"none"
+                                });
+
+                                $(this).addClass("processed")
                             });
-
-                            $(this).addClass("processed")
                         });
-                    });
-                }
+                    }
+                });
             });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#downloadButton").hover(
+        </script>
+        <script>
+            $(document).ready(function () {
+                $("#downloadButton").hover(
 
-                    function () {
-                        $("#downloadButton").animate({
-                            "background-size": "100%"
-                        }, "fast");
-                    },
+                        function () {
+                            $("#downloadButton").animate({
+                                "background-size": "100%"
+                            }, "fast");
+                        },
 
-                    function () {
-                        $("#downloadButton").animate({
-                            "background-size": "90%"
-                        }, "fast");
-                    });
+                        function () {
+                            $("#downloadButton").animate({
+                                "background-size": "90%"
+                            }, "fast");
+                        });
 
-        });
-    </script>
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
-    -->
-    <script>
-        var _gaq = [
-            ['_setAccount', 'UA-XXXXX-X'],
-            ['_trackPageview']
-        ];
-        (function (d, t) {
-            var g = d.createElement(t),
-                    s = d.getElementsByTagName(t)[0];
-            g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g, s)
-        }(document, 'script'));
-    </script>
+            });
+        </script>
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
+        -->
+        <script>
+            var _gaq = [
+                ['_setAccount', 'UA-XXXXX-X'],
+                ['_trackPageview']
+            ];
+            (function (d, t) {
+                var g = d.createElement(t),
+                        s = d.getElementsByTagName(t)[0];
+                g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+                s.parentNode.insertBefore(g, s)
+            }(document, 'script'));
+        </script>
 
-
+    </div>
   </body>
 </html>
