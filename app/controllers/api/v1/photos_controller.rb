@@ -122,7 +122,7 @@ module Api
                 with(:named_location_id).any_of(current_user.following_location_ids)
               end
             elsif following_users_count == 0 and following_location_count > 0
-              with(:location_id).any_of(current_user.following_location_ids)
+              with(:named_location_id).any_of(current_user.following_location_ids)
             elsif following_users_count > 0 and following_location_count == 0
               with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
             elsif following_users_count == 0 and following_location_count == 0
