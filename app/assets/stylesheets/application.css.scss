@@ -76,13 +76,12 @@
 
 }
 
-#maincontainer{
-  width: 1100px;
+#maincontainer {
+  width: 967px;
   margin: 0 auto;
   padding-top: 50px;
-  position: relative;
-  left: 75px;
 }
+
 #storeLink{
   width: 188px;
   background: url('/assets/storeLinkBorder.png');
@@ -98,20 +97,17 @@
   top: 30px;
   left: 11px;
 }
-#topRight{
-  width:612px;
-  padding-bottom: 32px;
-
+#topRight {
+  width: 670px;
+  position: relative;
+  left: 70px;
 }
+
 #logo, #topRight, #slogan, #storeLink{
   display:inline-block;
   vertical-align:top;
 }
 
-#topRight{
-  margin-left:70px;
-  width:670px;
-}
 #slogan{
   margin-top:18px;
 }
@@ -318,20 +314,20 @@ a{
   margin-bottom:60px;
 }
 
-#footer{
+#footer {
   background: url(/assets/footerBg.png);
   background-repeat: no-repeat;
   background-position: top;
-  font-family:satisfy;
-  color:#696969;
-  text-align:center;
-  padding-top:13px;
-  width:1002px;
+  font-family: satisfy;
+  color: #696969;
+  text-align: center;
+  padding-top: 13px;
+  width: 1002px;
   height: 94px;
   position: fixed;
   bottom: 0px;
   left: 50%;
-  margin-left: -490px;
+  margin-left: -501px;
   z-index: 12;
 }
 
