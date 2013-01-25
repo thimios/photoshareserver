@@ -6,10 +6,10 @@ module Api
       # the api is always available to all logged in users
       skip_authorization_check
 
+      # Returns the "best" ten markers according to our sorting algorithm, within a bounding box of coordinates
       #http://localhost:3000/api/v1/photos/indexbbox.json?sw_y=48.488334&sw_x=6.416342&ne_y=57.492658&ne_x=18.428616&place=true&art=true
       def indexbbox
         # update current user location, if coordinates not empty
-
         categories = Array.new
 
         if params[:fashion] == "true"
@@ -73,9 +73,17 @@ module Api
         end
       end
 
-      # GET /photos
-      # GET /photos.json
+      # Setting a Sencha proxy filter:
+      #   "feed" returns photos belonging to followed users or named locations
+      #   "category_id" returns photos belonging to specified category (1=fashion 2=place 3=art)
+      #
+      # "search_string" parameter performs full text search on photos
+      # "location_google_id" parameter returns photos belonging in the specified location
+
+      # all requests are paginated based on "page" and "limit" params and sorted according to the algorithm
+      #
       # http://localhost:3000/api/v1/photos?utf8=%E2%9C%93&category_id=1&page=1&user_latitude=52.488909&user_longitude=13.421728
+      # TODO This method is a mess, split it
       def index
         # update current user location, if coordinates not empty
         current_user.update_location(params[:user_latitude], params[:user_longitude])
@@ -218,6 +226,8 @@ module Api
       # POST /photos.json
       def create
 
+        # creating a photo with location_google_id will try to create the location
+        # this is the only place where a new location can be created
         unless params[:location_google_id].nil? or params[:location_google_id].blank?
           named_location = NamedLocation.where(:google_id => params[:location_google_id]).first_or_create( :reference => params[:location_reference], :latitude => params[:latitude], :longitude => params[:longitude], :name => params[:location_name], :vicinity => params[:location_vicinity])
           params[:named_location_id] = named_location.id
@@ -236,7 +246,8 @@ module Api
         if photo.save
           render json: {:id => photo.id}, :status => :created
         else
-          render :json => { :errors =>photo.errors },:status=> :ok #phonegap fileuploader cannot handle data on failure
+          # phonegap fileuploader cannot handle data on failure, so the status is ok, although it has actually failed
+          render :json => { :errors =>photo.errors },:status=> :ok
         end
 
       end
