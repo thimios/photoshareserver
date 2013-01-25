@@ -1,9 +1,7 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  fixtures :categories, :users
 
   test "plusminus" do
     generator = Random.new
@@ -36,7 +34,6 @@ class UserTest < ActiveSupport::TestCase
     end
 
     assert_equal(User.find(1).plusminus, total_votes_on_photos_of_first_user, "User plusminus should be the sum of vote count on user's photos")
-
 
   end
 

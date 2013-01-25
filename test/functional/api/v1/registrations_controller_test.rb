@@ -6,6 +6,7 @@ module Api
   module V1
 
     class RegistrationsControllerTest < ActionController::TestCase
+      fixtures :categories, :users, :quotes, :photo_reports, :named_locations
       include TestSunspot
 
       setup do

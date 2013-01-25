@@ -9,10 +9,9 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  fixtures :all
   TestSunspot.setup
 
-  # disable user activity tracking during testing
+  # by defalut, disable user activity tracking during testing
   PublicActivity.enabled= false
 
   # Add more helper methods to be used by all tests here...

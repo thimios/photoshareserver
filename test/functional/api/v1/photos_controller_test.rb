@@ -2,10 +2,12 @@ require 'test_helper'
 include Devise::TestHelpers
 
 
+
 module Api
   module V1
 
     class PhotosControllerTest < ActionController::TestCase
+      fixtures :categories, :users, :quotes, :photo_reports, :named_locations
       include TestSunspot
 
       setup do
