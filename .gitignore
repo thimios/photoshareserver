@@ -5,6 +5,8 @@
 #   git config --global core.excludesfile ~/.gitignore_global
 
 log/*
+test/results/photos/*.csv
+test/results/users/*.csv
 public/assets
 tmp
 .project

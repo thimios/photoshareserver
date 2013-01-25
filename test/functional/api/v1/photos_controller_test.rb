@@ -31,7 +31,7 @@ module Api
         assert_not_empty NamedLocation.find_all_by_reference location_reference_string, "Named location should be created"
         photos = Photo.find_all_by_title "photo with location"
 
-        assert_equal(photos.first.location_reference, location_reference_string)
+        assert_equal(location_reference_string, photos.first.location_reference )
       end
 
       test "delete photo and all comments, votes, photo_reports" do
@@ -54,19 +54,19 @@ module Api
         # until now there should be one photo, one comment, one vote and one report created
         loaded_photo = Photo.find(first_photo.id)
         assert_not_nil(loaded_photo, "Created photo not found in db")
-        assert_equal(loaded_photo.comments_count, 1, "Photo should have exactly one comment")
-        assert_equal(loaded_photo.plusminus, 1, "Photo should have exactly one vote")
-        assert_equal(loaded_photo.photo_reports.count, 1, "Photo should have exactly one report")
+        assert_equal(1, loaded_photo.comments_count, "Photo should have exactly one comment")
+        assert_equal(1, loaded_photo.plusminus, "Photo should have exactly one vote")
+        assert_equal(1, loaded_photo.photo_reports.count, "Photo should have exactly one report")
 
         loaded_photo.destroy
 
         assert_true loaded_photo.destroyed?, "Photo not destroyed"
-        assert_equal(loaded_photo.comments_count, 0, "Destoyed photo should have no comments")
-        assert_equal(loaded_photo.plusminus, 0, "Destroyed photo should have no votes")
-        assert_equal(loaded_photo.photo_reports.count, 0, "Destoyed photo should have no photo report")
-        assert_equal(Comment.all.count, 0, "Destoyed photo should have no comments")
-        assert_equal(Vote.all.count, 0, "Destroyed photo should have no votes")
-        assert_equal(PhotoReport.all.count, 0, "Destoyed photo should have no photo report")
+        assert_equal(0, loaded_photo.comments_count, "Destoyed photo should have no comments")
+        assert_equal(0, loaded_photo.plusminus, "Destroyed photo should have no votes")
+        assert_equal(0, loaded_photo.photo_reports.count, "Destoyed photo should have no photo report")
+        assert_equal(0, loaded_photo.comments_count , "Destoyed photo should have no comments")
+        assert_equal(0, loaded_photo.plusminus, "Destroyed photo should have no votes")
+        assert_equal(0, loaded_photo.photo_reports.count, "Destoyed photo should have no photo report")
 
 
         activities = PublicActivity::Activity.all
