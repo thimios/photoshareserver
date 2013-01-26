@@ -5,7 +5,6 @@ class NamedLocation < ActiveRecord::Base
   has_many :photos, :inverse_of => :named_location, :dependent => :nullify
 
   validates_presence_of     :reference
-  validates_uniqueness_of   :reference
   validates_presence_of     :google_id
   validates_uniqueness_of   :google_id
   validates_presence_of     :latitude
