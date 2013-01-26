@@ -6,4 +6,5 @@ photos_001:
   latitude: 52.2
   longitude: 12.3
   track_location: yes
+  named_location_id: 1
 

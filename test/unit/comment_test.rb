@@ -3,7 +3,7 @@ require 'test_helper'
 class CommentTest < ActiveSupport::TestCase
   fixtures :categories, :users, :photos, :comments
 
-  test "as_json should include fields" do
+  test "as_json should include extra fields" do
     c = comments(:comments_001)
     json = c.as_json
 
