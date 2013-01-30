@@ -9,7 +9,6 @@ class NamedLocationTest < ActiveSupport::TestCase
 
     location.current_user = current_user
     assert_equal "false", location.followed_by_current_user
-
     current_user.follow location
 
     assert_equal "true", location.followed_by_current_user
