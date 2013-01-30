@@ -59,7 +59,6 @@ class NamedLocation < ActiveRecord::Base
     else
       return (SystemPhoto.find_by_title "default avatar").thumb_size_url
     end
-
   end
 
   def followed_by_current_user
