@@ -111,6 +111,9 @@ group :assets do
   gem 'compass-h5bp'
   gem "therubyracer", :require => 'v8'
   gem 'libv8'
+
+  # only precompile updated assets
+  gem 'turbo-sprockets-rails3'
 end
 
 
