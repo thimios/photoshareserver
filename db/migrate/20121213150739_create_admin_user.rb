@@ -17,6 +17,41 @@ class CreateAdminUser < ActiveRecord::Migration
     user3.confirm!
     user3.geocode
     user3.save
+
+    user3 =
+        User.create(
+            :username => "thimios",
+            :birth_date => "2010-09-28 00:00:00",
+            :gender => "male",
+            :email => "thimios@wantedpixel.com",
+            :password => 'thimios',
+            :password_confirmation => 'thimios',
+            :address => 'Schlegelstrasse 15, 10115 Berlin, Germany',
+            :avatar => imagefile,
+            :admin => true,
+            :superadmin => false
+        )
+    user3.confirm!
+    user3.geocode
+    user3.save
+
+    user3 =
+        User.create(
+            :username => "spiros",
+            :birth_date => "2010-09-28 00:00:00",
+            :gender => "male",
+            :email => "spiros@wantedpixel.com",
+            :password => 'spiros',
+            :password_confirmation => 'spiros',
+            :address => 'Schlegelstrasse 15, 10115 Berlin, Germany',
+            :avatar => imagefile,
+            :admin => true,
+            :superadmin => false
+        )
+    user3.confirm!
+    user3.geocode
+    user3.save
+
   end
 
   def down
