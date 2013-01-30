@@ -57,12 +57,13 @@ class NamedLocation < ActiveRecord::Base
     unless search.results.empty?
       return search.results.first.small_size_url
     else
+      # named locations that have no photo, will appear with the default avatar
       return (SystemPhoto.find_by_title "default avatar").thumb_size_url
     end
   end
 
   def followed_by_current_user
-    # add whether the current user is following this user or not
+    # add whether the current user is following this named location or not
     if !self.current_user.nil? and self.followed_by?(self.current_user)
       return "true"
     else
