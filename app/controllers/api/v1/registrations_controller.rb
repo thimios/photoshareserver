@@ -62,12 +62,11 @@ module Api
 
         @records_as_json = @users.map{|user| user.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date, :admin, :superadmin ] )  }
         render :json =>  { :records => @records_as_json, :total_count => @total_count }
-
       end
 
-
       def create
-        imagefile = File.open(Rails.root.join('app/assets', 'images', "Soberlin.png"))
+        # default user avatar
+        imagefile = File.open(Rails.root.join('app/assets', 'images', "defaultavatar.png"))
         params[:registration][:avatar] = imagefile
         params[:registration].delete( :thumb_size_url)
         params[:registration][:address] = "Urbanstrasse 66, 10967, Berlin, Germany"
@@ -102,7 +101,6 @@ module Api
           params.delete(:birth_date3i)
         end
 
-
         user_params = params.reject{|key, value| key.in?(["_method","authenticity_token","commit","auth_token","action","controller","format"])}
 
         if resource.update_with_password(user_params)
@@ -116,12 +114,7 @@ module Api
           respond_with resource, :location => after_update_path_for(resource)
         else
           clean_up_passwords resource
-          respond_to do |format|
-            format.html { respond_with resource }
-            format.json {
-              render :json => { :errors =>resource.errors },:status=> :ok #phonegap fileuploader cannot handle data on failure
-            }
-          end
+          render :json => { :errors =>resource.errors },:status=> :ok #phonegap fileuploader cannot handle data on failure
         end
       end
 
@@ -141,17 +134,14 @@ module Api
         @users.each { |user|
           user.current_user = current_user
         }
-        respond_to do |format|
-          format.html # show.html.erb
-          format.json {
-            unless params[:id].eql? (current_user.id.to_s)
-              @records_as_json = @users.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ] )
-            else
-              @records_as_json = @users.as_json()
-            end
-            render json: @records_as_json
-          }
+
+        unless params[:id].eql? (current_user.id.to_s)
+          @records_as_json = @users.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ] )
+        else
+          @records_as_json = @users.as_json()
         end
+        render json: @records_as_json
+
       end
 
       def follow
