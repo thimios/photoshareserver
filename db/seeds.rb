@@ -14,7 +14,7 @@ Category.find_or_create_by_title(title: "fashion", description: "fashion passion
 Category.find_or_create_by_title(title: "place", description: "places category")
 Category.find_or_create_by_title(title: "art", description: "art")
 
-imagefile = File.open(File.join(Rails.root, 'app', 'assets', 'images', 'seed.jpg'))
+imagefile = File.open(File.join(Rails.root, 'app', 'assets', 'images', 'defaultavatar.png'))
 
 user1 =
     User.find_or_create_by_email(
@@ -69,7 +69,7 @@ user3.save
 
 generator = Random.new
 
-30.times do
+10.times do
   photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
   20.times do
    comment = photo.comments.build( body: Faker::Lorem.sentence(3) )
@@ -82,7 +82,7 @@ generator = Random.new
 
 end
 
-30.times do
+10.times do
   photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 2, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
   20.times do
     comment = photo.comments.build( body: Faker::Lorem.sentence(3) )
@@ -96,7 +96,7 @@ end
   report.save
 end
 
-30.times do
+10.times do
   photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 3, user_id: generator.rand(1..2), latitude: generator.rand(52.2..54.7), longitude: generator.rand(12.3..14.5), image: imagefile, track_location: "yes")
   20.times do
     comment = photo.comments.build( body: Faker::Lorem.sentence(3) )
