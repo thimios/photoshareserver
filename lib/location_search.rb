@@ -7,6 +7,10 @@ module Api
         # home.html.erb
         exclude_location_ids =  current_user.following_location_ids
         search = Sunspot.search (NamedLocation) do
+
+          #suggest locations to follow that have at least one photo
+          with(:photos_count).more_than 0
+
           unless exclude_location_ids.empty?
             without(:id, exclude_location_ids)
           end

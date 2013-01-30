@@ -23,7 +23,12 @@ class NamedLocation < ActiveRecord::Base
     end
     integer :plusminus
     integer :id
+    integer :photos_count
     time :created_at, :trie => true
+  end
+
+  def photos_count
+    self.photos.count
   end
 
   def plusminus
