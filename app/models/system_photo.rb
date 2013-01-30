@@ -2,7 +2,7 @@ class SystemPhoto < ActiveRecord::Base
   attr_accessible :title, :image
 
   has_attached_file :image,
-                    :styles => { :full => "640x640", :medium => "460x460>", :thumb => "80x80>" }
+                    :styles => { :full => "640x640", :medium => "460x460>", :thumb => "160x160>" }
   def original_size_url
     image.url
   end

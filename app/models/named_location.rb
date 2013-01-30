@@ -57,7 +57,7 @@ class NamedLocation < ActiveRecord::Base
     unless search.results.empty?
       return search.results.first.small_size_url
     else
-      return nil
+      return SystemPhoto.find_by_title "default avatar".thumb_size_url
     end
 
   end
