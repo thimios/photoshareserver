@@ -96,19 +96,21 @@
 
 
       <!--open detail view-->
-      <script>
-          $("#main").colorbox({
-              width: 544,
-              top:40,
-              open:true,
-              href:
-                      transition:"none"
-          },function onOpen(){
-              //alert('prin ano3ei to colorbox');
-              //$("#colorbox").css('top', $(window).scrollTop() + "px");
-              $("#colorbox").css('top', $(window).scrollTop()+90 + "px!important");
-          });
-      </script>
+      <% unless @detailsview_id.nil? %>
+          <script>
+              $("#main").colorbox({
+                  width: 544,
+                  top: 40,
+                  open: true,
+                  href: "/home/photo/<%=@detailsview_id %>",
+                  transition: "none"
+              },function onOpen(){
+                  //alert('prin ano3ei to colorbox');
+                  //$("#colorbox").css('top', $(window).scrollTop() + "px");
+                  $("#colorbox").css('top', $(window).scrollTop()+90 + "px!important");
+              });
+          </script>
+      <% end %>
 
 
 

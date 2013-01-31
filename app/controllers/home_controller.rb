@@ -33,6 +33,9 @@ class HomeController < ApplicationController
 
   def home
     # home.html.erb
+    unless params[:detailsview_id].nil?
+      @detailsview_id = params[:detailsview_id]
+    end
     params[:page] = params[:page] || 1
     case params["show"]
       when "fashion"
