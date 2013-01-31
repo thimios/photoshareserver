@@ -7,6 +7,7 @@ module Api
         # home.html.erb
         exclude_location_ids =  current_user.following_location_ids
         search = Sunspot.search (NamedLocation) do
+
           unless exclude_location_ids.empty?
             without(:id, exclude_location_ids)
           end
