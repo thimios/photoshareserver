@@ -31,12 +31,18 @@ class HomeController < ApplicationController
     render @photos
   end
 
-  def home
-    # home.html.erb
-    unless params[:detailsview_id].nil?
-      @detailsview_id = params[:detailsview_id]
-    end
+  def home_photo_detail
     params[:page] = params[:page] || 1
+    @detailsview_id = params[:id]
+    @photos = PhotoSearch.all(params[:page],24)
+    @active = "all"
+
+    # home.html.erb
+    render 'home'
+  end
+
+  def home
+
     case params["show"]
       when "fashion"
         @photos = PhotoSearch.category_created_at(1, params[:page], 24)

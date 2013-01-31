@@ -2,6 +2,7 @@ TodosSt2::Application.routes.draw do
 
   resources :quotes
 
+
   get "home/launchrock"
   get "home/facebook"
 
@@ -11,6 +12,7 @@ TodosSt2::Application.routes.draw do
 
   match 'home/photo/:id' => 'home#photo_details', :as => :photo_details
   match 'home/photos_paging' => 'home#photos_paging', :as => :photos_paging
+  match 'home/:id' => 'home#home_photo_detail', :as => :home_photo_detail
 
   # admin routes
   match 'admin' => "admin#home", :as => :admin

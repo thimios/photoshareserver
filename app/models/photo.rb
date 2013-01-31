@@ -1,4 +1,6 @@
 class Photo < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+
   acts_as_voteable
 
   has_many :photo_reports, :inverse_of => :photo, :dependent => :destroy
@@ -51,6 +53,11 @@ class Photo < ActiveRecord::Base
 
   def thumb_size_url
     self.banned? ? Rails.configuration.banned_thumb_size_url : image.url(:thumb)
+  end
+
+  # path to the photo details on the web page, to be shared on facebook etc
+  def share_path
+   home_photo_detail_path(self)
   end
 
   def author_name
@@ -157,7 +164,7 @@ class Photo < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference, :location_google_id, :location_name, :location_vicinity, :location_followed_by_current_user ]))
+    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference, :location_google_id, :location_name, :location_vicinity, :location_followed_by_current_user, :share_path ]))
   end
 
   #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
