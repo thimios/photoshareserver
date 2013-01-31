@@ -4,6 +4,7 @@
   <%= render "head" %>
 
   <body class="<%= controller.controller_name %>">
+  <div style="width:1005px;margin:0 auto">
     <div id="maincontainer">
         <%= render "chromeframe" %>
         <%= render "header" %>
@@ -17,7 +18,7 @@
 
         <%# Javascript at the bottom for fast page loading %>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-        <%= javascript_include_tag "colorbox/jquery.colorbox-min.js" %>
+        <%= javascript_include_tag "colorbox/jquery.colorbox.js" %>
         <%= javascript_include_tag 'frontend/jquery.inview' %>
 
 
@@ -33,7 +34,12 @@
                     $(this).colorbox({
                         width: 544,
                         top:40,
+
                         transition:"none"
+                    },function onOpen(){
+                        //alert('prin ano3ei to colorbox');
+                        //$("#colorbox").css('top', $(window).scrollTop() + "px");
+                        $("#colorbox").css('top', $(window).scrollTop()+90 + "px!important");
                     });
 
                     $(this).addClass("processed")
@@ -87,8 +93,28 @@
 
             });
         </script>
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
-        -->
+
+
+      <!--open detail view-->
+      <script>
+          $("#main").colorbox({
+              width: 544,
+              top:40,
+              open:true,
+              href:
+                      transition:"none"
+          },function onOpen(){
+              //alert('prin ano3ei to colorbox');
+              //$("#colorbox").css('top', $(window).scrollTop() + "px");
+              $("#colorbox").css('top', $(window).scrollTop()+90 + "px!important");
+          });
+      </script>
+
+
+
+
+      <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
+      -->
         <script>
             var _gaq = [
                 ['_setAccount', 'UA-XXXXX-X'],
@@ -101,7 +127,7 @@
                 s.parentNode.insertBefore(g, s)
             }(document, 'script'));
         </script>
-
     </div>
+  </div>
   </body>
 </html>

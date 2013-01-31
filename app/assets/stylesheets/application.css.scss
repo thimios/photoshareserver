@@ -77,10 +77,12 @@
 }
 
 #maincontainer {
-  width: 967px;
+  width: 1005px;
   margin: 0 auto;
   padding-top: 50px;
+  margin-left:18px;
 }
+
 
 #storeLink{
   width: 188px;
@@ -115,6 +117,14 @@
   padding-top:10px;
 
 }
+
+#colorbox{
+  position:absolute!important;
+  //top:20%!important;
+
+
+}
+
 .lastItem{
   position:relative;left:-26px;
 }
@@ -144,6 +154,7 @@
   margin-bottom: 0px;
 
 }
+
 .photoAuthor{
   font-family: 'FuturaBT-Book';
   font-size:12px;
@@ -156,6 +167,7 @@
   margin-top:20px;
   margin-bottom: 180px!important;
 }
+
 
 
 .menuItem span:hover{
@@ -313,7 +325,10 @@ a{
 .photosRow{
   margin-bottom:60px;
 }
+.hook{
 
+  display:none;
+}
 #footer {
   background: url(/assets/footerBg.png);
   background-repeat: no-repeat;
@@ -322,13 +337,14 @@ a{
   color: #696969;
   text-align: center;
   padding-top: 13px;
-  width: 1002px;
+  width: 1005px;
   height: 94px;
   position: fixed;
   bottom: 0px;
-  left: 50%;
-  margin-left: -501px;
   z-index: 12;
+  overflow:auto;
+  left:50%;
+  margin-left:-502px;
 }
 
 #footer span{

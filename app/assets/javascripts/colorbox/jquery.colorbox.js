@@ -38,7 +38,7 @@
 
 		open: false,
 		returnFocus: true,
-		reposition: true,
+		reposition: false,
 		loop: true,
 		slideshow: false,
 		slideshowAuto: true,
