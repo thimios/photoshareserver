@@ -74,7 +74,7 @@ TodosSt2::Application.routes.draw do
         resources :photos
       end
 
-      devise_for :users, :controllers => {:sessions => 'Api::V1::sessions', :registrations => "Api::V1::registrations", :confirmations => "Api::V1::confirmations"}, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
+      devise_for :users, :controllers => {:sessions => 'api/v1/sessions', :registrations => "api/v1/registrations", :confirmations => "api/v1/confirmations"}, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
 
       devise_scope :user do
         match 'login' => 'sessions#create', :via => [:post]
@@ -84,7 +84,7 @@ TodosSt2::Application.routes.draw do
         match 'users/:id' => 'registrations#show'
         match 'users/:id/follow' => 'registrations#follow'
         match 'users/:id/unfollow' => 'registrations#unfollow'
-        match 'users' => 'registrations#index'
+        match 'users' => 'registrations#index', :via => [:get]
       end
 
       resources :histories

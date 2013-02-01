@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :token_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable
 
   default_scope :conditions => { :deleted_at => nil }
 
@@ -138,6 +138,10 @@ class User < ActiveRecord::Base
     distance_in_km = Geocoder::Calculations::distance_between(self, [lat, long], :units => :km)
 
     return (plusminus + 1) * Math.exp( -7e-4 * distance_in_km)
+  end
+
+  def first_login
+    user.last_sign_in_at > 3.seconds.ago ? true : false
   end
 
   def as_json(options={})

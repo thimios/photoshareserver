@@ -29,16 +29,10 @@ module Api
         user = warden.authenticate(:scope => :user)
 
         if !user.nil?
-          first_login = user.last_sign_in_at > 3.seconds.ago ? true : false
           user.reset_authentication_token!
-          render :json => {:auth_token => user.authentication_token, :first_login => first_login, :token_type => "persistant", :user_id => user.id}, :callback => params[:callback]
+          render :json => {:auth_token => user.authentication_token, :first_login => user.first_login, :token_type => "persistant", :user_id => user.id}
         else
-          user = User.find_by_email (params['user']['email'])
-          if !user.nil? and !user.confirmed?
-            render :json => {:error => "Please confirm your email address before logging in. Check your email!"}, status: :unauthorized
-          else
-            render :json => {:error => "Invalid username or password"}, status: :unauthorized
-          end
+          render :json => {:error => "Invalid username or password"}, status: :unauthorized
         end
       end
     end

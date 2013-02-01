@@ -10,11 +10,48 @@ module Api
       include TestSunspot
 
       setup do
+
         @request.env["devise.mapping"] = Devise.mappings[:user]
-        sign_in User.first
       end
 
+      test "register new user" do
+        # tell Devise which mapping should be used before a request. This is necessary because Devise gets this information from router, but since functional tests do not pass through the router, it needs to be told explicitly.
+        email = "thimios.laptop@gmail.com"
+        post 'create' , { :format => 'json', :registration => {:username => "Thimioslaptop", :email =>email, :password =>"[FILTERED]", :password_confirmation =>"[FILTERED]", :gender =>"male", :birth_date =>"1994-10-27T00:00:00", :thumb_size_url =>"", :id =>"ext-record-165"} }
+        data = ActiveSupport::JSON.decode(response.body)
+
+        assert_response :success
+        assert_true data["first_login"], "First login should be true directly after registration"
+        assert_not_nil data["auth_token"], "Auth token should be set directly after registration, so that user is considered logged in"
+        assert_not_nil data["user"]
+        assert_equal email, data["user"]["email"]
+      end
+
+      test "register user with wrong password confirmation should fail with error message" do
+        # tell Devise which mapping should be used before a request. This is necessary because Devise gets this information from router, but since functional tests do not pass through the router, it needs to be told explicitly.
+        email = "thimios.laptop@gmail.com"
+        post 'create' , { :format => 'json', :registration => {:username => "Thimioslaptop", :email =>email, :password =>"[FILTERED]", :password_confirmation =>"skata", :gender =>"male", :birth_date =>"1994-10-27T00:00:00", :thumb_size_url =>"", :id =>"ext-record-165"} }
+        data = ActiveSupport::JSON.decode(response.body)
+
+        assert_response 422
+        assert_equal "doesn't match confirmation", data['errors']['password'][0]
+      end
+
+      test "register user with existing email should fail with error message" do
+        # tell Devise which mapping should be used before a request. This is necessary because Devise gets this information from router, but since functional tests do not pass through the router, it needs to be told explicitly.
+        email = User.first.email
+        post 'create' , { :format => 'json', :registration => {:username => "Thimioslaptop", :email =>email, :password =>"skata", :password_confirmation =>"skata", :gender =>"male", :birth_date =>"1994-10-27T00:00:00", :thumb_size_url =>"", :id =>"ext-record-165"} }
+        data = ActiveSupport::JSON.decode(response.body)
+
+        assert_response 422
+        assert_equal "has already been taken", data['errors']['email'][0]
+      end
+
+
+
       test "test suggested users" do
+        sign_in User.first
+
         # /api/v1/users/suggested.json?_dc=1356628364027&auth_token=Hy4JzyV8XVxpDtt7rStj&user_latitude=37.0435203&user_longitude=22.110219000000004&page=1&start=0&limit=20
         generator = Random.new
         User.all.each do |user|

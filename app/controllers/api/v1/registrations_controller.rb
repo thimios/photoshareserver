@@ -72,10 +72,12 @@ module Api
         params[:registration][:address] = "Urbanstrasse 66, 10967, Berlin, Germany"
         user = User.new(params[:registration])
         if user.save
-          render :json=> user.as_json, :status=>201
+          # on successful registration, user is directly logged in
+          user.reset_authentication_token!
+          render :json=> {:user => user.as_json, :auth_token => user.authentication_token, :first_login => true, :user_id => user.id} , :status=>201
           return
         else
-          warden.custom_failure!
+          # warden.custom_failure!
           render :json => { :errors =>user.errors },:status=>422
         end
       end
