@@ -11,7 +11,7 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   TestSunspot.setup
 
-  # by defalut, disable user activity tracking during testing
+  # by default, disable user activity tracking during testing
   PublicActivity.enabled= false
 
   # Add more helper methods to be used by all tests here...

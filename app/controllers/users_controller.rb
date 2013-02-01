@@ -11,7 +11,6 @@ class UsersController < ApplicationController
     render "index"
   end
 
-
   # GET /admin/users
   def index
     @users = User.page(params[:page]).per(params[:limit])
@@ -25,6 +24,10 @@ class UsersController < ApplicationController
   def csv
     @users = User.order(:username)
     send_data @users.to_web_csv, :filename => 'soberlin-users.csv'
+  end
+
+  def show
+    @user = User.find(params[:id])
   end
 
 end

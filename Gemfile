@@ -112,6 +112,8 @@ group :assets do
   gem "therubyracer", :require => 'v8'
   gem 'libv8'
 
+  gem 'jquery-datatables-rails'
+
   # only precompile updated assets
   gem 'turbo-sprockets-rails3'
 end

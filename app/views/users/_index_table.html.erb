@@ -1,27 +1,30 @@
-<table>
-  <tr>
-    <th>id</th>
-    <th>Username</th>
-    <th>Email</th>
-    <th>Born on</th>
-    <th>Gender</th>
-    <th>Registered at</th>
-    <th>Photos uploaded</th>
-    <th>Comments made</th>
-  </tr>
-
-  <% @users.each do |user| %>
+<table id="users">
+  <thead>
       <tr>
-        <td><%= user.id %></td>
-        <td><%= user.username %></td>
-        <td><%= user.email %></td>
-        <td><%= user.birth_date %></td>
-        <td><%= user.gender %></td>
-        <td><%= user.created_at %></td>
-        <td><%= user.photos.count %></td>
-        <td><%= user.comments.count %></td>
+        <th>id</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Born on</th>
+        <th>Gender</th>
+        <th>Registered at</th>
+        <th>Photos</th>
+        <th>Comments</th>
       </tr>
-  <% end %>
+  </thead>
+  <tbody>
+      <% @users.each do |user| %>
+          <tr>
+            <td><%= link_to(user.id, user) %></td>
+            <td><%= link_to(user.username, user) %></td>
+            <td><%= link_to(user.email, user) %></td>
+            <td><%= link_to(user.birth_date, user) %></td>
+            <td><%= link_to(user.gender, user) %></td>
+            <td><%= link_to(user.created_at, user) %></td>
+            <td><%= link_to(user.photos.count, user) %></td>
+            <td><%= link_to(user.comments.count, user) %></td>
+          </tr>
+      <% end %>
+  </tbody>
 </table>
 
 <%= paginate @users %>

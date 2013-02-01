@@ -48,8 +48,9 @@ TodosSt2::Application.routes.draw do
     match 'users/:id/unfollow' => 'registrations#unfollow'
   end
 
-  match 'users/csv' => 'users#csv', :as => :users_csv
-  match 'users' => 'users#index'
+  get 'users/csv' => 'users#csv', :as => :users_csv
+  get 'users/:id' => 'users#show', :as => :user
+  get 'users' => 'users#index'
 
   resources :histories
 

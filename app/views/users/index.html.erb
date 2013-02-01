@@ -7,8 +7,13 @@
     <%= text_field_tag(:search_string) %>
     <%= submit_tag("Search") %>
 <% end %>
+<br>
 
+<%= paginate @users %>
+<br>
 <%= render 'index_table' %>
+<br>
+<%= paginate @users %>
 
 <br>
 <p><%= link_to "Download CSV", users_csv_path %></p>

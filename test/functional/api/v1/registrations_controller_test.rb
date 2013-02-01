@@ -46,8 +46,6 @@ module Api
         assert_equal "has already been taken", data['errors']['email'][0]
       end
 
-
-
       test "test suggested users" do
         sign_in User.first
 
