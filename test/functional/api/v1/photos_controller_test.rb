@@ -7,12 +7,41 @@ module Api
   module V1
 
     class PhotosControllerTest < ActionController::TestCase
-      fixtures :categories, :users, :quotes, :photo_reports, :named_locations
+      fixtures :categories, :users, :photos, :quotes, :photo_reports, :named_locations
       include TestSunspot
 
       setup do
         sign_in User.first
         @generator = Random.new
+      end
+
+      test "index bbox" do
+        #y latitude
+        #x longitude
+        Photo.reindex
+        Sunspot.commit
+
+        sw_y=38.23493973799441
+        sw_x=21.736575518896416
+        ne_y=38.27962430368643
+        ne_x=21.764041339208916
+
+
+
+        get :indexbbox, {
+            :sw_y => 52.1,
+            :sw_x => 12.2,
+            :ne_y => 52.7,
+            :ne_x => 12.8,
+            :fashion =>true,
+            :art => true,
+            :place => true,
+            :current_markers => ""
+        }
+
+        assert_response :success
+        data = ActiveSupport::JSON.decode(response.body)
+        assert_not_nil data
       end
 
       test "should create photo without named location reference" do
@@ -176,19 +205,10 @@ module Api
       end
 
       test "get user feed, following one user with two photos and one location with two photos" do
-        # two photos for user2 with no location
-        2.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 2, latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), track_location: "yes")
-        end
-
-        first_location = NamedLocation.first
-        # two photos for user3 with first_location
-        2.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 3, latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), track_location: "yes", named_location_id: first_location.id)
-        end
-
         Photo.reindex
         Sunspot.commit
+
+        first_location = NamedLocation.first
 
         #first user is logged in user, following second user, who created two photos
         User.first.follow(User.find(2))
@@ -197,19 +217,11 @@ module Api
         get :index , {'feed' => true, 'page' => 1, 'start' => 0, 'limit' => 50, 'user_latitude' => @generator.rand(52.2..59.7), 'user_longitude' => @generator.rand(12.3..17.5) }
         assert_response :success
         photos = assigns(:photos)
-        assert_equal(4, photos.count, "Feed should include four photos")
+        assert_equal(5, photos.count, "Feed should include four photos")
       end
 
       test "get user feed, following one user with two photos and one location with two photos, one photo overlapping" do
-
-
-        # two photos for user2 with no location
-        2.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 2, latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), track_location: "yes")
-        end
-
         first_location = NamedLocation.first
-        # two photos for user3 with first_location
 
         Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 2, latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), track_location: "yes", named_location_id: first_location.id)
         Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 3, latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), track_location: "yes", named_location_id: first_location.id)
@@ -229,7 +241,7 @@ module Api
         get :index , {'feed' => true, 'page' => 1, 'start' => 0, 'limit' => 50, 'user_latitude' => @generator.rand(52.2..59.7), 'user_longitude' => @generator.rand(12.3..17.5) }
         assert_response :success
         photos = assigns(:photos)
-        assert_equal(4, photos.count, "Feed should include three photos")
+        assert_equal(7, photos.count, "Feed should include three photos")
       end
     end
   end

@@ -76,8 +76,6 @@ class Photo < ActiveRecord::Base
     self.named_location.nil? ? nil : self.named_location.vicinity
   end
 
-
-
   def location_reference
     self.named_location.nil? ? nil : self.named_location.reference
   end

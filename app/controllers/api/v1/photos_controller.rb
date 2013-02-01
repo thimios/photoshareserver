@@ -7,9 +7,11 @@ module Api
       skip_authorization_check
 
       # Returns the "best" ten markers according to our sorting algorithm, within a bounding box of coordinates
-      #http://localhost:3000/api/v1/photos/indexbbox.json?sw_y=48.488334&sw_x=6.416342&ne_y=57.492658&ne_x=18.428616&place=true&art=true
+      #http://localhost:3000/api/v1/photos/indexbbox.json?_dc=1359735692603&sw_y=38.23493973799441&sw_x=21.736575518896416&ne_y=38.27962430368643&ne_x=21.764041339208916&fashion=true&art=true&place=true&auth_token=jFZkzcuoLHnEqWJe3DPF&current_markers=94%2C93
+
       def indexbbox
-        # update current user location, if coordinates not empty
+        current_photo_ids = params['current_markers'].split(',').map{ | item | item.to_i }
+
         categories = Array.new
 
         if params[:fashion] == "true"
@@ -67,9 +69,27 @@ module Api
           photos.each { |photo|
             photo.current_user = current_user
           }
-          render :json => photos
+
+          new_photo_ids = photos.map{|photo| photo.id}
+
+          to_remove_ids = current_photo_ids - new_photo_ids
+
+          to_add_ids = new_photo_ids - current_photo_ids
+
+          to_add_photos = []
+
+          photos.each{ |photo|
+            unless to_add_ids.index(photo.id).nil?
+              to_add_photos << photo
+            end
+          }
+
+          render :json => {:to_add_photos => to_add_photos, :to_remove_ids => to_remove_ids}
         else
-          render :json => []
+          # no markers should be displayed, remove all of them
+          to_remove_ids = current_photo_ids
+          to_add_photos = []
+          render :json => {:to_add_photos => to_add_photos, :to_remove_ids => to_remove_ids}
         end
       end
 
