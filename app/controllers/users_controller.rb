@@ -4,6 +4,13 @@ class UsersController < ApplicationController
   load_and_authorize_resource
   layout "admin"
 
+  require_dependency 'user_search'
+
+  def search
+    @users = UserSearch.fulltext(params[:search_string], params[:page], params[:limit])
+    render "index"
+  end
+
 
   # GET /admin/users
   def index

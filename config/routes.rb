@@ -2,7 +2,6 @@ TodosSt2::Application.routes.draw do
 
   resources :quotes
 
-
   get "home/launchrock"
   get "home/facebook"
 
@@ -17,11 +16,11 @@ TodosSt2::Application.routes.draw do
   # admin routes
   match 'admin' => "admin#home", :as => :admin
 
-
   root :to => "home#launchrock"
   #root :to => "home#home"  # production home page
 
   opinio_model :controller => 'comments'
+
 
   resources :photos do
     opinio :controller => 'comments'
@@ -44,6 +43,7 @@ TodosSt2::Application.routes.draw do
     match 'login' => 'sessions#new', :via => [:get]
     get 'logout' => 'sessions#destroy', :as => :destroy_user_session
     match 'users/messages' => 'registrations#messages'
+    get 'users/search' => "users#search", :as => :user_search
     match 'users/:id/follow' => 'registrations#follow'
     match 'users/:id/unfollow' => 'registrations#unfollow'
   end

@@ -97,11 +97,11 @@ server LINODE_SERVER_HOSTNAME, :app, :web, :db, :primary => true
 
 before 'deploy:restart', 'deploy:migrate'
 # Install RVM
-before 'deploy:setup',   'rvm:install_rvm'
+# before 'deploy:setup',   'rvm:install_rvm'
 # Install Ruby
-before 'deploy:setup',   'rvm:install_ruby'
+# before 'deploy:setup',   'rvm:install_ruby'
 # Or create gemset
-before 'deploy',         'rvm:create_gemset'
+# before 'deploy',         'rvm:create_gemset'
 after  'deploy',         'deploy:cleanup'
 
 after "deploy:setup", "nginx:setup", "nginx:reload"
@@ -171,8 +171,8 @@ task :install_solr_init_script, :roles => :app do
 end
 
 after 'deploy:setup', 'deploy:setup_solr_data_dir'
-after 'deploy:update_code',  'install_unicorn_init_script'
-after 'deploy:update_code',  'install_solr_init_script'
+#after 'deploy:update_code',  'install_unicorn_init_script'
+#after 'deploy:update_code',  'install_solr_init_script'
 after 'unicorn:stop', 'solr:stop'
 before 'inicorn:start', 'solr:start'
 

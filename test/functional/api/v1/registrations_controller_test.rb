@@ -21,10 +21,9 @@ module Api
         data = ActiveSupport::JSON.decode(response.body)
 
         assert_response :success
-        assert_true data["first_login"], "First login should be true directly after registration"
+        assert_not_nil data
+        assert_equal email, data["email"]
         assert_not_nil data["auth_token"], "Auth token should be set directly after registration, so that user is considered logged in"
-        assert_not_nil data["user"]
-        assert_equal email, data["user"]["email"]
       end
 
       test "register user with wrong password confirmation should fail with error message" do

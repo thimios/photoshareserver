@@ -1,10 +1,28 @@
+class UserSearch
+
+  def self.fulltext(search_string, page, limit)
+    page = page || 1
+    limit = limit || 24
+    search = Sunspot.search (User) do
+      fulltext search_string
+      paginate(:page => page, :per_page => limit)
+    end
+
+    return search.results
+  end
+end
+
+
+
 module Api
   module V1
 
     class UserSearch
 
       def self.suggest_followable_users(current_user, page, limit)
-        # home.html.erb
+        page = page || 1
+        limit = limit || 24
+
         exclude_user_ids =  [current_user.id] + current_user.following_user_ids
         search = Sunspot.search (User) do
           without(:id, exclude_user_ids)

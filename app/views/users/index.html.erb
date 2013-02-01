@@ -2,6 +2,12 @@
 
 <h1>Listing users</h1>
 
+<%= form_tag(user_search_path, :method => "get") do %>
+    <%= label_tag(:search_string, "Search for:") %>
+    <%= text_field_tag(:search_string) %>
+    <%= submit_tag("Search") %>
+<% end %>
+
 <%= render 'index_table' %>
 
 <br>

@@ -74,10 +74,9 @@ module Api
         if user.save
           # on successful registration, user is directly logged in
           user.reset_authentication_token!
-          render :json=> {:user => user.as_json, :auth_token => user.authentication_token, :first_login => true, :user_id => user.id} , :status=>201
-          return
+          user.current_user= user
+          render :json=> user.as_json, :status=>201
         else
-          # warden.custom_failure!
           render :json => { :errors =>user.errors },:status=>422
         end
       end

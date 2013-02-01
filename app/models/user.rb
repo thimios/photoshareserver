@@ -110,6 +110,7 @@ class User < ActiveRecord::Base
 
   searchable do
     text :username, :as => :username_textp
+    text :email, :as => :email_textp
     integer :following_user_ids, :multiple => true
     integer :plusminus
     integer :id
@@ -141,11 +142,23 @@ class User < ActiveRecord::Base
   end
 
   def first_login
-    user.last_sign_in_at > 3.seconds.ago ? true : false
+    if self.last_sign_in_at.nil? || self.last_sign_in_at > 3.seconds.ago
+      return true
+    else
+      return false
+    end
+  end
+
+  def auth_token
+    self.authentication_token
   end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :thumb_size_url, :followed_by_current_user, :total_followers, :total_following ]))
+    if !(self.current_user.nil?) && self.current_user == self
+      super(options.reverse_merge(:methods => [ :thumb_size_url, :followed_by_current_user, :total_followers, :total_following, :auth_token  ]))
+    else
+      super(options.reverse_merge(:methods => [ :thumb_size_url, :followed_by_current_user, :total_followers, :total_following ]))
+    end
   end
 
   # used for functional tests
