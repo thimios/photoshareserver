@@ -30,4 +30,25 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  # GET /users/1/edit
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def generate_new_password_email
+    user = User.find(params[:user_id])
+    user.send_reset_password_instructions
+    redirect_to edit_user_url(user), :notice => "Reset password instructions have been sent to #{user.email}."
+  end
+
+  # PUT /users/1
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(params[:user])
+      redirect_to edit_user_url(@user), :notice => 'User was successfully updated.'
+    else
+      render action: "edit"
+    end
+  end
+
 end

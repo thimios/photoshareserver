@@ -14,14 +14,14 @@
   <tbody>
       <% @users.each do |user| %>
           <tr>
-            <td><%= link_to(user.id, user) %></td>
-            <td><%= link_to(user.username, user) %></td>
-            <td><%= link_to(user.email, user) %></td>
-            <td><%= link_to(user.birth_date, user) %></td>
-            <td><%= link_to(user.gender, user) %></td>
-            <td><%= link_to(user.created_at, user) %></td>
-            <td><%= link_to(user.photos.count, user) %></td>
-            <td><%= link_to(user.comments.count, user) %></td>
+            <td><%= link_to(user.id, edit_user_path(user)) %></td>
+            <td><%= link_to(user.username, edit_user_path(user)) %></td>
+            <td><%= link_to(user.email, edit_user_path(user)) %></td>
+            <td><%= link_to(user.birth_date, edit_user_path(user)) %></td>
+            <td><%= link_to(user.gender, edit_user_path(user)) %></td>
+            <td><%= link_to(user.created_at, edit_user_path(user)) %></td>
+            <td><%= link_to(user.photos.count, edit_user_path(user)) %></td>
+            <td><%= link_to(user.comments.count, edit_user_path(user)) %></td>
           </tr>
       <% end %>
   </tbody>

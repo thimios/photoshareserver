@@ -8,13 +8,27 @@
   <meta property="og:url" content="http://www.soberlin.org" />
   <meta property="og:image" content="null" />
   <meta property="og:description" content="I just signed up on So Berlin (soberlin.org)! - So inspiring and fresh " />
-  <%= stylesheet_link_tag    "admin", :media => "all" %>
+  <%= stylesheet_link_tag "admin/admin", :media => "all" %>
   <%= javascript_include_tag "admin" %>
-  <%= stylesheet_link_tag 'gmaps4rails' %>
+
   <%= csrf_meta_tags %>
-  <%= yield :head %>
+
 </head>
 <body>
+
+<% if notice || alert %>
+    <div class="flash-message <%= notice ? "notice" : ""%><%= alert ? "error" : ""%>">
+      <div class="container container_12 clearfix">
+        <div class="grid_12">
+          <% if notice %>
+              <p><%= notice %></p>
+          <% elsif alert %>
+              <p><%= alert %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+<% end %>
 
 <div id="photosPart">
 <%= render "devise/menu/login_items" %>
