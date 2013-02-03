@@ -21,27 +21,65 @@ module Api
         Photo.reindex
         Sunspot.commit
 
-        sw_y=38.23493973799441
-        sw_x=21.736575518896416
-        ne_y=38.27962430368643
-        ne_x=21.764041339208916
-
-
+        sw_y=52.13493973799441
+        sw_x=12.236575518896416
+        ne_y=52.77962430368643
+        ne_x=12.764041339208916
 
         get :indexbbox, {
-            :sw_y => 52.1,
-            :sw_x => 12.2,
-            :ne_y => 52.7,
-            :ne_x => 12.8,
-            :fashion =>true,
-            :art => true,
-            :place => true,
+            :sw_y => sw_y,
+            :sw_x => sw_x,
+            :ne_y => ne_y,
+            :ne_x => ne_x,
+            :fashion => "true",
+            :art => "true",
+            :place => "true",
             :current_markers => ""
         }
 
         assert_response :success
         data = ActiveSupport::JSON.decode(response.body)
+
         assert_not_nil data
+        assert_equal 5, data['to_add_photos'].count, "should return all 5 photos of the fixture"
+
+
+        # test with two markers already on the map
+        get :indexbbox, {
+            :sw_y => sw_y,
+            :sw_x => sw_x,
+            :ne_y => ne_y,
+            :ne_x => ne_x,
+            :fashion => "true",
+            :art => "true",
+            :place => "true",
+            :current_markers => "1,3"
+        }
+
+        assert_response :success
+        data = ActiveSupport::JSON.decode(response.body)
+
+        assert_not_nil data
+        assert_equal 3, data['to_add_photos'].count, "should return 3 photos of the fixture"
+
+        # test with two extra markers that should be removed from the map
+        get :indexbbox, {
+            :sw_y => sw_y,
+            :sw_x => sw_x,
+            :ne_y => ne_y,
+            :ne_x => ne_x,
+            :fashion => "true",
+            :art => "true",
+            :place => "true",
+            :current_markers => "1,3,45,46"
+        }
+
+        assert_response :success
+        data = ActiveSupport::JSON.decode(response.body)
+
+        assert_not_nil data
+        assert_equal 3, data['to_add_photos'].count, "should return 3 photos of the fixture"
+        assert_equal 2, data['to_remove_ids'].count, "should remove two ids"
       end
 
       test "should create photo without named location reference" do

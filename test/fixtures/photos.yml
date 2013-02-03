@@ -7,6 +7,8 @@ photos_001:
   longitude: 12.3
   track_location: yes
   named_location_id: 1
+  banned: false
+  created_at: 2012-12-12 14:26:51
 
 photos_002:
   id: 2
@@ -17,6 +19,8 @@ photos_002:
   longitude: 12.4
   track_location: yes
   named_location_id: 1
+  banned: false
+  created_at: 2012-12-12 14:26:51
 
 photos_003:
   id: 3
@@ -27,6 +31,8 @@ photos_003:
   longitude: 12.5
   track_location: yes
   named_location_id: 1
+  banned: false
+  created_at: 2012-12-12 14:26:51
 
 photos_004:
   id: 4
@@ -37,6 +43,8 @@ photos_004:
   longitude: 12.6
   track_location: yes
   named_location_id: 1
+  banned: false
+  created_at: 2012-12-12 14:26:51
 
 photos_005:
   id: 5
@@ -47,4 +55,6 @@ photos_005:
   longitude: 12.7
   track_location: yes
   named_location_id: 1
+  banned: false
+  created_at: 2012-12-12 14:26:51
 
