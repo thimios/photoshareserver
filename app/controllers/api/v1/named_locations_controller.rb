@@ -2,7 +2,7 @@ module Api
   module V1
     class NamedLocationsController < ApplicationController
       before_filter :my_authenticate_user
-      require_dependency 'location_search'
+      require_dependency 'api/v1/location_search'
       # the api is always available to all logged in users
       skip_authorization_check
 

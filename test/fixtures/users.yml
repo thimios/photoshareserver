@@ -12,6 +12,8 @@ one:
   gender: male
   birth_date: <%= 20.years.ago %>
   confirmed_at: <%= Time.now %>
+  latitude: 52.5
+  longitude: 12.6
 
 two:
   id: 2
@@ -21,6 +23,8 @@ two:
   gender: male
   birth_date: <%= 20.years.ago %>
   confirmed_at: <%= Time.now %>
+  latitude: 52.5
+  longitude: 12.6
 
 three:
   id: 3
@@ -30,6 +34,8 @@ three:
   gender: male
   birth_date: <%= 20.years.ago %>
   confirmed_at: <%= Time.now %>
+  latitude: 52.5
+  longitude: 12.6
 
 four:
   id: 4
@@ -39,6 +45,8 @@ four:
   gender: male
   birth_date: <%= 20.years.ago %>
   confirmed_at: <%= Time.now %>
+  latitude: 52.5
+  longitude: 12.6
 
 five:
   id: 5
@@ -48,6 +56,8 @@ five:
   gender: male
   birth_date: <%= 20.years.ago %>
   confirmed_at: <%= Time.now %>
+  latitude: 52.5
+  longitude: 12.6
 
 six:
   id: 6
@@ -57,6 +67,8 @@ six:
   gender: male
   birth_date: <%= 20.years.ago %>
   confirmed_at: <%= Time.now %>
+  latitude: 52.5
+  longitude: 12.6
 
 seven:
   id: 7
@@ -66,6 +78,8 @@ seven:
   gender: male
   birth_date: <%= 20.years.ago %>
   confirmed_at: <%= Time.now %>
+  latitude: 52.5
+  longitude: 12.6
 
 eight:
   id: 8
@@ -75,6 +89,8 @@ eight:
   gender: male
   birth_date: <%= 20.years.ago %>
   confirmed_at: <%= Time.now %>
+  latitude: 52.5
+  longitude: 12.6
 
 nine:
   id: 9
@@ -84,6 +100,8 @@ nine:
   gender: male
   birth_date: <%= 20.years.ago %>
   confirmed_at: <%= Time.now %>
+  latitude: 52.5
+  longitude: 12.6
 
 ten:
   id: 10
@@ -93,3 +111,5 @@ ten:
   gender: male
   birth_date: <%= 20.years.ago %>
   confirmed_at: <%= Time.now %>
+  latitude: 52.5
+  longitude: 12.6
