@@ -5,10 +5,10 @@ module Api
       before_filter :my_authenticate_user
       # the api is always available to all logged in users
       skip_authorization_check
+      require_dependency 'api/v1/photo_search'
 
       # Returns the "best" ten markers according to our sorting algorithm, within a bounding box of coordinates
       #http://localhost:3000/api/v1/photos/indexbbox.json?_dc=1359735692603&sw_y=38.23493973799441&sw_x=21.736575518896416&ne_y=38.27962430368643&ne_x=21.764041339208916&fashion=true&art=true&place=true&auth_token=jFZkzcuoLHnEqWJe3DPF&current_markers=94%2C93
-
       def indexbbox
         current_photo_ids = params['current_markers'].split(',').map{ | item | item.to_i }
 
@@ -108,6 +108,12 @@ module Api
         # update current user location, if coordinates not empty
         current_user.update_location(params[:user_latitude], params[:user_longitude])
 
+        # time_factor
+        # distance_factor
+
+        time_factor = PhotoSearch.time_factor_from_param params[:time_factor]
+        distance_factor = PhotoSearch.distance_factor_from_param params[:distance_factor]
+
         if params[:filter]
           @filter_params = HashWithIndifferentAccess.new
           @filter = ActiveSupport::JSON.decode(params[:filter])
@@ -149,10 +155,13 @@ module Api
                 with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
                 with(:named_location_id).any_of(current_user.following_location_ids)
               end
+              without(:user_id).equal_to(current_user.id)
             elsif following_users_count == 0 and following_location_count > 0
               with(:named_location_id).any_of(current_user.following_location_ids)
+              without(:user_id).equal_to(current_user.id)
             elsif following_users_count > 0 and following_location_count == 0
               with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
+              without(:user_id).equal_to(current_user.id)
             elsif following_users_count == 0 and following_location_count == 0
               with(:user_id).equal_to(nil)
             end
@@ -174,7 +183,7 @@ module Api
               #c2 = -1.15e-09
               #Assuming distance in km for c1 and milliseconds for c2.
               solr_params[:sort] = "product( sum(plusminus_i,1), exp( product(
-                                         -7e-4,
+                                         #{distance_factor},
                                           geodist(
                                             coordinates_ll,
                                             #{params[:user_latitude]},
@@ -184,7 +193,7 @@ module Api
                                       ),
                                       exp(
                                         product(
-                                            -1.15e-09,
+                                            #{time_factor},
                                             ms(NOW, created_at_dt)
                                         )
                                       )

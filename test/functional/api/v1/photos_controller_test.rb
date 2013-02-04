@@ -163,7 +163,6 @@ module Api
           user.vote_for (first_photo)
         }
 
-
         photo_count_high_rate.times do
           photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: @generator.rand(1..2), latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), track_location: "yes")
           photo.created_at = rand(0.2..0.7).hours.ago
@@ -214,22 +213,18 @@ module Api
         Sunspot.commit
 
         #first user is logged in user, following second user
-        User.first.follow(User.find(2))
+        User.first.follow(User.find(10))
 
         get :index , {'feed' => true, 'page' => 1, 'start' => 0, 'limit' => 50, 'user_latitude' => @generator.rand(52.2..59.7), 'user_longitude' => @generator.rand(12.3..17.5) }
         assert_response :success
 
         photos = assigns(:photos)
 
-        assert_equal(0, photos.count, "Feed should include two photos")
+        assert_equal(0, photos.count, "Feed should include no photos")
 
       end
 
       test "get user feed, following one user with two photos" do
-        2.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 2, latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), track_location: "yes")
-        end
-
         Photo.reindex
         Sunspot.commit
 
@@ -250,12 +245,26 @@ module Api
 
         #first user is logged in user, following second user, who created two photos
         User.first.follow(User.find(2))
+
+        # all photos of first location actually belong to the current user, they should not be returned in the feed
         User.first.follow(first_location)
 
         get :index , {'feed' => true, 'page' => 1, 'start' => 0, 'limit' => 50, 'user_latitude' => @generator.rand(52.2..59.7), 'user_longitude' => @generator.rand(12.3..17.5) }
         assert_response :success
         photos = assigns(:photos)
-        assert_equal(5, photos.count, "Feed should include four photos")
+        assert_equal(2, photos.count, "Feed should include two photos")
+      end
+
+      test "feed should not include own photos from followed location" do
+        Photo.reindex
+        Sunspot.commit
+        User.first.follow(NamedLocation.first)
+        User.first.follow(NamedLocation.find(2))
+        User.first.follow(User.find(10))
+        get :index , {'feed' => true, 'page' => 1, 'start' => 0, 'limit' => 50, 'user_latitude' => @generator.rand(52.2..59.7), 'user_longitude' => @generator.rand(12.3..17.5) }
+        assert_response :success
+        photos = assigns(:photos)
+        assert_equal(2, photos.count, "Feed should include just photos that do not belong to the current user")
       end
 
       test "get user feed, following one user with two photos and one location with two photos, one photo overlapping" do
@@ -279,7 +288,7 @@ module Api
         get :index , {'feed' => true, 'page' => 1, 'start' => 0, 'limit' => 50, 'user_latitude' => @generator.rand(52.2..59.7), 'user_longitude' => @generator.rand(12.3..17.5) }
         assert_response :success
         photos = assigns(:photos)
-        assert_equal(7, photos.count, "Feed should include three photos")
+        assert_equal(4, photos.count, "Feed should include 4 photos")
       end
     end
   end

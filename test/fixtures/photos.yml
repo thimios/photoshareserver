@@ -38,7 +38,7 @@ photos_004:
   id: 4
   title: first photo
   category_id: 1
-  user_id: 1
+  user_id: 2
   latitude: 52.5
   longitude: 12.6
   track_location: yes
@@ -50,7 +50,7 @@ photos_005:
   id: 5
   title: first photo
   category_id: 1
-  user_id: 1
+  user_id: 2
   latitude: 52.6
   longitude: 12.7
   track_location: yes
