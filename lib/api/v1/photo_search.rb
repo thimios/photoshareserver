@@ -20,15 +20,15 @@ module Api
         #1. -0.8e-7
         #0. -1e-5 : recent : full left
         case time_factor_param
-          when '0' # recent, full left
+          when "0" # recent, full left
            return "-1e-5"
-          when '1'
+          when "1"
             return "-0.8e-7"
-          when '2' # middle, default value
+          when "2" # middle, default value
             return "-1.15e-9"
-          when '3'
+          when "3"
             return "-1.15e-10"
-          when '4' # all time, full right
+          when "4" # all time, full right
             return "0"
           else
             logger.warn "Time factor param value: #{time_factor_param} not expected. Using default"
@@ -42,7 +42,7 @@ module Api
       def self.distance_factor_from_param(distance_factor_param)
         if distance_factor_param.nil?
           Rails.logger.warn "distance_factor param is nil, using default, slider in the middle"
-          distance_factor_param = 2
+          distance_factor_param = "2"
         end
         #Distance:
         #
