@@ -37,4 +37,10 @@ class UserTest < ActiveSupport::TestCase
 
   end
 
+  test "followed by current user should be self, when current user is self" do
+    user = User.first
+    user.current_user = user
+    assert_equal "self", user.followed_by_current_user
+  end
+
 end

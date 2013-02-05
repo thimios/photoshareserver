@@ -78,7 +78,9 @@ class User < ActiveRecord::Base
 
   def followed_by_current_user
     # add whether the current user is following this user or not
-    if !self.current_user.nil? and self.followed_by?(self.current_user)
+    if !self.current_user.nil? and self.current_user.id == self.id
+      return "self"
+    elsif !self.current_user.nil? and self.followed_by?(self.current_user)
       return "true"
     else
       return "false"
