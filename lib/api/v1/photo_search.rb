@@ -31,7 +31,7 @@ module Api
           when "4" # all time, full right
             return "0"
           else
-            logger.warn "Time factor param value: #{time_factor_param} not expected. Using default"
+            Rails.logger.warn "Time factor param value: #{time_factor_param} not expected. Using default"
             return "-1.15e-9"
         end
       end
