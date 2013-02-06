@@ -4,6 +4,7 @@
   <%= render "head" %>
 
   <body class="<%= controller.controller_name %>">
+  <div id="linkToStore">Get So Berlin from the <a>App store</a> and start discovering how berlin is your neighborhood</div>
   <div style="width:1005px;margin:0 auto">
     <div id="maincontainer">
         <%= render "chromeframe" %>
@@ -20,6 +21,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <%= javascript_include_tag "colorbox/jquery.colorbox.js" %>
         <%= javascript_include_tag 'frontend/jquery.inview' %>
+        <%= javascript_include_tag 'http://dinbror.dk/downloads/jquery.bpopup-0.8.0.min.js' %>
 
 
         <%= javascript_include_tag "plugins.js" %>

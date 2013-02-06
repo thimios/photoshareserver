@@ -7,7 +7,8 @@
       <div id="photoText">
         <div id="photoTextTop"><%= @photo.title %></div><div id="uploadedDate"> , <%= @photo.created_at_date %></div>
         <div id="photoTextBottom">
-          <div>by <div id="authorUsername"><%= @photo.user.username %></div><img class="followButton" src="/assets/follow.jpg"/></div>
+          <div>by <div id="authorUsername"><%= @photo.user.username %></div>
+            <img onclick="$('#linkToStore').bPopup({zIndex:1000000});" class="followButton" src="/assets/follow.jpg"/></div>
 
           <% unless @photo.named_location.nil? %>
                 <div>at <div id="placeName"><%=  @photo.named_location.name %></div><img class="followButton" src="/assets/follow.jpg"/></div>
