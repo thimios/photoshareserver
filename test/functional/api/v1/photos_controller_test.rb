@@ -41,7 +41,7 @@ module Api
         data = ActiveSupport::JSON.decode(response.body)
 
         assert_not_nil data
-        assert_equal 5, data['to_add_photos'].count, "should return all photos of the fixture with show_on_map 1"
+        assert_equal 1, data['to_add_photos'].count, "should return only one photo of the fixture for each location and only photos with show_on_map 1"
 
 
         # test with two markers already on the map
@@ -53,14 +53,14 @@ module Api
             :fashion => "true",
             :art => "true",
             :place => "true",
-            :current_markers => "1,3"
+            :current_markers => "1"
         }
 
         assert_response :success
         data = ActiveSupport::JSON.decode(response.body)
 
         assert_not_nil data
-        assert_equal 3, data['to_add_photos'].count, "should return 3 photos of the fixture"
+        assert_equal 1, data['to_add_photos'].count, "should return one more photo"
 
         # test with two extra markers that should be removed from the map
         get :indexbbox, {
@@ -78,13 +78,18 @@ module Api
         data = ActiveSupport::JSON.decode(response.body)
 
         assert_not_nil data
-        assert_equal 3, data['to_add_photos'].count, "should return 3 photos of the fixture"
-        assert_equal 2, data['to_remove_ids'].count, "should remove two ids"
+        assert_equal 0, data['to_add_photos'].count, "should return no more photos of the fixture"
+        assert_equal 3, data['to_remove_ids'].count
       end
 
       test "should create photo without named location reference" do
+        count = NamedLocation.count
         assert_empty Photo.find_all_by_title "photo without location", "Photo should not be there"
         post :create, { :title => "photo without location", :category_id => 1, :user_id => @generator.rand(1..2), :latitude => 52.2, :longitude => 12.3, show_on_map: 1}
+        assert_response :success
+
+        assert_equal count, NamedLocation.count
+
       end
 
       test "should create photo and named location" do
