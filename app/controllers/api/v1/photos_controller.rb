@@ -30,6 +30,7 @@ module Api
             #x longitude
             with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
             with(:category_id,  categories)
+            with(:show_on_map, 1)
             paginate(:page => 1, :per_page => 10)
 
             adjust_solr_params do |solr_params|

@@ -5,7 +5,7 @@ photos_001:
   user_id: 1
   latitude: 52.2
   longitude: 12.3
-  track_location: yes
+  show_on_map: 1
   named_location_id: 1
   banned: false
   created_at: 2012-12-12 14:26:51
@@ -17,7 +17,7 @@ photos_002:
   user_id: 1
   latitude: 52.3
   longitude: 12.4
-  track_location: yes
+  show_on_map: 1
   named_location_id: 1
   banned: false
   created_at: 2012-12-12 14:26:51
@@ -29,7 +29,7 @@ photos_003:
   user_id: 1
   latitude: 52.4
   longitude: 12.5
-  track_location: yes
+  show_on_map: 1
   named_location_id: 1
   banned: false
   created_at: 2012-12-12 14:26:51
@@ -41,7 +41,7 @@ photos_004:
   user_id: 2
   latitude: 52.5
   longitude: 12.6
-  track_location: yes
+  show_on_map: 1
   named_location_id: 1
   banned: false
   created_at: 2012-12-12 14:26:51
@@ -53,8 +53,22 @@ photos_005:
   user_id: 2
   latitude: 52.6
   longitude: 12.7
-  track_location: yes
+  show_on_map: 1
   named_location_id: 1
   banned: false
   created_at: 2012-12-12 14:26:51
+
+photos_006:
+  id: 6
+  title: first photo
+  category_id: 1
+  user_id: 2
+  latitude: 52.6
+  longitude: 12.7
+  show_on_map: 0
+  named_location_id: 1
+  banned: false
+  created_at: 2012-12-12 14:26:51
+
+
 
