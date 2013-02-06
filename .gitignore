@@ -20,6 +20,6 @@ tmp
 ehthumbs.db
 Icon?
 Thumbs.db
-/log
-/solr/pids
-/solr/data
+
+solr/pids
+solr/data
