@@ -29,7 +29,7 @@ user1 =
         :admin => true,
         :superadmin => true
     )
-user1.confirm!
+
 user1.geocode
 user1.save
 
@@ -46,7 +46,7 @@ user2 =
         :admin => true,
         :superadmin => true
     )
-user2.confirm!
+
 user2.geocode
 user2.save
 
@@ -63,7 +63,7 @@ user3 =
         :admin => true,
         :superadmin => false
     )
-user3.confirm!
+
 user3.geocode
 user3.save
 
