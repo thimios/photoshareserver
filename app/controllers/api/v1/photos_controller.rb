@@ -31,10 +31,12 @@ module Api
             with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
             with(:category_id,  categories)
             with(:show_on_map, 1)
-            paginate(:page => 1, :per_page => 10)
+            group(:named_location_id_str) do
+              limit 10
+            end
+            #paginate(:page => 1, :per_page => 10)
 
             adjust_solr_params do |solr_params|
-
               #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
               #
               #c1 and c2 are negative constants.
@@ -64,7 +66,16 @@ module Api
                                      ) desc".gsub(/\s+/, " ").strip
             end
           end
-          photos = search.results
+
+          photos = []
+
+          search.group(:named_location_id_str).groups.each do |group|
+            if group.value ==""
+              photos.concat group.results
+            else
+              photos.append group.results.first
+            end
+          end
 
           # set current_user on all photos before calling voted_by_current_user
           photos.each { |photo|
@@ -85,7 +96,7 @@ module Api
             end
           }
 
-          render :json => {:to_add_photos => to_add_photos, :to_remove_ids => to_remove_ids}
+            render :json => {:to_add_photos => to_add_photos, :to_remove_ids => to_remove_ids}
         else
           # no markers should be displayed, remove all of them
           to_remove_ids = current_photo_ids

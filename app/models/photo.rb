@@ -28,8 +28,12 @@ class Photo < ActiveRecord::Base
     integer :show_on_map
     boolean :banned
     time :created_at, :trie => true
+    string :named_location_id_str
   end
 
+  def named_location_id_str
+    self.named_location_id.to_s
+  end
 
   belongs_to :category, :touch => true, :inverse_of => :photos
   belongs_to :user, :touch => false, :inverse_of => :photos
