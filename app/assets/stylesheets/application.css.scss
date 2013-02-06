@@ -104,7 +104,9 @@
   position: relative;
   left: 70px;
 }
-
+#link{
+  color: #a1c21d!important;
+}
 #logo, #topRight, #slogan, #storeLink{
   display:inline-block;
   vertical-align:top;
@@ -487,6 +489,7 @@ a{
   position: relative;
   top: -3px;
   left: 14px;
+  cursor: pointer;
 }
 
 .linkContainer{
