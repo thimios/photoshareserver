@@ -8,6 +8,8 @@ TodosSt2::Application.routes.draw do
   match 'home' => "home#home", :as => :home
   match 'about' => 'home#about', :as => :about
   match 'terms' => 'home#terms', :as => :terms
+  match 'press' => "home#press", :as => :press
+  match 'contact' => "home#contact", :as => :contact
 
   match 'home/photo/:id' => 'home#photo_details', :as => :photo_details
   match 'home/photos_paging' => 'home#photos_paging', :as => :photos_paging

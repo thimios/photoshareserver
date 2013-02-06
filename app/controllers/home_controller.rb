@@ -71,8 +71,12 @@ class HomeController < ApplicationController
 
   end
 
-  def facebook
-    # facebook.html.erb
+  def contact
+    # contact.html.erb
+  end
+
+  def press
+    # press.html.erb
   end
 
   def about
