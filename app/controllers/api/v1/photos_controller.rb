@@ -12,6 +12,8 @@ module Api
       def indexbbox
         current_photo_ids = params['current_markers'].split(',').map{ | item | item.to_i }
 
+        #params[:detail_photo_id]
+
         categories = Array.new
 
         if params[:fashion] == "true"

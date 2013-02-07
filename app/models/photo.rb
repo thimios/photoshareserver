@@ -52,6 +52,14 @@ class Photo < ActiveRecord::Base
     self.show_on_map? ? "yes" : "no"
   end
 
+  def track_location=(new_value)
+    if new_value == "yes"
+      self.show_on_map= true
+    else
+      self.show_on_map= false
+    end
+  end
+
   def medium_size_url
     self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium)
   end
