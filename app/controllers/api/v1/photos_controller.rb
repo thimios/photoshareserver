@@ -32,7 +32,7 @@ module Api
             #x longitude
             with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
             with(:category_id,  categories)
-            with(:show_on_map, 1)
+            with(:show_on_map, true)
             group(:named_location_id_str) do
               limit 10
             end

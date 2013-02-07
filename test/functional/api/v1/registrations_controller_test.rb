@@ -65,7 +65,7 @@ module Api
         photo_count = photo_count_low_rate + photo_count_high_rate
 
         photo_count_high_rate.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: generator.rand(1..10), latitude: generator.rand(52.2..59.7), longitude: generator.rand(12.3..17.5), show_on_map: 1)
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: generator.rand(1..10), latitude: generator.rand(52.2..59.7), longitude: generator.rand(12.3..17.5), show_on_map: true)
           photo.created_at = rand(0.2..0.7).hours.ago
           photo.save
 
@@ -76,7 +76,7 @@ module Api
         end
 
         photo_count_low_rate.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: generator.rand(1..10), latitude: generator.rand(52.2..56.7), longitude: generator.rand(12.3..17.5), show_on_map: 1)
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: generator.rand(1..10), latitude: generator.rand(52.2..56.7), longitude: generator.rand(12.3..17.5), show_on_map: true)
           photo.created_at = rand(0..20000).hours.ago
           photo.save
 

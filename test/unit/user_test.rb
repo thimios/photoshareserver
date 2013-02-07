@@ -8,7 +8,7 @@ class UserTest < ActiveSupport::TestCase
     # photos created by first user
     total_votes_on_photos_of_first_user = 0
     5.times do
-      photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: rand(1..3), user_id: 1, latitude: generator.rand(52.2..59.7), longitude: generator.rand(12.3..17.5), show_on_map: 1)
+      photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: rand(1..3), user_id: 1, latitude: generator.rand(52.2..59.7), longitude: generator.rand(12.3..17.5), show_on_map: true)
       photo.created_at = rand(0.2..0.7).hours.ago
       photo.save
 
@@ -22,7 +22,7 @@ class UserTest < ActiveSupport::TestCase
 
     # photos created by all other users
     15.times do
-      photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: rand(1..3), user_id: generator.rand(2..10), latitude: generator.rand(52.2..59.7), longitude: generator.rand(12.3..17.5), show_on_map: 1)
+      photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: rand(1..3), user_id: generator.rand(2..10), latitude: generator.rand(52.2..59.7), longitude: generator.rand(12.3..17.5), show_on_map: true)
       photo.created_at = rand(0.2..0.7).hours.ago
       photo.save
 

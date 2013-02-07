@@ -41,7 +41,7 @@ module Api
         data = ActiveSupport::JSON.decode(response.body)
 
         assert_not_nil data
-        assert_equal 1, data['to_add_photos'].count, "should return only one photo of the fixture for each location and only photos with show_on_map 1"
+        assert_equal 1, data['to_add_photos'].count, "should return only one photo of the fixture for each location and only photos with show_on_map true"
 
 
         # test with two markers already on the map
@@ -85,7 +85,7 @@ module Api
       test "should create photo without named location reference" do
         count = NamedLocation.count
         assert_empty Photo.find_all_by_title "photo without location", "Photo should not be there"
-        post :create, { :title => "photo without location", :category_id => 1, :user_id => @generator.rand(1..2), :latitude => 52.2, :longitude => 12.3, show_on_map: 1}
+        post :create, { :title => "photo without location", :category_id => 1, :user_id => @generator.rand(1..2), :latitude => 52.2, :longitude => 12.3, show_on_map: true}
         assert_response :success
 
         assert_equal count, NamedLocation.count
@@ -98,7 +98,7 @@ module Api
         location_name = "Hasenheide Volkspark"
         location_vicinity = "Berlin"
         assert_empty Photo.find_all_by_title "photo with location", "Photo should not be there"
-        post :create, { :title => "photo with location", :category_id => 1, :user_id => @generator.rand(1..2), :latitude => 52.2, :longitude => 12.3, show_on_map: 1, :location_reference => location_reference_string, :location_google_id => location_google_id, :location_name => location_name, :location_vicinity => location_vicinity }
+        post :create, { :title => "photo with location", :category_id => 1, :user_id => @generator.rand(1..2), :latitude => 52.2, :longitude => 12.3, show_on_map: true, :location_reference => location_reference_string, :location_google_id => location_google_id, :location_name => location_name, :location_vicinity => location_vicinity }
         assert_not_empty Photo.find_all_by_title "photo with location", "Photo should be created"
         assert_not_empty NamedLocation.find_all_by_reference location_reference_string, "Named location should be created"
         photos = Photo.find_all_by_title "photo with location"
@@ -111,7 +111,7 @@ module Api
         PublicActivity.set_controller(@controller)
         user2 = User.all.second
 
-        first_photo  = Photo.create(title: "first photo", category_id: 1, user_id: @generator.rand(1..2), latitude: 52.2, longitude: 12.3, show_on_map: 1)
+        first_photo  = Photo.create(title: "first photo", category_id: 1, user_id: @generator.rand(1..2), latitude: 52.2, longitude: 12.3, show_on_map: true)
         first_photo.save
 
         comment = first_photo.comments.build( body: Faker::Lorem.sentence(3) )
@@ -161,7 +161,7 @@ module Api
         photo_count = photo_count_low_rate + photo_count_high_rate
 
         #creating first photo
-        first_photo  = Photo.create(title: "first photo", category_id: 1, user_id: @generator.rand(1..2), latitude: 52.2, longitude: 12.3, show_on_map: 1)
+        first_photo  = Photo.create(title: "first photo", category_id: 1, user_id: @generator.rand(1..2), latitude: 52.2, longitude: 12.3, show_on_map: true)
         first_photo.save
         users = User.order('RAND()').limit(10)
         users.each {|user|
@@ -169,7 +169,7 @@ module Api
         }
 
         photo_count_high_rate.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: @generator.rand(1..2), latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), show_on_map: 1)
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: @generator.rand(1..2), latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), show_on_map: true)
           photo.created_at = rand(0.2..0.7).hours.ago
           photo.save
 
@@ -180,7 +180,7 @@ module Api
         end
 
         photo_count_low_rate.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: @generator.rand(1..2), latitude: @generator.rand(52.2..56.7), longitude: @generator.rand(12.3..17.5), show_on_map: 1)
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: @generator.rand(1..2), latitude: @generator.rand(52.2..56.7), longitude: @generator.rand(12.3..17.5), show_on_map: true)
           photo.created_at = rand(0..20000).hours.ago
           photo.save
 
@@ -275,12 +275,12 @@ module Api
       test "get user feed, following one user with two photos and one location with two photos, one photo overlapping" do
         first_location = NamedLocation.first
 
-        Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 2, latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), show_on_map: 1, named_location_id: first_location.id)
-        Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 3, latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), show_on_map: 1, named_location_id: first_location.id)
+        Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 2, latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), show_on_map: true, named_location_id: first_location.id)
+        Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 3, latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), show_on_map: true, named_location_id: first_location.id)
 
         #and some unrelated
         2.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 4, latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), show_on_map: 1)
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 4, latitude: @generator.rand(52.2..59.7), longitude: @generator.rand(12.3..17.5), show_on_map: true)
         end
 
         Photo.reindex
