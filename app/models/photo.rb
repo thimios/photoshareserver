@@ -1,6 +1,11 @@
 class Photo < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
+  after_destroy :reindex_named_location
+  after_save :reindex_named_location
+  after_update :reindex_named_location
+
+
   acts_as_voteable
 
   has_many :photo_reports, :inverse_of => :photo, :dependent => :destroy
@@ -38,6 +43,13 @@ class Photo < ActiveRecord::Base
   belongs_to :category, :touch => true, :inverse_of => :photos
   belongs_to :user, :touch => false, :inverse_of => :photos
   belongs_to :named_location,:touch => true, :inverse_of => :photos
+
+  def reindex_named_location
+    unless self.named_location.nil?
+      Sunspot.index! self.named_location
+    end
+  end
+
   has_attached_file :image,
                     :styles => { :full => "640x640", :medium => "460x460>", :thumb => "80x80>" }
   def original_size_url
