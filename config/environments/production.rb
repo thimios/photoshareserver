@@ -35,6 +35,13 @@ TodosSt2::Application.configure do
   # ssl everywhere except home page and /home
   config.middleware.use Rack::SslEnforcer, :strict => true, :except => [/\/$/, ]
 
+  # send an email on exceptions
+  config.middleware.use ExceptionNotifier,
+                        :email_prefix => "[So Berlin production] ",
+                        :sender_address => %{"notifier" <server@soberlin.org>},
+                        :exception_recipients => %w{thimios@wantedpixel.com, spiros@wantedpixel.com}
+
+
   # See everything in the log (default is :info)
   # config.log_level = :debug
 

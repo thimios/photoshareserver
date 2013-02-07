@@ -88,6 +88,8 @@ group :testing do
   gem 'test-unit'
 end
 
+# send email on exception in production
+gem 'exception_notification'
 
 group :development do
   gem 'capistrano'
