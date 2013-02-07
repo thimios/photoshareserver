@@ -48,18 +48,6 @@ class Photo < ActiveRecord::Base
     self.banned? ? Rails.configuration.banned_full_size_url : image.url(:full)
   end
 
-  def track_location
-    self.show_on_map? ? "yes" : "no"
-  end
-
-  def track_location=(new_value)
-    if new_value == "yes"
-      self.show_on_map= true
-    else
-      self.show_on_map= false
-    end
-  end
-
   def medium_size_url
     self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium)
   end
@@ -179,7 +167,7 @@ class Photo < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference, :location_google_id, :location_name, :location_vicinity, :location_followed_by_current_user, :share_path, :track_location ]))
+    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference, :location_google_id, :location_name, :location_vicinity, :location_followed_by_current_user, :share_path ]))
   end
 
   #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
