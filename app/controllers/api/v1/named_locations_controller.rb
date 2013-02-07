@@ -47,6 +47,7 @@ module Api
           #get fulltext resutls
           @search = Sunspot.search (NamedLocation) do
             fulltext params[:search_string]
+            with(:photos_count).greater_than(0)
             paginate(:page => params[:page], :per_page => params[:limit])
           end
           @results = @search.results

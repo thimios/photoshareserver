@@ -4,7 +4,6 @@ class PhotoTest < ActiveSupport::TestCase
   fixtures :categories, :users, :photos, :quotes, :photo_reports, :named_locations
 
   test "show on map" do
-
     photo = Photo.first
     photo.update_attribute :show_on_map, true
 

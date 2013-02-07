@@ -47,6 +47,21 @@ class NamedLocation < ActiveRecord::Base
     self.count_user_followers
   end
 
+  def best_photo
+    search = Sunspot.search (Photo) do
+      with(:named_location_id,  self.id)
+      order_by :plusminus, :desc
+      paginate :page => 1, :per_page => 1
+    end
+
+    unless search.results.empty?
+      return search.results.first
+    else
+      # named locations that have no photo, will appear with the default avatar
+      return nil
+    end
+  end
+
   def small_size_url
     search = Sunspot.search (Photo) do
       with(:named_location_id,  self.id)

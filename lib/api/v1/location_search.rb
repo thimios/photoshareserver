@@ -11,7 +11,7 @@ module Api
           unless exclude_location_ids.empty?
             without(:id, exclude_location_ids)
           end
-
+          with(:photos_count).greater_than(0)
           paginate(:page => page, :per_page => limit)
           adjust_solr_params do |solr_params|
 

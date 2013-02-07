@@ -12,10 +12,8 @@ module Api
       def indexbbox
         current_photo_ids = params['current_markers'].split(',').map{ | item | item.to_i }
 
-        #params[:detail_photo_id]
-
+        # set categories according to filtering on the map
         categories = Array.new
-
         if params[:fashion] == "true"
           categories << 1
         end
@@ -79,6 +77,31 @@ module Api
             end
           end
 
+          # if location_google_id is set, the map for a named location details view is requested, so the best
+          # photo of that location is always included
+          unless params[:location_google_id].nil?
+            detail_location = NamedLocation.find_by_google_id( params[:location_google_id])
+            unless detail_location.nil?
+              detail_photo = detail_location.best_photo
+              unless detail_photo.nil?
+                if photos.index(detail_photo).nil?
+                  photos << detail_photo
+                end
+              end
+            end
+          end
+
+          # if detail_photo_id param is set, the photo with that id will by all means be in the results
+          unless params[:detail_photo_id].nil?
+            detail_photo = Photo.find(params[:detail_photo_id])
+
+            unless detail_photo.nil?
+              if photos.index(detail_photo).nil?
+                photos << detail_photo
+              end
+            end
+          end
+
           # set current_user on all photos before calling voted_by_current_user
           photos.each { |photo|
             photo.current_user = current_user
@@ -98,7 +121,7 @@ module Api
             end
           }
 
-            render :json => {:to_add_photos => to_add_photos, :to_remove_ids => to_remove_ids}
+          render :json => {:to_add_photos => to_add_photos, :to_remove_ids => to_remove_ids}
         else
           # no markers should be displayed, remove all of them
           to_remove_ids = current_photo_ids

@@ -117,6 +117,10 @@ SystemPhoto.create(title: "banned image", image: bannedimagefile)
 defaultavatar = File.open(File.join(Rails.root, 'app', 'assets','images','defaultavatar.png'))
 SystemPhoto.create(title: "default avatar", image: defaultavatar)
 
+Quote.find_or_create_by_content( :content => "So Berlin! Inspire and get inspired")
+
+
+
 
 
 
