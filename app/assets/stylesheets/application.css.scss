@@ -484,7 +484,22 @@ a{
   margin: 0 auto;
   overflow:hidden;
 }
+.textContainer{
+  margin-bottom:200px;
+  position: relative;
+  top: 15px;
+  font-family: FuturaBT-book;
+  width: 962px;
 
+}
+.textContainer h3{
+  font-family: satisfy;
+  font-size: 23px;
+}
+.textContainer a{
+  color:rgb(41, 158, 4)!important
+
+}
 .followButton{
   position: relative;
   top: -3px;
