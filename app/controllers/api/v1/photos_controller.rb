@@ -28,6 +28,9 @@ module Api
           search = Sunspot.search (Photo) do
             #y latitude
             #x longitude
+            # eager load user and named_location of each photo, to avoid N+1 queries
+            data_accessor_for(Photo).include = [:user, :named_location]
+
             with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
             with(:category_id,  categories)
             with(:show_on_map, true)
@@ -60,7 +63,7 @@ module Api
                                         exp(
                                           product(
                                               -1.15e-09,
-                                              ms(NOW, created_at_dt)
+                                              ms(NOW/HOUR, created_at_dt)
                                           )
                                         )
                                      ) desc".gsub(/\s+/, " ").strip
@@ -167,7 +170,7 @@ module Api
         end
 
         @search = Sunspot.search (Photo) do
-
+          # eager load user and named_location of each photo, to avoid N+1 queries
           data_accessor_for(Photo).include = [:user, :named_location]
 
           if !params[:search_string].blank?

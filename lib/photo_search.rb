@@ -29,7 +29,7 @@ class PhotoSearch
                                     exp(
                                       product(
                                           -1.15e-09,
-                                          ms(NOW, created_at_dt)
+                                          ms(NOW/HOUR, created_at_dt)
                                       )
                                     )
                                  ) desc".gsub(/\s+/, " ").strip
