@@ -8,6 +8,7 @@ class PhotoSearch
       if !category_id.nil?
         with(:category_id, category_id)
         with(:banned, false)
+        data_accessor_for(Photo).include = [:user]
       end
 
       paginate(:page => page, :per_page => limit)
@@ -48,6 +49,7 @@ class PhotoSearch
       with(:banned, false)
       paginate(:page => page, :per_page => limit)
       order_by :created_at, :desc
+      data_accessor_for(Photo).include = [:user]
     end
     photos = search.results
 
@@ -62,6 +64,7 @@ class PhotoSearch
       with(:banned, false)
       paginate(:page => page, :per_page => limit)
       order_by :plusminus, :desc
+      data_accessor_for(Photo).include = [:user]
     end
     photos = search.results
 
