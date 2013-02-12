@@ -219,6 +219,8 @@ module Api
               #c1 = -7e-4
               #c2 = -1.15e-09
               #Assuming distance in km for c1 and milliseconds for c2.
+
+              # using reduced precision on time to prevent excessive memory consumption
               solr_params[:sort] = "product( sum(plusminus_i,1), exp( product(
                                          #{distance_factor},
                                           geodist(
@@ -231,7 +233,7 @@ module Api
                                       exp(
                                         product(
                                             #{time_factor},
-                                            ms(NOW, created_at_dt)
+                                            ms(NOW/HOUR, created_at_dt)
                                         )
                                       )
                                    ) desc".gsub(/\s+/, " ").strip
