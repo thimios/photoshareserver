@@ -11,6 +11,7 @@
         <th>Banned</th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
   </thead>
   <tbody>
@@ -26,6 +27,10 @@
             <td><%= photo.reported_count %></td>
             <td><%= photo.banned? ? 'yes' : 'no' %></td>
             <td><%= link_to 'Show', photo %></td>
+            <td><%= link_to photo.banned? ? "Unban photo" : "Ban photo",
+                            toggle_ban_photo_path(photo),
+                            :method => :post %>
+            </td>
             <td><%= link_to 'Delete', photo, :method => :delete, :confirm => "Deleting a photo is irreversible, are you sure?"  %></td>
           </tr>
       <% end %>

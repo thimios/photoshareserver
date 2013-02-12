@@ -95,11 +95,11 @@ class PhotosController < ApplicationController
     unless photo.banned?
       photo.banned=true
       photo.save
-      redirect_to @photo, notice: 'Photo was successfully banned.'
+      redirect_to :back, notice: 'Photo was successfully banned.'
     else
       photo.banned=false
       photo.save
-      redirect_to @photo, notice: 'Photo was successfully unbanned.'
+      redirect_to :back, notice: 'Photo was successfully unbanned.'
     end
   end
 
