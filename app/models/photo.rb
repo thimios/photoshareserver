@@ -113,9 +113,11 @@ class Photo < ActiveRecord::Base
 
   def voted_by_current_user
     # add whether the current user has voted for it
-    if (self.current_user.voted_against?(self))
-      return "against"
-    elsif (self.current_user.voted_for?(self))
+    #if (self.current_user.voted_against?(self))
+    #  return "against"
+    # users can currently vote only for a photo
+
+    if (self.current_user.voted_for?(self))
       return "for"
     else
       return "not"
