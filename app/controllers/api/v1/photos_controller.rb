@@ -322,6 +322,7 @@ module Api
       # PUT /photos/1.json
       def update
         photo = Photo.find(params[:id])
+        photo.current_user = current_user
         if photo.update_attributes(params[:photo])
           render json: photo, status: :updated
         else
