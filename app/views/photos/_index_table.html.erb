@@ -1,31 +1,35 @@
-<table>
-  <tr>
-    <th></th>
-    <th>id</th>
-    <th>Title</th>
-    <th>Votes</th>
-    <th>Category</th>
-    <th>Posted by</th>
-    <th>Times reported</th>
-    <th>Banned</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-  <% @photos.each do |photo| %>
+<table id="photos">
+  <thead>
       <tr>
-        <td><img src=<%= photo.image.url(:thumb) %> /></td>
-        <td><%= photo.id %></td>
-        <td><%= photo.title %></td>
-        <td><%= photo.plusminus %></td>
-        <td><%= photo.category.title %></td>
-        <td><%= photo.user.username %></td>
-        <td><%= photo.reported_count %></td>
-        <td><%= photo.banned? ? 'yes' : 'no' %></td>
-        <td><%= link_to 'Show', photo %></td>
+        <th></th>
+        <th>id</th>
+        <th>Title</th>
+        <th>Votes</th>
+        <th>Category</th>
+        <th>Posted by</th>
+        <th>Times reported</th>
+        <th>Banned</th>
+        <th></th>
+        <th></th>
       </tr>
-  <% end %>
+  </thead>
+  <tbody>
+
+      <% @photos.each do |photo| %>
+          <tr>
+            <td><img src=<%= photo.image.url(:thumb) %> /></td>
+            <td><%= photo.id %></td>
+            <td><%= photo.title %></td>
+            <td><%= photo.plusminus %></td>
+            <td><%= photo.category.title %></td>
+            <td><%= photo.user.username %></td>
+            <td><%= photo.reported_count %></td>
+            <td><%= photo.banned? ? 'yes' : 'no' %></td>
+            <td><%= link_to 'Show', photo %></td>
+            <td><%= link_to 'Delete', photo, :method => :delete, :confirm => "Deleting a photo is irreversible, are you sure?"  %></td>
+          </tr>
+      <% end %>
+  </tbody>
 </table>
 
 <%= paginate @photos %>

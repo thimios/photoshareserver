@@ -24,6 +24,10 @@ TodosSt2::Application.routes.draw do
   opinio_model :controller => 'comments'
 
 
+
+  get 'photos/destroy_all_reported' => "photos#destroy_all_reported", :as => :photos_detroy_all_reported
+  get 'photos/ban_all_reported' => "photos#ban_all_reported", :as => :photos_ban_all_reported
+
   resources :photos do
     opinio :controller => 'comments'
     resource :category
@@ -31,8 +35,11 @@ TodosSt2::Application.routes.draw do
       get 'vote_up'
       post 'toggle_ban'
       post 'refuse_ban'
+
     end
   end
+
+
 
   resources :categories do
     resources :photos

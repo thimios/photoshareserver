@@ -27,10 +27,14 @@ class Ability
 
     if user.superadmin?
       can :manage, :all
+      can :destroy_all_reported, Photo
+      can :ban_all_reported, Photo
     elsif user.admin?
       can :manage, Photo
       can :manage, Quote
       can :manage, User
+      can :destroy_all_reported, Photo
+      can :ban_all_reported, Photo
     else
       # if user is no admin or superadmin, nothing is permitted on the web interface
     end

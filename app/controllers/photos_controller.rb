@@ -7,9 +7,7 @@ class PhotosController < ApplicationController
 
   # GET /photos
   def index
-
     @photos = PhotoSearch.reported.page(params[:page]).per(params[:limit])
-
     # set current_user on all photos before calling voted_by_current_user
     @photos.each { |photo|
       photo.current_user = current_user
@@ -18,7 +16,6 @@ class PhotosController < ApplicationController
   end
 
   # GET /photos/1
-
   def show
     @photo = (Photo.find(params[:id]))
     # set current_user on all photos before calling voted_by_current_user
@@ -30,7 +27,6 @@ class PhotosController < ApplicationController
   # GET /photos/new.json
   def new
     @photo = Photo.new
-
     # set current_user on all photos before calling voted_by_current_user
     @photo.current_user = current_user
   end
@@ -71,12 +67,26 @@ class PhotosController < ApplicationController
     end
   end
 
+  def destroy_all_reported
+    Photo.where("photo_reports_count > 0").find_each do |photo|
+      photo.destroy
+    end
+    redirect_to photos_url
+  end
+
+  def ban_all_reported
+    Photo.where("photo_reports_count > 0").find_each do |photo|
+      photo.banned=true
+      photo.save
+    end
+    redirect_to photos_url
+  end
+
   # DELETE /photos/1
   # DELETE /photos/1.json
   def destroy
     @photo = Photo.find(params[:id])
-    logger.debug "no photos can be deleted"
-    #@photo.destroy
+    @photo.destroy
     redirect_to photos_url
   end
 
