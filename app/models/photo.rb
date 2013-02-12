@@ -42,7 +42,7 @@ class Photo < ActiveRecord::Base
 
   belongs_to :category, :touch => true, :inverse_of => :photos
   belongs_to :user, :touch => false, :inverse_of => :photos
-  belongs_to :named_location,:touch => true, :inverse_of => :photos
+  belongs_to :named_location, :touch => true, :inverse_of => :photos
 
   def reindex_named_location
     unless self.named_location.nil?

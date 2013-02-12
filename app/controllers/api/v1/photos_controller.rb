@@ -167,6 +167,9 @@ module Api
         end
 
         @search = Sunspot.search (Photo) do
+
+          data_accessor_for(Photo).include = [:user, :named_location]
+
           if !params[:search_string].blank?
             fulltext params[:search_string]
           end
