@@ -68,4 +68,19 @@ TodosSt2::Application.configure do
   Rails.configuration.banned_thumb_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.devel/system_photos/images/000/000/001/thumb/bannedphoto.png"
 
   config.watchable_dirs['lib'] = [:rb]
+
+  # bullet database query optimization suggestions
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = false
+    Bullet.bullet_logger = true
+    Bullet.console = false
+    Bullet.growl = false
+    Bullet.xmpp = { :account => 'soberlindev@jabber.org',
+                    :password => 'd3vd3v12sdev',
+                    :receiver => 'thimios.wantedpixel.@jabber.org',
+                    :show_online_status => true }
+    Bullet.rails_logger = true
+    Bullet.airbrake = false
+  end
 end

@@ -101,7 +101,11 @@ group :development do
   # gem 'ruby-debug19', :require => false
   #gem 'ruby-debug-base19', :git => 'https://github.com/tribune/ruby-debug-base19.git', :require => false
   gem 'thin'
+
 end
+
+gem 'bullet'
+gem 'xmpp4r'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -109,5 +109,15 @@ TodosSt2::Application.configure do
   Rails.configuration.banned_medium_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.production/system_photos/images/000/000/001/medium/bannedphoto.png"
   Rails.configuration.banned_thumb_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.production/system_photos/images/000/000/001/thumb/bannedphoto.png"
 
+  # bullet database query optimization suggestions
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = false
+    Bullet.bullet_logger = true
+    Bullet.console = false
+    Bullet.growl = false
+    Bullet.rails_logger = true
+    Bullet.airbrake = false
+  end
 
 end
