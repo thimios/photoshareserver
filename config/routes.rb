@@ -25,8 +25,8 @@ TodosSt2::Application.routes.draw do
 
 
 
-  get 'photos/destroy_all_reported' => "photos#destroy_all_reported", :as => :photos_detroy_all_reported
-  get 'photos/ban_all_reported' => "photos#ban_all_reported", :as => :photos_ban_all_reported
+  get 'photos/destroy_all_reported' => "photos#destroy_all_reported"
+  get 'photos/ban_all_reported' => "photos#ban_all_reported"
 
   resources :photos do
     opinio :controller => 'comments'
