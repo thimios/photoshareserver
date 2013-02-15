@@ -6,7 +6,7 @@ class Comment < ActiveRecord::Base
   tracked :owner => proc { |controller, model| controller.current_user }
 
   # destroy all activity records on destroy
-  has_many :activities, :class_name => "PublicActivity::Activity", :as => :trackable, :dependent => :destroy
+  has_many :activities, :class_name => "::PublicActivity::Activity", :as => :trackable, :dependent => :destroy
 
 
   def owner_username

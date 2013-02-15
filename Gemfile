@@ -57,12 +57,12 @@ gem 'geocoder'
 gem 'gmaps4rails'
 
 # pagination
-gem "kaminari" ,'0.14.1'
+gem "kaminari"
 
 gem 'faker'
 
 # comments
-gem 'opinio', '0.6'
+gem 'opinio'
 
 # activity feeds
 gem 'public_activity'

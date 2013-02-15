@@ -13,9 +13,11 @@ class Vote < ActiveRecord::Base
 
   # tracked for user's activity feeds
   include PublicActivity::Model
-  tracked :owner => proc { |controller, model| controller.current_user }
+  tracked :owner => proc { |controller, model|
+    controller.current_user
+  }
   # destroy all activity records on destroy
-  has_many :activities, :class_name => "PublicActivity::Activity", :as => :trackable, :dependent => :destroy
+  has_many :activities, :class_name => "::PublicActivity::Activity", :as => :trackable, :dependent => :destroy
 
 
   # Comment out the line below to allow multiple votes per user.

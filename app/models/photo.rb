@@ -115,9 +115,10 @@ class Photo < ActiveRecord::Base
     # add whether the current user has voted for it
     #if (self.current_user.voted_against?(self))
     #  return "against"
-    # users can currently vote only for a photo
+    # users can currently vote only for a photo and not against it, also users can only vote on photos
 
-    if (self.current_user.voted_for?(self))
+    if ( 0 < Vote.where( :voter_id => current_user.id,
+                         :voteable_id => self.id).count)   #self.current_user.voted_for?(self))
       return "for"
     else
       return "not"
@@ -157,7 +158,7 @@ class Photo < ActiveRecord::Base
   }
 
   # destroy all activity records on destroy
-  has_many :activities, :class_name => "PublicActivity::Activity", :as => :trackable, :dependent => :destroy
+  has_many :activities, :class_name => "::PublicActivity::Activity", :as => :trackable, :dependent => :destroy
 
   validates :category_id, :presence => true
   validates :title, :presence => true
