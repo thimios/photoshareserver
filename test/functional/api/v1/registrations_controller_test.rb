@@ -48,6 +48,7 @@ module Api
 
       test "test suggested users" do
         sign_in User.first
+        PublicActivity.enabled= false
 
         # /api/v1/users/suggested.json?_dc=1356628364027&auth_token=Hy4JzyV8XVxpDtt7rStj&user_latitude=37.0435203&user_longitude=22.110219000000004&page=1&start=0&limit=20
         generator = Random.new
@@ -65,7 +66,7 @@ module Api
         photo_count = photo_count_low_rate + photo_count_high_rate
 
         photo_count_high_rate.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: generator.rand(1..10), latitude: generator.rand(52.2..59.7), longitude: generator.rand(12.3..17.5), show_on_map: true)
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 1, latitude: generator.rand(52.2..59.7), longitude: generator.rand(12.3..17.5), show_on_map: true)
           photo.created_at = rand(0.2..0.7).hours.ago
           photo.save
 
@@ -76,7 +77,7 @@ module Api
         end
 
         photo_count_low_rate.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: generator.rand(1..10), latitude: generator.rand(52.2..56.7), longitude: generator.rand(12.3..17.5), show_on_map: true)
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: 1, latitude: generator.rand(52.2..56.7), longitude: generator.rand(12.3..17.5), show_on_map: true)
           photo.created_at = rand(0..20000).hours.ago
           photo.save
 

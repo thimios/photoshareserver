@@ -14,6 +14,7 @@ one:
   confirmed_at: <%= Time.now %>
   latitude: 52.5
   longitude: 12.6
+  admin: 1
 
 two:
   id: 2
