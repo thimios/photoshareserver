@@ -1,5 +1,6 @@
 class Photo < ActiveRecord::Base
   include Rails.application.routes.url_helpers
+  require 'api/v1/photo_search'
 
   after_destroy :reindex_named_location
   after_save :reindex_named_location
@@ -201,10 +202,15 @@ class Photo < ActiveRecord::Base
   #c2 = -1.15e-09
   #Assuming distance in km for c1 and milliseconds for c2.
 
-  def sorting_rate(lat, long)
-    distance_in_km = Geocoder::Calculations::distance_between(self, [lat, long], :units => :km)
+
+  # params_time_factor: position of the slider 0: full left: recent,  4: full right: all time
+  # params_distance_factor:  0: full left: nearby, 4: full right: global
+  def sorting_rate(lat, long, params_time_factor, params_distance_factor)
+    distance_in_km = Geocoder::Calculations::distance_between(self, [lat.round(4), long.round(4)], :units => :km)
     time_in_millis = (Time.zone.now - self.created_at) * 1000
-    time_in_minutes = time_in_millis / 1000 / 60
+
+    time_factor = Api::V1::PhotoSearch.time_factor_from_param params_time_factor
+    distance_factor = Api::V1::PhotoSearch.distance_factor_from_param params_distance_factor
 
     #"product(
     #    sum(plusminus_i,1),
@@ -231,14 +237,14 @@ class Photo < ActiveRecord::Base
     #    )
     # )"
 
-    return (plusminus + 1) * Math.exp( -7e-4 * distance_in_km) * Math.exp( -1.15e-09 *  time_in_millis)
+    return (plusminus + 1) * Math.exp( distance_factor.to_f * distance_in_km) * Math.exp( time_factor.to_f *  time_in_millis)
   end
 
-  def to_csv(lat, long)
+  def to_csv(lat, long, params_time_factor, params_distance_factor)
     distance_in_km = Geocoder::Calculations::distance_between(self, [lat, long], :units => :km)
     time_in_millis = (Time.zone.now - self.created_at)  * 1000
     csv = []
-    csv += [self.id, self.title, self.latitude, self.longitude, distance_in_km, time_in_millis, self.plusminus.to_s, self.created_at, self.sorting_rate( lat, long).to_s ]
+    csv += [self.id, self.title, self.latitude, self.longitude, distance_in_km, time_in_millis, self.plusminus.to_s, self.created_at, self.sorting_rate( lat, long, params_time_factor, params_distance_factor).to_s ]
   end
 
   private

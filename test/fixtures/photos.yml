@@ -3,8 +3,8 @@ photos_001:
   title: first photo
   category_id: 1
   user_id: 1
-  latitude: 52.2
-  longitude: 12.3
+  latitude: 52.48929608052652
+  longitude: 13.421714945981385
   show_on_map: true
   named_location_id: 1
   banned: false
