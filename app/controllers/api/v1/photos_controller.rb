@@ -228,7 +228,7 @@ module Api
 
               # using reduced precision on time to prevent excessive memory consumption
               # also using reduced precision 4 decimals on geolocation coordinates
-              solr_params[:sort] = "product(1e9, sum(plusminus_i,1), exp( product(
+              solr_params[:sort] = "product(sum(plusminus_i,1), exp( product(
                                          #{distance_factor},
                                           geodist(
                                             coordinates_ll,
