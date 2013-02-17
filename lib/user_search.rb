@@ -47,8 +47,8 @@ module Api
                                            -7e-4,
                                             geodist(
                                               coordinates_ll,
-                                              #{current_user.latitude},
-                                              #{current_user.longitude}
+                                              #{current_user.latitude.round(4)},
+                                              #{current_user.longitude.round(4)}
                                             )
                                           )
                                       )

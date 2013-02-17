@@ -227,12 +227,13 @@ module Api
               #Assuming distance in km for c1 and milliseconds for c2.
 
               # using reduced precision on time to prevent excessive memory consumption
+              # also using reduced precision 4 decimals on geolocation coordinates
               solr_params[:sort] = "product( sum(plusminus_i,1), exp( product(
                                          #{distance_factor},
                                           geodist(
                                             coordinates_ll,
-                                            #{params[:user_latitude]},
-                                            #{params[:user_longitude]}
+                                            #{params[:user_latitude].to_f.round(4)},
+                                            #{params[:user_longitude].to_f.round(4)}
                                           )
                                         )
                                       ),
