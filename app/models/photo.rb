@@ -106,10 +106,6 @@ class Photo < ActiveRecord::Base
     user.thumb_size_url
   end
 
-  def comments_count
-    self.comments.count
-  end
-
   attr_accessor :current_user
 
   def voted_by_current_user

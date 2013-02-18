@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130215193823) do
+ActiveRecord::Schema.define(:version => 20130218143801) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(:version => 20130215193823) do
     t.boolean  "show_on_map",         :default => false
     t.integer  "photo_reports_count", :default => 0
     t.integer  "votes_count",         :default => 0
+    t.integer  "comments_count",      :default => 0
   end
 
   create_table "quotes", :force => true do |t|

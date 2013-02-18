@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  opinio
+  opinio counter_cache: true
 
   # tracked for user's activity feeds
   include PublicActivity::Model
