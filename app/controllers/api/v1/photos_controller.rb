@@ -35,9 +35,9 @@ module Api
             with(:category_id,  categories)
             with(:show_on_map, true)
             group(:named_location_id_str) do
-              limit 10
+              limit 10 # TODO: find a way to set limit=1 for groups with named_location_id_str =! "" but 10 for the empty named_location_id group
             end
-            paginate(:page => 1, :per_page => 10)
+            paginate(:page => 1, :per_page => 20)
 
             adjust_solr_params do |solr_params|
               #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
@@ -73,12 +73,18 @@ module Api
           photos = []
 
           no_location_photos = nil
-          search.group(:named_location_id_str).groups.each do |group|
+          search.group(:named_location_id_str).groups.each_with_index do |group, index|
+            # get maximum ten named location groups
+            if index == 10
+              break
+            end
+
             if group.value ==""
               no_location_photos = group.results
             else
               photos.append group.results.first
             end
+
           end
 
           # if we got less than 10 photos with named locations, we add the rest from the group of photos that have no named location
