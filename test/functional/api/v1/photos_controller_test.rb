@@ -15,6 +15,152 @@ module Api
         @generator = Random.new
       end
 
+      test "index bbox, return maximum ten markers, when less than 10 are available" do
+
+        photos_without_named_location_count = 3
+        photos_with_named_location_count = 3
+        sw_y=55.2
+        sw_x=18.3
+        ne_y=58.7
+        ne_x=22.5
+
+        photos_without_named_location_count.times do
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23),
+                               category_id: 1,
+                               user_id: @generator.rand(1..10),
+                               latitude: @generator.rand(sw_y..ne_y),
+                               longitude: @generator.rand(sw_x..ne_x),
+                               show_on_map: true)
+          photo.created_at = rand(2..20000).hours.ago
+          photo.save
+
+          users = User.order('RAND()').limit(rand(0..10))
+          users.each {|user|
+            user.vote_for (photo)
+          }
+        end
+
+        photos_with_named_location_count.times do
+          longitude = @generator.rand(sw_x..ne_x)
+          latitude = @generator.rand(sw_y..ne_y)
+
+          named_location = NamedLocation.create( reference: Faker::Lorem.characters,
+                                                 google_id: Faker::Lorem.characters(40),
+                                                 latitude: latitude,
+                                                 longitude: longitude,
+                                                 name: Faker::Lorem.words(2),
+                                                 vicinity: Faker::Lorem.word)
+
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23),
+                               category_id: 1, user_id: @generator.rand(1..10),
+                               latitude: latitude,
+                               longitude: longitude,
+                               show_on_map: true, named_location_id: named_location.id)
+
+          photo.created_at = rand(2..20000).hours.ago
+          photo.save
+
+          users = User.order('RAND()').limit(rand(0..10))
+          users.each {|user|
+            user.vote_for (photo)
+          }
+        end
+
+        Photo.reindex
+        Sunspot.commit
+
+        get :indexbbox, {
+            :sw_y => sw_y,
+            :sw_x => sw_x,
+            :ne_y => ne_y,
+            :ne_x => ne_x,
+            :fashion => "true",
+            :art => "true",
+            :place => "true",
+            :current_markers => ""
+        }
+
+        assert_response :success
+        data = ActiveSupport::JSON.decode(response.body)
+
+        assert_not_nil data
+        assert_equal photos_without_named_location_count + photos_with_named_location_count, data['to_add_photos'].count, "map should include all photos, if less than 10 photos are available on that area"
+
+      end
+
+      test "index bbox, return ten markers, when more than 10 are available" do
+
+        photos_without_named_location_count = 13
+        photos_with_named_location_count = 13
+        sw_y=55.2
+        sw_x=18.3
+        ne_y=58.7
+        ne_x=22.5
+
+        photos_without_named_location_count.times do
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23),
+                               category_id: 1,
+                               user_id: @generator.rand(1..10),
+                               latitude: @generator.rand(sw_y..ne_y),
+                               longitude: @generator.rand(sw_x..ne_x),
+                               show_on_map: true)
+          photo.created_at = rand(2..20000).hours.ago
+          photo.save
+
+          users = User.order('RAND()').limit(rand(0..10))
+          users.each {|user|
+            user.vote_for (photo)
+          }
+        end
+
+        photos_with_named_location_count.times do
+          longitude = @generator.rand(sw_x..ne_x)
+          latitude = @generator.rand(sw_y..ne_y)
+
+          named_location = NamedLocation.create( reference: Faker::Lorem.characters,
+                                                 google_id: Faker::Lorem.characters(40),
+                                                 latitude: latitude,
+                                                 longitude: longitude,
+                                                 name: Faker::Lorem.words(2),
+                                                 vicinity: Faker::Lorem.word)
+
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23),
+                               category_id: 1, user_id: @generator.rand(1..10),
+                               latitude: latitude,
+                               longitude: longitude,
+                               show_on_map: true, named_location_id: named_location.id)
+
+          photo.created_at = rand(2..20000).hours.ago
+          photo.save
+
+          users = User.order('RAND()').limit(rand(0..10))
+          users.each {|user|
+            user.vote_for (photo)
+          }
+        end
+
+        Photo.reindex
+        Sunspot.commit
+
+        get :indexbbox, {
+            :sw_y => sw_y,
+            :sw_x => sw_x,
+            :ne_y => ne_y,
+            :ne_x => ne_x,
+            :fashion => "true",
+            :art => "true",
+            :place => "true",
+            :current_markers => ""
+        }
+
+        assert_response :success
+        data = ActiveSupport::JSON.decode(response.body)
+
+        assert_not_nil data
+        assert_equal 10, data['to_add_photos'].count, "map should always include maximum 10 photos"
+
+      end
+
       test "index bbox" do
         #y latitude
         #x longitude

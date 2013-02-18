@@ -37,7 +37,7 @@ module Api
             group(:named_location_id_str) do
               limit 10
             end
-            #paginate(:page => 1, :per_page => 10)
+            paginate(:page => 1, :per_page => 10)
 
             adjust_solr_params do |solr_params|
               #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
@@ -72,13 +72,20 @@ module Api
 
           photos = []
 
+          no_location_photos = nil
           search.group(:named_location_id_str).groups.each do |group|
             if group.value ==""
-              photos.concat group.results
+              no_location_photos = group.results
             else
               photos.append group.results.first
             end
           end
+
+          # if we got less than 10 photos with named locations, we add the rest from the group of photos that have no named location
+          if (!no_location_photos.nil? && photos.count < 10)
+            photos.concat no_location_photos.first(10 - photos.count)
+          end
+
 
           # if location_google_id is set, the map for a named location details view is requested, so the best
           # photo of that location is always included
