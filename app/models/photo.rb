@@ -117,22 +117,12 @@ class Photo < ActiveRecord::Base
     #if (self.current_user.voted_against?(self))
     #  return "against"
     # users can currently vote only for a photo and not against it, also users can only vote on photos
-
-    if ( 0 < Vote.where( :voter_id => current_user.id,
-                         :voteable_id => self.id).count)   #self.current_user.voted_for?(self))
-      return "for"
-    else
-      return "not"
-    end
+    current_user.voted_for?(self)
   end
 
   def reported_by_current_user
     # add whether the current user has voted for it
-    if PhotoReport.where("user_id = ? AND photo_id = ?", self.current_user.id, self.id).first
-      return true
-    else
-      return false
-    end
+    current_user.reported? self
   end
 
   def author_followed_by_current_user

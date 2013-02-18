@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   has_many :histories, :inverse_of => :owner, :dependent => :destroy
 
-  has_many :reports, :inverse_of => :user, :dependent => :destroy
+  has_many :photo_reports, :inverse_of => :user, :dependent => :destroy
 
   acts_as_gmappable :lat => 'latitude', :lng => 'longitude', :process_geocoding => :geocode?,
                     :address => "address", :normalized_address => "address",
@@ -153,6 +153,15 @@ class User < ActiveRecord::Base
 
   def auth_token
     self.authentication_token
+  end
+
+  def voted_for?(photo)
+    # load all voteable_ids of votes of this user, to optimize queries
+    self.votes.select("voteable_id").map{|vote|vote.voteable_id}.index(photo.id) ? "for" : "not"
+  end
+
+  def reported?(photo)
+    self.photo_reports.select("photo_id").map{|report|report.photo_id}.index(photo.id) ? true : false
   end
 
   def as_json(options={})
