@@ -41,7 +41,7 @@ module Api
           if @filter_params[:followed_by_current_user]
             params[:followed_by_current_user] = @filter_params[:followed_by_current_user]
           end
-          @results = NamedLocation.where(:id => current_user.following_location_ids).page(params[:page]).per(params[:limit])
+          @results = NamedLocation.where(:id => current_user.following_location_ids).order("name").page(params[:page]).per(params[:limit])
           @total_count = @results.total_count
         elsif !params[:search_string].blank?
           #get fulltext resutls
