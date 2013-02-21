@@ -15,7 +15,100 @@ module Api
         @generator = Random.new
       end
 
-      test "index bbox, return maximum ten markers, when less than 10 are available" do
+      test "index bbox, should not return two photos with the same location id" do
+        sw_y=55.2
+        sw_x=18.3
+        ne_y=58.7
+        ne_x=22.5
+
+        3.times do
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23),
+                               category_id: 1,
+                               user_id: @generator.rand(1..10),
+                               latitude: @generator.rand(sw_y..ne_y),
+                               longitude: @generator.rand(sw_x..ne_x),
+                               show_on_map: true)
+          photo.created_at = rand(2..20000).hours.ago
+          photo.save
+
+          users = User.order('RAND()').limit(rand(0..10))
+          users.each {|user|
+            user.vote_for (photo)
+          }
+        end
+
+        longitude = @generator.rand(sw_x..ne_x)
+        latitude = @generator.rand(sw_y..ne_y)
+        named_location = NamedLocation.create( reference: Faker::Lorem.characters,
+                                               google_id: Faker::Lorem.characters(40),
+                                               latitude: latitude,
+                                               longitude: longitude,
+                                               name: Faker::Lorem.words(2),
+                                               vicinity: Faker::Lorem.word)
+
+        3.times do
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23),
+                               category_id: 1, user_id: @generator.rand(1..10),
+                               latitude: latitude,
+                               longitude: longitude,
+                               show_on_map: true, named_location_id: named_location.id)
+
+          photo.created_at = rand(2..20000).hours.ago
+          photo.save
+
+          users = User.order('RAND()').limit(rand(0..10))
+          users.each {|user|
+            user.vote_for (photo)
+          }
+        end
+
+        named_location = NamedLocation.create( reference: Faker::Lorem.characters,
+                                               google_id: Faker::Lorem.characters(40),
+                                               latitude: latitude,
+                                               longitude: longitude,
+                                               name: Faker::Lorem.words(2),
+                                               vicinity: Faker::Lorem.word)
+
+        3.times do
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23),
+                               category_id: 1, user_id: @generator.rand(1..10),
+                               latitude: latitude,
+                               longitude: longitude,
+                               show_on_map: true, named_location_id: named_location.id)
+
+          photo.created_at = rand(2..20000).hours.ago
+          photo.save
+
+          users = User.order('RAND()').limit(rand(0..10))
+          users.each {|user|
+            user.vote_for (photo)
+          }
+        end
+
+        Photo.reindex
+        Sunspot.commit
+
+        get :indexbbox, {
+            :sw_y => sw_y,
+            :sw_x => sw_x,
+            :ne_y => ne_y,
+            :ne_x => ne_x,
+            :fashion => "true",
+            :art => "true",
+            :place => "true",
+            :current_markers => ""
+        }
+
+        assert_response :success
+        data = ActiveSupport::JSON.decode(response.body)
+
+        assert_not_nil data
+        assert_equal 5, data['to_add_photos'].count, "map should include only photos with unique location ids or no locations"
+
+      end
+
+
+      test "index bbox, return maximum 25 markers, when less are available" do
 
         photos_without_named_location_count = 3
         photos_with_named_location_count = 3
@@ -88,10 +181,10 @@ module Api
 
       end
 
-      test "index bbox, return ten markers, when more than 10 are available" do
+      test "index bbox, return 25 markers, when more than 10 are available" do
 
-        photos_without_named_location_count = 13
-        photos_with_named_location_count = 13
+        photos_without_named_location_count = 15
+        photos_with_named_location_count = 15
         sw_y=55.2
         sw_x=18.3
         ne_y=58.7
@@ -157,7 +250,7 @@ module Api
         data = ActiveSupport::JSON.decode(response.body)
 
         assert_not_nil data
-        assert_equal 10, data['to_add_photos'].count, "map should always include maximum 10 photos"
+        assert_equal 25, data['to_add_photos'].count, "map should always include maximum 10 photos"
 
       end
 
@@ -217,7 +310,7 @@ module Api
             :fashion => "true",
             :art => "true",
             :place => "true",
-            :current_markers => "1,3,45,46"
+            :current_markers => "2,3,45,46"
         }
 
         assert_response :success

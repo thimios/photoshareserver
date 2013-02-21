@@ -34,10 +34,8 @@ module Api
             with(:coordinates).in_bounding_box([params[:sw_y], params[:sw_x]], [params[:ne_y], params[:ne_x]])
             with(:category_id,  categories)
             with(:show_on_map, true)
-            group(:named_location_id_str) do
-              limit 10 # TODO: find a way to set limit=1 for groups with named_location_id_str =! "" but 10 for the empty named_location_id group
-            end
-            paginate(:page => 1, :per_page => 20)
+
+            paginate(:page => 1, :per_page => 60)
 
             adjust_solr_params do |solr_params|
               #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
@@ -51,15 +49,7 @@ module Api
               #c1 = -7e-4
               #c2 = -1.15e-09
               #Assuming distance in km for c1 and milliseconds for c2.
-              solr_params[:sort] = "product( sum(plusminus_i,1), exp( product(
-                                           -7e-4,
-                                            geodist(
-                                              coordinates_ll,
-                                              #{ ( params[:sw_y].to_f + params[:ne_y].to_f ) / 2.0 },
-                                              #{ ( params[:sw_x].to_f + params[:ne_x].to_f ) / 2.0 }
-                                            )
-                                          )
-                                        ),
+              solr_params[:sort] = "product( sum(plusminus_i,1),
                                         exp(
                                           product(
                                               -1.15e-09,
@@ -72,26 +62,18 @@ module Api
 
           photos = []
 
-          no_location_photos = nil
-          search.group(:named_location_id_str).groups.each_with_index do |group, index|
-            # get maximum ten named location groups
-            if index == 10
-              break
+          location_ids = []
+          search.results.each do |photo|
+            if photo.named_location_id == nil || location_ids.index(photo.named_location_id) == nil
+              photos.append photo
+              if photo.named_location_id != nil
+                location_ids.append photo.named_location_id
+              end
             end
-
-            if group.value ==""
-              no_location_photos = group.results
-            else
-              photos.append group.results.first
+            if photos.length == 25
+              break;
             end
-
           end
-
-          # if we got less than 10 photos with named locations, we add the rest from the group of photos that have no named location
-          if (!no_location_photos.nil? && photos.count < 10)
-            photos.concat no_location_photos.first(10 - photos.count)
-          end
-
 
           # if location_google_id is set, the map for a named location details view is requested, so the best
           # photo of that location is always included
