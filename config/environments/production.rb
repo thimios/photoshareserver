@@ -33,7 +33,7 @@ TodosSt2::Application.configure do
   # config.force_ssl = true
 
   # ssl everywhere except home page and /home
-  config.middleware.use Rack::SslEnforcer, :strict => true, :except => [/\/$/, ]
+  config.middleware.use Rack::SslEnforcer, :strict => true, :except => [/\/$/,'/home' ]
 
   # send an email on exceptions
   config.middleware.use ExceptionNotifier,
@@ -95,7 +95,7 @@ TodosSt2::Application.configure do
   config.paperclip_defaults = {
       :storage => :s3,
       :s3_host_name => "s3-eu-west-1.amazonaws.com",
-      :s3_protocol => "https",
+      :s3_protocol => "http",
       :s3_credentials => {
           :bucket => "com.wantedpixel.soberlin.production",
           :access_key_id => "AKIAI4KGTEOUVZZZFCLA",
