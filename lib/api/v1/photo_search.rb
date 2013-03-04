@@ -21,7 +21,7 @@ module Api
         #0. -1e-5 : recent : full left
         case time_factor_param
           when "0" # recent, full left
-           return "-1e-5"
+           return "-1e-7"
           when "1"
             return "-0.8e-7"
           when "2" # middle, default value
@@ -54,7 +54,7 @@ module Api
 
         case distance_factor_param
           when '0' # recent, full left
-            return "-10"
+            return "-1"
           when '1'
             return "-7e-2"
           when '2' # middle, default value
