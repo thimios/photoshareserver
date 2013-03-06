@@ -225,6 +225,7 @@ module Api
               # also using reduced precision 4 decimals on geolocation coordinates
               solr_params[:sort] = "product(
                                       sum(plusminus_i,1),
+                                      1e100,
                                       max(
                                         product(
                                           exp(
