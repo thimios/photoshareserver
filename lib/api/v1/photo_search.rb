@@ -53,7 +53,7 @@ module Api
         #0. 10 : local : full left
 
         case distance_factor_param
-          when '0' # recent, full left
+          when '0' # local, full left
             return "-1"
           when '1'
             return "-7e-2"
@@ -61,7 +61,7 @@ module Api
             return "-7e-4"
           when '3'
             return "-7e-5"
-          when '4' # all time, full right
+          when '4' # global, full right
             return "0"
           else
             Rails.logger.warn "Distance factor param value: #{distance_factor_param} not expected. Using default"
