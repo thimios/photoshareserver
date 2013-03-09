@@ -26,14 +26,15 @@
 								<span class="menuItem" <% if @active == "all" %>id="active" <%end %> >
 									<span><%= link_to "All",  "/home?show=all" %></span>
 								</span>
-								<span class="menuItem"  <% if @active == "fashion" %>id="active" <%end %> >
+								 <span class="menuItem"  <% if @active == "places" %>id="active" <%end %> >
+                                	<span><a href="/home?show=places">Location</a></span>
+                                </span>
+                                <span class="menuItem"  <% if @active == "fashion" %>id="active" <%end %> >
 									<span><a href="/home?show=fashion">Fashion</a></span>
 								</span>
-                                <span class="menuItem"  <% if @active == "places" %>id="active" <%end %> >
-                                	<span><a href="/home?show=places">Places</a></span>
-                                </span>
+
                                 <span class="menuItem blastItem"  <% if @active == "design" %> id="active" <%end %> >
-                                	<span><a href="/home?show=design">Art</a></span>
+                                	<span><a href="/home?show=design">Stuff</a></span>
                                 </span>
                                 <span class="menuItem lastItem" <% if @active == "best" %> id="active" <%end %> >
                                 	<span><a href="/home?show=best">Best</a></span>
