@@ -372,10 +372,7 @@ module Api
         loaded_photo.destroy
 
         assert_true loaded_photo.destroyed?, "Photo not destroyed"
-        assert_equal(0, loaded_photo.comments_count, "Destoyed photo should have no comments")
-        assert_equal(0, loaded_photo.plusminus, "Destroyed photo should have no votes")
-        assert_equal(0, loaded_photo.photo_reports.count, "Destoyed photo should have no photo report")
-        assert_equal(0, loaded_photo.comments_count , "Destoyed photo should have no comments")
+        assert_equal(0, (Comment.find_all_by_commentable_id loaded_photo.id).count, "Destoyed photo should have no comments")
         assert_equal(0, loaded_photo.plusminus, "Destroyed photo should have no votes")
         assert_equal(0, loaded_photo.photo_reports.count, "Destoyed photo should have no photo report")
 
