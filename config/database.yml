@@ -25,7 +25,6 @@ test:
   username: root
   password:
   host: localhost
-  socket: /var/run/mysqld/mysqld.sock
 
 production:
   adapter: mysql2
