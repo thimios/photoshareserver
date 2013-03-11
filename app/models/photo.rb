@@ -28,13 +28,21 @@ class Photo < ActiveRecord::Base
     integer :user_id, :references => User, :multiple => false
     integer :named_location_id, :references => NamedLocation, :multiple => false
     latlon :coordinates do
-      Sunspot::Util::Coordinates.new(latitude, longitude)
+      Sunspot::Util::Coordinates.new(latitude_not_null, longitude_not_null)
     end
     integer :plusminus
     boolean :show_on_map
     boolean :banned
     time :created_at, :trie => true
     string :named_location_id_str
+  end
+
+  def latitude_not_null
+    latitude || 90.000
+  end
+
+  def longitude_not_null
+    longitude || 0.000
   end
 
   def named_location_id_str
@@ -149,8 +157,7 @@ class Photo < ActiveRecord::Base
 
   validates :category_id, :presence => true
   validates :title, :presence => true
-  validates :latitude, :presence => true
-  validates :longitude, :presence => true
+
   validates :title, :length => { :maximum => 23 }
   validates :user_id, :presence => true
   #validate :address_or_coordinates
