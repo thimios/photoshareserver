@@ -54,7 +54,7 @@ module Api
 
         case distance_factor_param
           when '0' # local, full left
-            return "-10"
+            return "-3e-2"
           when '1'
             return "-7e-2"
           when '2' # middle, default value

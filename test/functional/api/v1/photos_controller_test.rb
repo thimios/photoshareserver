@@ -392,7 +392,7 @@ module Api
       test "test photo sorting algorithm, random distances" do
         # /api/v1/photos.json?_dc=1356628364027&auth_token=Hy4JzyV8XVxpDtt7rStj&user_latitude=37.0435203&user_longitude=22.110219000000004&page=1&start=0&limit=10&filter=%5B%7B%22property%22%3A%22category_id%22%2C%22value%22%3A%221%22%7D%5D
 
-        photo_count = 60
+        photo_count = 200
 
         #creating first photo
         first_photo  = Photo.create(title: "first photo", category_id: 1, user_id: @generator.rand(1..2), latitude: 51.2, longitude: 10.3, show_on_map: true)
@@ -403,7 +403,7 @@ module Api
         }
 
         photo_count.times do
-          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: @generator.rand(1..2), latitude: @generator.rand(52.2..56.7), longitude: @generator.rand(12.3..17.5), show_on_map: true)
+          photo = Photo.create(title: Faker::Lorem.sentence(2).truncate(23), category_id: 1, user_id: @generator.rand(1..2), latitude: @generator.rand(40.2..52.7), longitude: @generator.rand(-74.0..29.5), show_on_map: true)
           photo.created_at = rand(2..20000).hours.ago
           photo.save
 
