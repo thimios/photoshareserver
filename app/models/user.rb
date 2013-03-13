@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   validates_inclusion_of    :gender, :in => %w(male female)
 
   has_attached_file :avatar,
-                    :styles => { :full => "640x640", :medium => "460x460>", :thumb => "116x116>" }
+                    :styles => { :medium => "460x460>", :thumb => "116x116>" }
 
   # if params not nil, will update the location attributes in the database. A solr reindex of that user will be triggered
   def update_location(lat, long)

@@ -60,13 +60,13 @@ class Photo < ActiveRecord::Base
   end
 
   has_attached_file :image,
-                    :styles => { :full => "640x640", :medium => "460x460>", :thumb => "80x80>" }
+                    :styles => { :medium => "256x256>", :thumb => "80x80>" }
   def original_size_url
     self.banned? ? Rails.configuration.banned_original_size_url : self.image.url
   end
 
   def full_size_url
-    self.banned? ? Rails.configuration.banned_full_size_url : image.url(:full)
+    self.original_size_url
   end
 
   def medium_size_url
