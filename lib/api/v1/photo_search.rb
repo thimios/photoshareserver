@@ -21,18 +21,14 @@ module Api
         #0. -1e-5 : recent : full left
         case time_factor_param
           when "0" # recent, full left
-           return "-0.1e-9"
-          when "1"
-            return "-0.8e-7"
+           return "-3.48414e-9"
           when "2" # middle, default value
-            return "-1.15e-9"
-          when "3"
-            return "-1.15e-10"
+            return "-3.48414e-10"
           when "4" # all time, full right
             return "0"
           else
             Rails.logger.warn "Time factor param value: #{time_factor_param} not expected. Using default"
-            return "-1.15e-9"
+            return "-3.48414e-10"
         end
       end
 
@@ -54,18 +50,14 @@ module Api
 
         case distance_factor_param
           when '0' # local, full left
-            return "-6.1e-3"
-          when '1'
-            return "-7.1e-2"
+            return "-3.01e-1"
           when '2' # middle, default value
-            return "-7.1e-4"
-          when '3'
-            return "-7.1e-5"
+            return "-3.01e-3"
           when '4' # global, full right
             return "0"
           else
             Rails.logger.warn "Distance factor param value: #{distance_factor_param} not expected. Using default"
-            return "-7e-4"
+            return "-3.01e-3"
         end
       end
 

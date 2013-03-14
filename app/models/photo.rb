@@ -207,32 +207,33 @@ class Photo < ActiveRecord::Base
     time_factor = Api::V1::PhotoSearch.time_factor_from_param params_time_factor
     distance_factor = Api::V1::PhotoSearch.distance_factor_from_param params_distance_factor
 
-    #"product(
-    #    sum(plusminus_i,1),
-    #    exp(
-    #      product(
-    #        product(
-    #          -7, exp(-4)
-    #        ),
-    #        geodist(
-    #          coordinates_ll,
-    #          #{params[:user_latitude]},
-    #          #{params[:user_longitude]}
-    #        )
-    #      )
-    #    ),
-    #    exp(
-    #      product(
-    #          product(
-    #            -1.15,
-    #            exp(-9)
-    #          ),
-    #          ms(NOW, created_at_dt)
-    #      )
-    #    )
-    # )"
+    #                               "product(
+    #                                  sum(plusminus_i,1),
+    #                                  1e100,
+    #                                  max(
+    #                                    product(
+    #                                      exp(
+    #                                        product(
+    #                                          #{distance_factor},
+    #                                          geodist(
+    #                                            coordinates_ll,
+    #                                            #{params[:user_latitude].to_f.round(4)},
+    #                                            #{params[:user_longitude].to_f.round(4)}
+    #                                          )
+    #                                        )
+    #                                      ),
+    #                                      exp(
+    #                                        product(
+    #                                          #{time_factor},
+    #                                          ms(NOW/HOUR, created_at_dt)
+    #                                        )
+    #                                      )
+    #                                    ),
+    #                                    1e-200
+    #                                  )
+    #                               ) desc".gsub(/\s+/, " ").strip
 
-    return (plusminus + 1) * Math.exp( distance_factor.to_f * distance_in_km) * Math.exp( time_factor.to_f *  time_in_millis)
+    return (plusminus + 1) * 1.0e100 * [Math.exp( distance_factor.to_f * distance_in_km) * Math.exp( time_factor.to_f *  time_in_millis), 1.0e-200].max
   end
 
   def to_csv(lat, long, params_time_factor, params_distance_factor)
