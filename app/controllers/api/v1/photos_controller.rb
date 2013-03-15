@@ -227,7 +227,7 @@ module Api
               # also using reduced precision 4 decimals on geolocation coordinates
               solr_params[:sort] = "product(
                                       sum(plusminus_i,1),
-                                      1.0e100,
+                                      1.0e10,
                                       max(
                                         product(
                                           exp(
@@ -243,7 +243,7 @@ module Api
                                           exp(
                                             product(
                                               #{time_factor},
-                                              ms(NOW/HOUR, created_at_dt)
+                                              ms(NOW/HOUR, created_at_dt), 0.0000001
                                             )
                                           )
                                         ),
