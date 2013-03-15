@@ -227,21 +227,27 @@ module Api
               # also using reduced precision 4 decimals on geolocation coordinates
               solr_params[:sort] = "product(
                                       sum(plusminus_i,1),
-                                      exp(
+                                      1.0e100,
+                                      max(
                                         product(
-                                          #{distance_factor},
-                                          geodist(
-                                            coordinates_ll,
-                                            #{params[:user_latitude].to_f.round(4)},
-                                            #{params[:user_longitude].to_f.round(4)}
+                                          exp(
+                                            product(
+                                              #{distance_factor},
+                                              geodist(
+                                                coordinates_ll,
+                                                #{params[:user_latitude].to_f.round(4)},
+                                                #{params[:user_longitude].to_f.round(4)}
+                                              )
+                                            )
+                                          ),
+                                          exp(
+                                            product(
+                                              #{time_factor},
+                                              ms(NOW/HOUR, created_at_dt)
+                                            )
                                           )
-                                        )
-                                      ),
-                                      exp(
-                                        product(
-                                            #{time_factor},
-                                            ms(NOW/HOUR, created_at_dt)
-                                        )
+                                        ),
+                                        1.0e-200
                                       )
                                    ) desc".gsub(/\s+/, " ").strip
             end

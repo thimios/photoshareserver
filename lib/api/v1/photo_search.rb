@@ -7,10 +7,7 @@ module Api
       # 0: full left: recent
       # 4: full right: all time
       def self.time_factor_from_param(time_factor_param)
-        if time_factor_param.nil?
-          Rails.logger.warn "time_factor param is nil, using default, slider in the middle"
-          time_factor_param = "2"
-        end
+
 
         #Time:
         #
@@ -21,14 +18,14 @@ module Api
         #0. -1e-5 : recent : full left
         case time_factor_param
           when "0" # recent, full left
-           return "-3.48414e-9"
+           return "-3.48414E-9"
           when "2" # middle, default value
-            return "-3.48414e-10"
+            return "-3.48414E-10"
           when "4" # all time, full right
             return "0"
           else
             Rails.logger.warn "Time factor param value: #{time_factor_param} not expected. Using default"
-            return "-3.48414e-10"
+            return "-3.48414E-10"
         end
       end
 
@@ -36,10 +33,7 @@ module Api
       # 0: full left: nearby
       # 4: full right: global
       def self.distance_factor_from_param(distance_factor_param)
-        if distance_factor_param.nil?
-          Rails.logger.warn "distance_factor param is nil, using default, slider in the middle"
-          distance_factor_param = "2"
-        end
+
         #Distance:
         #
         #4. 0 : Global: full right
@@ -50,14 +44,14 @@ module Api
 
         case distance_factor_param
           when '0' # local, full left
-            return "-3.01e-1"
+            return "-3.01E-1"
           when '2' # middle, default value
-            return "-3.01e-3"
+            return "-3.01E-3"
           when '4' # global, full right
             return "0"
           else
             Rails.logger.warn "Distance factor param value: #{distance_factor_param} not expected. Using default"
-            return "-3.01e-3"
+            return "-3.01E-3"
         end
       end
 
