@@ -202,7 +202,7 @@ class Photo < ActiveRecord::Base
   # params_distance_factor:  0: full left: nearby, 4: full right: global
   def sorting_rate(lat, long, params_time_factor, params_distance_factor)
     distance_in_km = Geocoder::Calculations::distance_between(self, [lat.round(4), long.round(4)], :units => :km)
-    time_in_millis = (Time.zone.now - self.created_at)
+    time_in_millis = (Time.zone.now - self.created_at) * 1000
 
     time_factor = Api::V1::PhotoSearch.time_factor_from_param params_time_factor
     distance_factor = Api::V1::PhotoSearch.distance_factor_from_param params_distance_factor

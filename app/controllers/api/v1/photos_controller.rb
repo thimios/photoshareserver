@@ -243,7 +243,7 @@ module Api
                                           exp(
                                             product(
                                               #{time_factor},
-                                              ms(NOW/HOUR, created_at_dt), 0.0000001
+                                              ms(NOW/HOUR, created_at_dt)
                                             )
                                           )
                                         ),
