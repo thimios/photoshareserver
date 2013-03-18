@@ -56,9 +56,12 @@ class HomeController < ApplicationController
       when "best"
         @photos = PhotoSearch.best(params[:page], 24)
         @active = "best"
-      else
+      when "all"
         @photos = PhotoSearch.all(params[:page],24)
         @active = "all"
+      else
+        @photos = PhotoSearch.best(params[:page], 24)
+        @active = "best"
     end
   end
 
