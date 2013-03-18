@@ -18,7 +18,7 @@ TodosSt2::Application.routes.draw do
   # admin routes
   match 'admin' => "admin#home", :as => :admin
 
-  root :to => "home#launchrock"
+  root :to => "home#home"
   #root :to => "home#home"  # production home page
 
   opinio_model :controller => 'comments'
