@@ -17,6 +17,10 @@ class PhotosControllerTest < ActionController::TestCase
     end
   end
 
+  test "get all photos of user, sorted by created_at desc" do
+
+  end
+
 
 end
 

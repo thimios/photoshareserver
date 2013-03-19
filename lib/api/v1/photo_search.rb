@@ -56,7 +56,7 @@ module Api
       end
 
       # get all photos of a specific user, with paging
-      def user_photos user_id, page, limit
+      def self.user_photos(user_id, page, limit)
         page = page || 1
         limit = limit || 24
 
@@ -67,7 +67,7 @@ module Api
           data_accessor_for(Photo).include = [:user]
         end
 
-        search.results
+        return search
       end
 
     end

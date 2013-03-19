@@ -168,7 +168,7 @@ module Api
         end
 
         if !params[:user_id].nil?
-          @photos = PhotoSearch.user_photos params[:user_id], params[:page], params[:limit]
+          @search = PhotoSearch.user_photos( params[:user_id], params[:page], params[:limit])
         else
 
           @search = Sunspot.search (Photo) do
@@ -261,10 +261,9 @@ module Api
 
             end
           end
-
-          @photos = @search.results
         end
 
+        @photos = @search.results
         # set current_user on all photos before calling voted_by_current_user
         @photos.each { |photo|
           photo.current_user = current_user
