@@ -162,100 +162,108 @@ module Api
           if @filter_params[:location_google_id]
             params[:location_google_id] = @filter_params[:location_google_id]
           end
+          if @filter_params[:user_id]
+            params[:user_id] = @filter_params[:user_id]
+          end
         end
 
-        @search = Sunspot.search (Photo) do
-          # eager load user and named_location of each photo, to avoid N+1 queries
-          data_accessor_for(Photo).include = [:user, :named_location]
+        if !params[:user_id].nil?
+          @photos = PhotoSearch.user_photos params[:user_id], params[:page], params[:limit]
+        else
 
-          if !params[:search_string].blank?
-            fulltext params[:search_string]
-          end
-          if !params[:category_id].nil?
-            with(:category_id,  params[:category_id])
-          end
-          if !params[:location_google_id].nil?
-            location = NamedLocation.find_by_google_id(params[:location_google_id])
-            unless location.nil?
-              with(:named_location_id, location.id)
-            else
-              # if the location is not found, just return an empty set
-              with(:user_id).equal_to(nil)
+          @search = Sunspot.search (Photo) do
+            # eager load user and named_location of each photo, to avoid N+1 queries
+            data_accessor_for(Photo).include = [:user, :named_location]
+
+            if !params[:search_string].blank?
+              fulltext params[:search_string]
             end
-          end
-
-          if !params[:feed].blank?
-            following_users_count = current_user.following_users_count
-            following_location_count = current_user.following_named_locations_count
-
-            if following_users_count > 0 and following_location_count > 0
-              any_of do
-                with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
-                with(:named_location_id).any_of(current_user.following_location_ids)
+            if !params[:category_id].nil?
+              with(:category_id,  params[:category_id])
+            end
+            if !params[:location_google_id].nil?
+              location = NamedLocation.find_by_google_id(params[:location_google_id])
+              unless location.nil?
+                with(:named_location_id, location.id)
+              else
+                # if the location is not found, just return an empty set
+                with(:user_id).equal_to(nil)
               end
-              without(:user_id).equal_to(current_user.id)
-            elsif following_users_count == 0 and following_location_count > 0
-              with(:named_location_id).any_of(current_user.following_location_ids)
-              without(:user_id).equal_to(current_user.id)
-            elsif following_users_count > 0 and following_location_count == 0
-              with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
-              without(:user_id).equal_to(current_user.id)
-            elsif following_users_count == 0 and following_location_count == 0
-              with(:user_id).equal_to(nil)
             end
-          end
 
-          if !params[:page].blank?
-            paginate(:page => params[:page], :per_page => params[:limit])
-            Rails.logger.debug "User latitude before rounding: #{params[:user_latitude]}, after: #{params[:user_latitude].to_f.round(4)}"
-            Rails.logger.debug "User longitude before rounding: #{params[:user_longitude]}, after: #{params[:user_longitude].to_f.round(4)}"
-            adjust_solr_params do |solr_params|
+            if !params[:feed].blank?
+              following_users_count = current_user.following_users_count
+              following_location_count = current_user.following_named_locations_count
 
-              #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
-              #
-              #c1 and c2 are negative constants.
-              #Distance is the distance between the current location and the picture
-              #time the time between the current time and the time the picture was taken.
-              #Clicks is the amount of "so berlin" votes the photo has received
-              #
-              #The constants are:
-              #c1 = -7e-4
-              #c2 = -1.15e-09
-              #Assuming distance in km for c1 and milliseconds for c2.
+              if following_users_count > 0 and following_location_count > 0
+                any_of do
+                  with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
+                  with(:named_location_id).any_of(current_user.following_location_ids)
+                end
+                without(:user_id).equal_to(current_user.id)
+              elsif following_users_count == 0 and following_location_count > 0
+                with(:named_location_id).any_of(current_user.following_location_ids)
+                without(:user_id).equal_to(current_user.id)
+              elsif following_users_count > 0 and following_location_count == 0
+                with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
+                without(:user_id).equal_to(current_user.id)
+              elsif following_users_count == 0 and following_location_count == 0
+                with(:user_id).equal_to(nil)
+              end
+            end
 
-              # using reduced precision on time to prevent excessive memory consumption
-              # also using reduced precision 4 decimals on geolocation coordinates
-              solr_params[:sort] = "product(
-                                      sum(plusminus_i,1),
-                                      1.0e10,
-                                      max(
-                                        product(
-                                          exp(
-                                            product(
-                                              #{distance_factor},
-                                              geodist(
-                                                coordinates_ll,
-                                                #{params[:user_latitude].to_f.round(4)},
-                                                #{params[:user_longitude].to_f.round(4)}
+            if !params[:page].blank?
+              paginate(:page => params[:page], :per_page => params[:limit])
+              Rails.logger.debug "User latitude before rounding: #{params[:user_latitude]}, after: #{params[:user_latitude].to_f.round(4)}"
+              Rails.logger.debug "User longitude before rounding: #{params[:user_longitude]}, after: #{params[:user_longitude].to_f.round(4)}"
+              adjust_solr_params do |solr_params|
+
+                #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
+                #
+                #c1 and c2 are negative constants.
+                #Distance is the distance between the current location and the picture
+                #time the time between the current time and the time the picture was taken.
+                #Clicks is the amount of "so berlin" votes the photo has received
+                #
+                #The constants are:
+                #c1 = -7e-4
+                #c2 = -1.15e-09
+                #Assuming distance in km for c1 and milliseconds for c2.
+
+                # using reduced precision on time to prevent excessive memory consumption
+                # also using reduced precision 4 decimals on geolocation coordinates
+                solr_params[:sort] = "product(
+                                        sum(plusminus_i,1),
+                                        1.0e10,
+                                        max(
+                                          product(
+                                            exp(
+                                              product(
+                                                #{distance_factor},
+                                                geodist(
+                                                  coordinates_ll,
+                                                  #{params[:user_latitude].to_f.round(4)},
+                                                  #{params[:user_longitude].to_f.round(4)}
+                                                )
+                                              )
+                                            ),
+                                            exp(
+                                              product(
+                                                #{time_factor},
+                                                ms(NOW/HOUR, created_at_dt)
                                               )
                                             )
                                           ),
-                                          exp(
-                                            product(
-                                              #{time_factor},
-                                              ms(NOW/HOUR, created_at_dt)
-                                            )
-                                          )
-                                        ),
-                                        1.0e-200
-                                      )
-                                   ) desc".gsub(/\s+/, " ").strip
+                                          1.0e-200
+                                        )
+                                     ) desc".gsub(/\s+/, " ").strip
+              end
+
             end
-
           end
-        end
 
-        @photos = @search.results
+          @photos = @search.results
+        end
 
         # set current_user on all photos before calling voted_by_current_user
         @photos.each { |photo|

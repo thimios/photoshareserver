@@ -55,6 +55,21 @@ module Api
         end
       end
 
+      # get all photos of a specific user, with paging
+      def user_photos user_id, page, limit
+        page = page || 1
+        limit = limit || 24
+
+        search = Sunspot.search (Photo) do
+          with(:user_id, user_id)
+          paginate(:page => page, :per_page => limit)
+          order_by :created_at, :desc
+          data_accessor_for(Photo).include = [:user]
+        end
+
+        search.results
+      end
+
     end
   end
 end
