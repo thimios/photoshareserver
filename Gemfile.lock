@@ -134,6 +134,9 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.0)
       mime-types
+    paperclip-aws (1.6.7)
+      aws-sdk (>= 1.2.0)
+      paperclip (>= 2.5.0)
     polyglot (0.3.3)
     pr_geohash (1.0.0)
     progress_bar (1.0.0)
@@ -236,7 +239,6 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_follower
-  aws-sdk
   bullet
   bundler
   cancan
@@ -260,6 +262,7 @@ DEPENDENCIES
   newrelic_rpm
   opinio
   paperclip
+  paperclip-aws
   progress_bar
   public_activity
   rack-cors

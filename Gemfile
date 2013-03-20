@@ -33,8 +33,7 @@ gem 'rack-jsonp-middleware',  :require => 'rack/jsonp'
 # file uploads
 gem "paperclip"
 
-# s3 storage for paperclip
-gem 'aws-sdk'
+gem "paperclip-aws" #support for all locations without hacks
 
 # solr searching
 gem 'sunspot_rails'

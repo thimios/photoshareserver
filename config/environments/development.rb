@@ -54,22 +54,23 @@ TodosSt2::Application.configure do
   config.paperclip_defaults = {
       :storage => :s3,
       :s3_host_alias => 'd2s2uq045goh1g.cloudfront.net',
+      :s3_host_name => "s3-eu-west-1.amazonaws.com",
       :url => ':s3_alias_url',
       :path => ":class/:attachment/:id_partition/:style/:filename",
       :s3_protocol => "http",
       :bucket => "com.wantedpixel.soberlin.devel",
-      :s3_credentials => {
 
+      :s3_credentials => {
           :access_key_id => "AKIAI4KGTEOUVZZZFCLA",
           :secret_access_key => "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"
       }
 
   }
 
-  Rails.configuration.banned_original_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.devel/system_photos/images/000/000/001/original/bannedphoto.png"
-  Rails.configuration.banned_full_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.devel/system_photos/images/000/000/001/full/bannedphoto.png"
-  Rails.configuration.banned_medium_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.devel/system_photos/images/000/000/001/medium/bannedphoto.png"
-  Rails.configuration.banned_thumb_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.devel/system_photos/images/000/000/001/thumb/bannedphoto.png"
+  Rails.configuration.banned_original_size_url = "http://d2s2uq045goh1g.cloudfront.net/system_photos/images/000/000/001/original/bannedphoto.png"
+  Rails.configuration.banned_full_size_url = "http://d2s2uq045goh1g.cloudfront.net/system_photos/images/000/000/001/full/bannedphoto.png"
+  Rails.configuration.banned_medium_size_url = "http://d2s2uq045goh1g.cloudfront.net/system_photos/images/000/000/001/medium/bannedphoto.png"
+  Rails.configuration.banned_thumb_size_url = "http://d2s2uq045goh1g.cloudfront.net/system_photos/images/000/000/001/thumb/bannedphoto.png"
 
   config.watchable_dirs['lib'] = [:rb]
 

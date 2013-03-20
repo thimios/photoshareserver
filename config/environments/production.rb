@@ -94,7 +94,10 @@ TodosSt2::Application.configure do
 
   config.paperclip_defaults = {
       :storage => :s3,
+      :s3_host_alias => 'd2ujlosr6qi8kc.cloudfront.net',
       :s3_host_name => "s3-eu-west-1.amazonaws.com",
+      :url => ':s3_alias_url',
+      :path => ":class/:attachment/:id_partition/:style/:filename",
       :s3_protocol => "http",
       :s3_credentials => {
           :bucket => "com.wantedpixel.soberlin.production",
@@ -104,10 +107,10 @@ TodosSt2::Application.configure do
   }
 
 
-  Rails.configuration.banned_original_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.production/system_photos/images/000/000/001/original/bannedphoto.png"
-  Rails.configuration.banned_full_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.production/system_photos/images/000/000/001/full/bannedphoto.png"
-  Rails.configuration.banned_medium_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.production/system_photos/images/000/000/001/medium/bannedphoto.png"
-  Rails.configuration.banned_thumb_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.production/system_photos/images/000/000/001/thumb/bannedphoto.png"
+  Rails.configuration.banned_original_size_url = "http://d2ujlosr6qi8kc.cloudfront.net/system_photos/images/000/000/001/original/bannedphoto.png"
+  Rails.configuration.banned_full_size_url = "http://d2ujlosr6qi8kc.cloudfront.net/system_photos/images/000/000/001/full/bannedphoto.png"
+  Rails.configuration.banned_medium_size_url = "http://d2ujlosr6qi8kc.cloudfront.net/system_photos/images/000/000/001/medium/bannedphoto.png"
+  Rails.configuration.banned_thumb_size_url = "http://d2ujlosr6qi8kc.cloudfront.net/system_photos/images/000/000/001/thumb/bannedphoto.png"
 
   # bullet database query optimization suggestions
   config.after_initialize do
