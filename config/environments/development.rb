@@ -53,13 +53,17 @@ TodosSt2::Application.configure do
 
   config.paperclip_defaults = {
       :storage => :s3,
-      :s3_host_name => "s3-eu-west-1.amazonaws.com",
+      :s3_host_alias => 'd2s2uq045goh1g.cloudfront.net',
+      :url => ':s3_alias_url',
+      :path => ":class/:attachment/:id_partition/:style/:filename",
       :s3_protocol => "http",
+      :bucket => "com.wantedpixel.soberlin.devel",
       :s3_credentials => {
-          :bucket => "com.wantedpixel.soberlin.devel",
+
           :access_key_id => "AKIAI4KGTEOUVZZZFCLA",
           :secret_access_key => "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"
       }
+
   }
 
   Rails.configuration.banned_original_size_url = "http://s3-eu-west-1.amazonaws.com/com.wantedpixel.soberlin.devel/system_photos/images/000/000/001/original/bannedphoto.png"

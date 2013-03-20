@@ -31,14 +31,14 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'rack-jsonp-middleware',  :require => 'rack/jsonp'
 
 # file uploads
-gem "paperclip", "~> 3.0"
+gem "paperclip"
 
 # s3 storage for paperclip
-gem 'aws-sdk', '~> 1.3.4'
+gem 'aws-sdk'
 
 # solr searching
-gem 'sunspot_rails', "~> 2.0.0.pre"
-gem 'sunspot_solr', "~> 2.0.0.pre" # optional pre-packaged Solr distribution for use in development
+gem 'sunspot_rails'
+gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development
 gem 'progress_bar' # needed to show progress bar when indexing
 
 # bundle exec rake sunspot:solr:start # or sunspot:solr:run to start in foreground
