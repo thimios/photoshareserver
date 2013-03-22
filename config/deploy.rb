@@ -180,6 +180,16 @@ task :tail_logs, :roles => :app do
   end
 end
 
+desc "remotely console"
+task :console, :roles => :app do
+  input = ''
+  run "cd #{current_path} && ./script/console #{ENV['RAILS_ENV']}" do |channel, stream, data|
+    next if data.chomp == input.chomp || data.chomp == ''
+    print data
+    channel.send_data(input = $stdin.gets) if data =~ /^(>|\?)>/
+  end
+end
+
 after 'deploy:setup', 'deploy:setup_solr_data_dir'
 #after 'deploy:update_code',  'install_unicorn_init_script'
 #after 'deploy:update_code',  'install_solr_init_script'
