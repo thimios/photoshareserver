@@ -152,7 +152,7 @@ namespace :solr do
     stop
     # run "rm -rf #{shared_path}/solr/data"
     start
-    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake sunspot:solr:reindex"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake sunspot:solr:reindex[,,true]"
   end
 end
 
