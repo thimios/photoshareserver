@@ -170,6 +170,16 @@ task :install_solr_init_script, :roles => :app do
   run "#{sudo} update-rc.d solr.#{application} defaults"
 end
 
+
+desc "tail production log files"
+task :tail_logs, :roles => :app do
+  run "tail -f #{shared_path}/log/production.log" do |channel, stream, data|
+    puts  # for an extra line break before the host name
+    puts "#{channel[:host]}: #{data}"
+    break if stream == :err
+  end
+end
+
 after 'deploy:setup', 'deploy:setup_solr_data_dir'
 #after 'deploy:update_code',  'install_unicorn_init_script'
 #after 'deploy:update_code',  'install_solr_init_script'
