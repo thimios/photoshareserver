@@ -23,6 +23,8 @@ class Photo < ActiveRecord::Base
   searchable do
   	# text :description, :as => :description_textp
     text :title, :as => :title_textp
+    text :author_name, :as => :author_name_textp
+    text :location_name, :as => :location_name_textp
     integer :named_location_id, :references => NamedLocation, :multiple => false
     integer :category_id, :references => Category, :multiple => false
     integer :user_id, :references => User, :multiple => false
