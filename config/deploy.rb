@@ -147,12 +147,19 @@ namespace :solr do
   task :stop, :roles => :app, :except => { :no_release => true } do
     run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec sunspot-solr stop --port=8983 --data-directory=#{shared_path}/solr/data --pid-dir=#{shared_path}/pids --solr-home=#{current_path}/solr --log-file=#{shared_path}/log/sunspot-solr-production.log"
   end
+
   desc "reindex the whole database"
   task :reindex, :roles => :app do
     stop
     # run "rm -rf #{shared_path}/solr/data"
     start
-    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake sunspot:solr:reindex[,,true]"
+
+    input = ''
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake sunspot:solr:reindex[,,true]" do |channel, stream, data|
+      next if data.chomp == input.chomp || data.chomp == ''
+      print data
+      channel.send_data(input = $stdin.gets) if data =~ /^(>|\?)>/
+    end
   end
 end
 
