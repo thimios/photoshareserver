@@ -112,7 +112,6 @@ class User < ActiveRecord::Base
 
   searchable do
     text :username, :as => :username_textp
-    text :email, :as => :email_textp
     integer :following_user_ids, :multiple => true
     integer :plusminus
     integer :id
