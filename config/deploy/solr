@@ -6,7 +6,7 @@ TIMEOUT=${TIMEOUT-60}
 APP_ROOT=/home/deploy/app/current
 SHARED_PATH=/home/deploy/app/shared
 APP_USER=deploy
-PID=/home/deploy/app/shared/pids/unicorn.pid
+PID=/home/deploy/app/shared/pids/sunspot-solr.pid
 ENV=production
 CONFIG_FILE=/home/deploy/app/current/config/unicorn/production.rb
 CMD="cd $APP_ROOT && RAILS_ENV=$ENV bundle exec sunspot-solr start --port=8983 --data-directory=$SHARED_PATH/solr/data --pid-dir=$SHARED_PATH/pids  --log-file=$SHARED_PATH/log/sunspot-solr-production.log"
