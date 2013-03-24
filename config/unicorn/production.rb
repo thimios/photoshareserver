@@ -10,7 +10,7 @@ stdout_path "log/unicorn.log"
 
 
 # Set unicorn options
-worker_processes 5
+worker_processes 10
 preload_app true
 
 before_fork do |server, worker|
