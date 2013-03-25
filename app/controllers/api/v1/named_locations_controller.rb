@@ -40,9 +40,14 @@ module Api
           @filter_params[@filter[0].values[0]] = @filter[0].values[1]
           if @filter_params[:followed_by_current_user]
             params[:followed_by_current_user] = @filter_params[:followed_by_current_user]
+            @results = NamedLocation.where(:id => current_user.following_location_ids).order("name").page(params[:page]).per(params[:limit])
+            @total_count = @results.total_count
+          elsif @filter_params[:followed_by_user_id]
+              params[:followed_by_user_id] = @filter_params[:followed_by_user_id]
+              @results = NamedLocation.where(:id => User.find(params[:followed_by_user_id]).following_location_ids).order("name").page(params[:page]).per(params[:limit])
+              @total_count = @results.total_count
           end
-          @results = NamedLocation.where(:id => current_user.following_location_ids).order("name").page(params[:page]).per(params[:limit])
-          @total_count = @results.total_count
+
         elsif !params[:search_string].blank?
           #get fulltext resutls
           @search = Sunspot.search (NamedLocation) do
