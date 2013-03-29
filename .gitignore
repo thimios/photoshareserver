@@ -23,3 +23,4 @@ Thumbs.db
 
 solr/pids
 solr/data
+test.sqlite3

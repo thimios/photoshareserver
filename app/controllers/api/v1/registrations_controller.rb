@@ -9,6 +9,8 @@ module Api
 
       respond_to :json
 
+      # list users followed by specific user: http://localhost:3000/api/v1/users?followed_by_user_id=5
+      # list users following a specific user: http://localhost:3000/api/v1/users?following_the_user_id=5
       # list users you are following: http://localhost:3000/api/v1/users?followed_by_current_user=true
       # list users following you: http://localhost:3000/api/v1/users?following_the_current_user=true
       def index
@@ -22,6 +24,10 @@ module Api
             params[:followed_by_current_user] = @filter_params[:followed_by_current_user]
           elsif @filter_params[:following_the_current_user]
             params[:following_the_current_user] = @filter_params[:following_the_current_user]
+          elsif @filter_params[:followed_by_user_id]
+            params[:followed_by_user_id] = @filter_params[:followed_by_user_id]
+          elsif @filter_params[:following_the_user_id]
+            params[:following_the_user_id] = @filter_params[:following_the_user_id]
           end
         end
 
@@ -30,6 +36,12 @@ module Api
           @total_count = @users.total_count
         elsif params[:following_the_current_user] == "true"
           @users = User.where(:id => current_user.followers.map{|follower_user| follower_user.id}).order("username").page(params[:page]).per(params[:limit])
+          @total_count = @users.total_count
+        elsif params[:followed_by_user_id]
+          @users = User.where(:id => User.find(params[:followed_by_user_id]).following_user_ids).order("username").page(params[:page]).per(params[:limit])
+          @total_count = @users.total_count
+        elsif params[:following_the_user_id]
+          @users = User.where(:id => User.find(params[:following_the_user_id]).followers.map{|follower_user| follower_user.id}).order("username").page(params[:page]).per(params[:limit])
           @total_count = @users.total_count
         elsif params[:search_string].blank?
           @users = User.page(params[:page]).per(params[:limit])
