@@ -124,13 +124,13 @@ a {
 
 #storeLink{
   width: 188px;
-  background: url('/assets/storeLinkBorder.png');
+  background: image-url('storeLinkBorder.png');
   height: 132px;
   margin-left:110px;
 }
 
 #downloadButton{
-  background: url('/assets/download.png');
+  background: image-url('download.png');
   width: 169px;
   height: 60px;
   position: relative;
@@ -176,7 +176,7 @@ a {
 
 
 #topRightTop{
-  background: url('/assets/toprightbg.png');
+  background: image-url('toprightbg.png');
   background-repeat: repeat-x;
   background-position: bottom;
   padding-bottom: 35px;
@@ -210,7 +210,7 @@ a {
 
 .menuItem span:hover{
   color:#516a16;
-  background:url('/assets/greendot.png');
+  background: image-url('greendot.png');
   background-repeat:repeat-x;
   background-position:bottom;
 }
@@ -220,7 +220,7 @@ a {
 }
 #downloadButton{
   cursor:pointer;
-  background: url('/assets/download.png');
+  background: image-url('download.png');
   width: 185px;
   height: 66px;
   position: relative;
@@ -248,7 +248,7 @@ a {
   text-align: center;
 }
 #active{
-  background:url('/assets/activeBg.png');
+  background: image-url('activeBg.png');
   color:#516a16;
   height:71px;
 
