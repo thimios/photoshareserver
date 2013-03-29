@@ -5,29 +5,30 @@
 #  # You may need to specify what region your storage bucket is in
 #  fog_region: "eu-west-1"
 #  existing_remote_files: keep
-  # To delete existing remote files.
-  # existing_remote_files: delete 
-  # Automatically replace files with their equivalent gzip compressed version
-  # gzip_compression: true
-  # Fail silently.  Useful for environments such as Heroku
-  # fail_silently: true
+# To delete existing remote files.
+# existing_remote_files: delete
+# Automatically replace files with their equivalent gzip compressed version
+# gzip_compression: true
+# Fail silently.  Useful for environments such as Heroku
+# fail_silently: true
 
 development:
   fog_provider: 'AWS'
   fog_directory: "todosst2-assets"
   # You may need to specify what region your storage bucket is in
-  fog_region: "eu-west-1"
+  fog_region: eu-west-1
   existing_remote_files: keep
-  aws_access_key_id: "AKIAI4KGTEOUVZZZFCLA"
-  aws_secret_access_key: "perhM6bovVIMqs9axO0fUoTtbM4WP9SEanerLlrg"
+  aws_access_key_id: AKIAI4KGTEOUVZZZFCLA
+  aws_secret_access_key: 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
   gzip_compression: true
 
 production:
-  fog_provider: 'AWS'
-  fog_directory: "todosst2-assets"
+  fog_provider: AWS
+  fog_directory: todosst2-assets
   # You may need to specify what region your storage bucket is in
-  fog_region: "eu-west-1"
+  fog_region: eu-west-1
   existing_remote_files: keep
-  aws_access_key_id: "AKIAI4KGTEOUVZZZFCLA",
-  aws_secret_access_key: "perhM6bovVIMqs9axO0fUoTtbM4WP9SEanerLlrg"
+  aws_access_key_id: AKIAI4KGTEOUVZZZFCLA
+  aws_secret_access_key: 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
   gzip_compression: true
+
