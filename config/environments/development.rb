@@ -36,7 +36,7 @@ TodosSt2::Application.configure do
   config.assets.debug = true
 
   # put assets on cdn
-  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+  config.action_controller.asset_host = "d2s2uq045goh1g.cloudfront.net"
 
   # store assets in a 'folder' instead of bucket root
   # config.assets.prefix = "/production/assets"
