@@ -52,11 +52,11 @@
     }
     #cboxTopCenter{
     	height: 4px;
-		background: image-url(borderTopCenter.png) repeat-x;
+		background: image-url("borderTopCenter.png") repeat-x;
 	}
     #cboxBottomCenter{
     	height: 4px;
-		background: image-url(borderBottomCenter.png) repeat-x;
+		background: image-url("borderBottomCenter.png") repeat-x;
     }
     #cboxContent{background:#fff; }
         .cboxIframe{background:#fff;}
@@ -67,17 +67,17 @@
         #cboxTitle{position:absolute; bottom:4px; left:0; text-align:center; width:100%; color:#949494;}
         #cboxCurrent{position:absolute; bottom:4px; left:58px; color:#949494;}
         #cboxSlideshow{position:absolute; bottom:4px; right:30px; color:#0092ef;}
-        #cboxPrevious{position:absolute; bottom:0; left:0; background: image-url(controls.png) no-repeat -75px 0; width:25px; height:25px; text-indent:-9999px;}
+        #cboxPrevious{position:absolute; bottom:0; left:0; background: image-url("controls.png") no-repeat -75px 0; width:25px; height:25px; text-indent:-9999px;}
         #cboxPrevious:hover{background-position:-75px -25px;}
-        #cboxNext{position:absolute; bottom:0; left:27px; background: image-url(controls.png) no-repeat -50px 0; width:25px; height:25px; text-indent:-9999px;}
+        #cboxNext{position:absolute; bottom:0; left:27px; background: image-url("controls.png") no-repeat -50px 0; width:25px; height:25px; text-indent:-9999px;}
         #cboxNext:hover{background-position:-50px -25px;}
-        #cboxLoadingOverlay{background: image-url(loading_background.png) no-repeat center center;}
-        #cboxLoadingGraphic{background: image-url(loading.gif) no-repeat center center;}
+        #cboxLoadingOverlay{background: image-url("loading_background.png") no-repeat center center;}
+        #cboxLoadingGraphic{background: image-url("loading.gif") no-repeat center center;}
 #cboxClose {
 position: absolute;
 top: -33px;
 right: -33px;
-background: image-url(closeBg.png);
+background: image-url("closeBg.png");
 width: 29px;
 height: 29px;
 text-indent: -9999px;
@@ -104,14 +104,14 @@ text-indent: -9999px;
   The following provides PNG transparency support for IE6
   Feel free to remove this and the /ie6/ directory if you have dropped IE6 support.
 */
-.cboxIE6 #cboxTopLeft{background: image-url(ie6/borderTopLeft.png);}
-.cboxIE6 #cboxTopCenter{background: image-url(ie6/borderTopCenter.png);}
-.cboxIE6 #cboxTopRight{background: image-url(ie6/borderTopRight.png);}
-.cboxIE6 #cboxBottomLeft{background: image-url(ie6/borderBottomLeft.png);}
-.cboxIE6 #cboxBottomCenter{background: image-url(ie6/borderBottomCenter.png);}
-.cboxIE6 #cboxBottomRight{background: image-url(ie6/borderBottomRight.png);}
-.cboxIE6 #cboxMiddleLeft{background: image-url(ie6/borderMiddleLeft.png);}
-.cboxIE6 #cboxMiddleRight{background: image-url(ie6/borderMiddleRight.png);}
+.cboxIE6 #cboxTopLeft{background: image-url("ie6/borderTopLeft.png");}
+.cboxIE6 #cboxTopCenter{background: image-url("ie6/borderTopCenter.png");}
+.cboxIE6 #cboxTopRight{background: image-url("ie6/borderTopRight.png");}
+.cboxIE6 #cboxBottomLeft{background: image-url("ie6/borderBottomLeft.png");}
+.cboxIE6 #cboxBottomCenter{background: image-url("ie6/borderBottomCenter.png");}
+.cboxIE6 #cboxBottomRight{background: image-url("ie6/borderBottomRight.png");}
+.cboxIE6 #cboxMiddleLeft{background: image-url("ie6/borderMiddleLeft.png");}
+.cboxIE6 #cboxMiddleRight{background: image-url("ie6/borderMiddleRight.png");}
 
 .cboxIE6 #cboxTopLeft,
 .cboxIE6 #cboxTopCenter,
@@ -126,7 +126,7 @@ text-indent: -9999px;
 
 #cboxTopCenter {
 	height: 51px;
-background: iamge-url(borderTopCenter.png) repeat-x;
+background: iamge-url("borderTopCenter.png") repeat-x;
 position: relative;
 top: 9px;
 z-index: 123123;
