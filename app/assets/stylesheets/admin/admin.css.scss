@@ -271,27 +271,13 @@ a {
   position:relative;
   top:10px;
 }
-.random1 .overlay{
-  position: absolute;
-  top: -14px;
-  left: -24px;
-  background:url(/assets/polaroid-01.png);
-  width:245px;
-  height:273px;
-}
+
 
 .random2{
   position:relative;
   top:15px;
 }
-.random2 .overlay{
-  position: absolute;
-  top: -14px;
-  left: -24px;
-  background:url(/assets/polaroid-02.png);
-  width:245px;
-  height:273px;
-}
+
 
 .scotch{
 
@@ -303,32 +289,14 @@ a {
   z-index: 12;
 }
 
-.random2 .scotch{
-  background: url(/assets/scotch-02.png);
-}
-.random4 .scotch{
-  background: url(/assets/scotch-04.png);
-}
-.random3 .scotch{
-  background: url(/assets/scotch-03.png);
-}
-.random1 .scotch{
-  background: url(/assets/scotch-01.png);
-}
+
 
 
 .random3{
   position:relative;
   top:-10px;
 }
-.random3 .overlay{
-  position: absolute;
-  top: -11px;
-  left: -16px;
-  background: url(/assets/polaroid-03.png);
-  width: 245px;
-  height: 273px;
-}
+
 .random3 .photoAuthor{
   left:8px;
 }
@@ -340,14 +308,7 @@ a {
   position:relative;
   top:0px;
 }
-.random4 .overlay{
-  position: absolute;
-  top: -14px;
-  left: -24px;
-  background:url(/assets/polaroid-04.png);
-  width:245px;
-  height:273px;
-}
+
 
 .photoContainer{
   display:inline-block;
@@ -362,24 +323,6 @@ a{
 }
 .photosRow{
   margin-bottom:60px;
-}
-
-#footer {
-  background: url(/assets/footerBg.png);
-  background-repeat: no-repeat;
-  background-position: top;
-  font-family: satisfy;
-  color: #696969;
-  text-align: center;
-  padding-top: 13px;
-  width: 1005px;
-  height: 94px;
-  position: fixed;
-  bottom: 0px;
-  z-index: 12;
-  overflow:auto;
-  left:50%;
-  margin-left:-502px;
 }
 
 #footer span{
@@ -410,14 +353,7 @@ a{
 #leftColumn{
   margin-right: 28px;
 }
-.comment{
-  background: url(/assets/dots.jpg);
-  background-repeat: no-repeat;
-  background-position: bottom;
-  padding-bottom: 12px;
-  width: 486px;
-  margin-bottom: 13px;
-}
+
 
 .dot{
   top: 19px!important;
@@ -533,27 +469,9 @@ a{
   height:57px;
 }
 
-#fbLink{
-  background: url(/assets/fb.png);
-  cursor:pointer;
 
-}
 
-#twitterLink{
-  background: url(/assets/twitter.png);
-  position: relative;
-  left: 19px;
-  cursor:pointer;
 
-}
-
-#fbLink:hover{
-  background: url(/assets/fbOn.png);
-}
-
-#twitterLink:hover{
-  background: url(/assets/twitterOn.png);
-}
 
 #preloadImages{
   display:none;

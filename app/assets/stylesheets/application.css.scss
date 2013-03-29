@@ -246,7 +246,7 @@
   position: absolute;
   top: -14px;
   left: -24px;
-  background:url(/assets/polaroid-01.png);
+  background: image-url("polaroid-01.png");
   width:245px;
   height:273px;
 }
@@ -259,7 +259,7 @@
   position: absolute;
   top: -14px;
   left: -24px;
-  background:url(/assets/polaroid-02.png);
+  background: image-url("polaroid-02.png");
   width:245px;
   height:273px;
 }
@@ -275,16 +275,16 @@
 }
 
 .random2 .scotch{
-  background: url(/assets/scotch-02.png);
+  background: image-url("scotch-02.png");
 }
 .random4 .scotch{
-  background: url(/assets/scotch-04.png);
+  background: image-url("scotch-04.png");
 }
 .random3 .scotch{
-  background: url(/assets/scotch-03.png);
+  background: image-url("scotch-03.png");
 }
 .random1 .scotch{
-  background: url(/assets/scotch-01.png);
+  background: image-url("scotch-01.png");
 }
 
 
@@ -296,7 +296,7 @@
   position: absolute;
   top: -11px;
   left: -16px;
-  background: url(/assets/polaroid-03.png);
+  background: image-url("polaroid-03.png");
   width: 245px;
   height: 273px;
 }
@@ -315,7 +315,7 @@
   position: absolute;
   top: -14px;
   left: -24px;
-  background:url(/assets/polaroid-04.png);
+  background: image-url("polaroid-04.png");
   width:245px;
   height:273px;
 }
@@ -336,7 +336,7 @@ a{
 }
 
 #footer {
-  background: url(/assets/footerBg.png);
+  background: image-url("footerBg.png");
   background-repeat: no-repeat;
   background-position: top;
   font-family: satisfy;
@@ -382,7 +382,7 @@ a{
   margin-right: 28px;
 }
 .comment{
-  background: url(/assets/dots.jpg);
+  background: image-url("dots.jpg");
   background-repeat: no-repeat;
   background-position: bottom;
   padding-bottom: 12px;
@@ -521,13 +521,13 @@ a{
 }
 
 #fbLink{
-  background: url(/assets/fb.png);
+  background: image-url("fb.png");
   cursor:pointer;
 
 }
 
 #twitterLink{
-  background: url(/assets/twitter.png);
+  background: image-url("twitter.png");
   position: relative;
   left: 19px;
   cursor:pointer;
@@ -535,11 +535,11 @@ a{
 }
 
 #fbLink:hover{
-  background: url(/assets/fbOn.png);
+  background: image-url("fbOn.png");
 }
 
 #twitterLink:hover{
-  background: url(/assets/twitterOn.png);
+  background: image-url("twitterOn.png");
 }
 
 #preloadImages{
