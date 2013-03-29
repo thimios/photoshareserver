@@ -13,14 +13,7 @@
 # fail_silently: true
 
 development:
-  fog_provider: 'AWS'
-  fog_directory: "todosst2-assets"
-  # You may need to specify what region your storage bucket is in
-  fog_region: eu-west-1
-  existing_remote_files: keep
-  aws_access_key_id: AKIAI4KGTEOUVZZZFCLA
-  aws_secret_access_key: perhM6bovVIMqs9axO0fUoTtbM4WP9SEanerLlrg
-  gzip_compression: true
+  enabled: false
 
 production:
   fog_provider: AWS
