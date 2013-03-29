@@ -29,7 +29,7 @@ TodosSt2::Application.configure do
   config.action_controller.asset_host = "d2ujlosr6qi8kc.cloudfront.net"
 
   # store assets in a 'folder' instead of bucket root
-  # config.assets.prefix = "/production/assets"
+  config.assets.prefix = "/production/assets"
 
   # Specifies the header that your server uses for sending files
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache

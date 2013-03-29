@@ -24,7 +24,7 @@ development:
 
 production:
   fog_provider: AWS
-  fog_directory: todosst2-assets
+  fog_directory: com.wantedpixel.soberlin.production
   # You may need to specify what region your storage bucket is in
   fog_region: eu-west-1
   existing_remote_files: keep
