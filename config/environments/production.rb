@@ -25,6 +25,12 @@ TodosSt2::Application.configure do
 
   config.assets.precompile += %w( *.js *.css )
 
+  # put assets on cdn
+  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+
+  # store assets in a 'folder' instead of bucket root
+  # config.assets.prefix = "/production/assets"
+
   # Specifies the header that your server uses for sending files
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx

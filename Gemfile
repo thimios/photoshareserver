@@ -121,6 +121,8 @@ group :assets do
 
   # only precompile updated assets
   gem 'turbo-sprockets-rails3'
+  # Synchronises Assets between Rails and S3
+  gem 'asset_sync'
 end
 
 
