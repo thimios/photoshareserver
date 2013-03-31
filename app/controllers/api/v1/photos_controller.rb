@@ -169,6 +169,8 @@ module Api
 
         if !params[:user_id].nil?
           @search = PhotoSearch.user_photos( params[:user_id], params[:page], params[:limit])
+        elsif !params[:feed].blank?
+          @search = PhotoSearch.user_feed(current_user, params[:page], params[:limit])
         else
 
           @search = Sunspot.search (Photo) do
@@ -187,27 +189,6 @@ module Api
                 with(:named_location_id, location.id)
               else
                 # if the location is not found, just return an empty set
-                with(:user_id).equal_to(nil)
-              end
-            end
-
-            if !params[:feed].blank?
-              following_users_count = current_user.following_users_count
-              following_location_count = current_user.following_named_locations_count
-
-              if following_users_count > 0 and following_location_count > 0
-                any_of do
-                  with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
-                  with(:named_location_id).any_of(current_user.following_location_ids)
-                end
-                without(:user_id).equal_to(current_user.id)
-              elsif following_users_count == 0 and following_location_count > 0
-                with(:named_location_id).any_of(current_user.following_location_ids)
-                without(:user_id).equal_to(current_user.id)
-              elsif following_users_count > 0 and following_location_count == 0
-                with(:user_id).any_of(current_user.following_users.map{|followed_user| followed_user.id})
-                without(:user_id).equal_to(current_user.id)
-              elsif following_users_count == 0 and following_location_count == 0
                 with(:user_id).equal_to(nil)
               end
             end

@@ -70,6 +70,42 @@ module Api
         return search
       end
 
+      # get photos feed for a user
+
+      def self.user_feed(user, page, limit)
+        page = page || 1
+        limit = limit || 24
+
+        search = Sunspot.search (Photo) do
+
+          following_users_count = user.following_users_count
+          following_location_count = user.following_named_locations_count
+
+          if following_users_count > 0 and following_location_count > 0
+            any_of do
+              with(:user_id).any_of(user.following_users.map{|followed_user| followed_user.id})
+              with(:named_location_id).any_of(user.following_location_ids)
+            end
+            without(:user_id).equal_to(user.id)
+          elsif following_users_count == 0 and following_location_count > 0
+            with(:named_location_id).any_of(user.following_location_ids)
+            without(:user_id).equal_to(user.id)
+          elsif following_users_count > 0 and following_location_count == 0
+            with(:user_id).any_of(user.following_users.map{|followed_user| followed_user.id})
+            without(:user_id).equal_to(user.id)
+          elsif following_users_count == 0 and following_location_count == 0
+            with(:user_id).equal_to(nil)
+          end
+
+          paginate(:page => page, :per_page => limit)
+          order_by :created_at, :desc
+          data_accessor_for(Photo).include = [:user]
+        end
+
+        return search
+      end
     end
   end
 end
+
+
