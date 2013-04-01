@@ -62,7 +62,7 @@ class Photo < ActiveRecord::Base
   end
 
   has_attached_file :image,
-                    :styles => { :medium => "256x256>", :thumb => "80x80>" }
+                    :styles => { :medium => "128x128>", :thumb => "80x80>" }
   def original_size_url
     self.banned? ? Rails.configuration.banned_original_size_url : self.image.url
   end
