@@ -62,7 +62,7 @@ class Photo < ActiveRecord::Base
   end
 
   has_attached_file :image,
-                    :styles => { :medium => "128x128>", :thumb => "80x80>" }
+                    :styles => { :medium => "128x128>", :medium_retina => "256x256>", :thumb => "80x80>" }
   def original_size_url
     self.banned? ? Rails.configuration.banned_original_size_url : self.image.url
   end
@@ -73,6 +73,10 @@ class Photo < ActiveRecord::Base
 
   def medium_size_url
     self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium)
+  end
+
+  def medium_retina_size_url
+    self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium_retina)
   end
 
   def small_size_url
@@ -184,7 +188,7 @@ class Photo < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference, :location_google_id, :location_name, :location_vicinity, :location_followed_by_current_user, :share_path ]))
+    super(options.reverse_merge(:methods => [ :author_name, :author_avatar_thumb_size_url, :full_size_url, :medium_size_url, :medium_retina_size_url, :thumb_size_url, :plusminus, :voted_by_current_user, :comments_count, :created_at_date, :author_followed_by_current_user, :reported_by_current_user, :location_reference, :location_google_id, :location_name, :location_vicinity, :location_followed_by_current_user, :share_path ]))
   end
 
   #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
