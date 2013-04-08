@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
     # add whether the current user is following this user or not
     if !self.current_user.nil? and self.current_user.id == self.id
       return "self"
-    elsif !self.current_user.nil? and self.followed_by?(self.current_user)
+    elsif !self.current_user.nil? and self.current_user.following_user_ids.include?(self.id)
       return "true"
     else
       return "false"
@@ -124,10 +124,12 @@ class User < ActiveRecord::Base
     Vote.joins('LEFT OUTER JOIN photos ON photos.id = votes.voteable_id').where("votes.vote = true AND photos.user_id = ?", self.id).count
   end
 
+  # array of ids of locations being followed by this user
   def following_location_ids
     self.following_named_location.map {|item| item.id}
   end
 
+  # array of ids of users being followed by this user
   def following_user_ids
     self.following_user.map {|user| user.id}
   end

@@ -139,7 +139,7 @@ class Photo < ActiveRecord::Base
     if self.current_user == user
       return 'self'
     else
-      return self.current_user.following?(user)
+      return self.current_user.following_user_ids.include?(user.id)
     end
   end
 

@@ -79,7 +79,7 @@ class NamedLocation < ActiveRecord::Base
 
   def followed_by_current_user
     # add whether the current user is following this named location or not
-    if !self.current_user.nil? and self.followed_by?(self.current_user)
+    if !self.current_user.nil? and self.current_user.following_location_ids.include?(self.id)
       return "true"
     else
       return "false"
