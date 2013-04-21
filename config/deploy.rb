@@ -12,7 +12,7 @@ end
 # Use a simple directory tree copy here to make demo easier.
 # You probably want to use your own repository for a real app
 set :scm, "git"
-set :repository, "git@bitbucket.org:thimios/gigflip-server.git"
+set :repository, "git@bitbucket.org:thimios/engineyardhipster.git"
 set :deploy_via, :remote_cache
 set :ssh_options, { :forward_agent => true }
 
