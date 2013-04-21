@@ -32,6 +32,7 @@ namespace :rubber do
 
             echo 'installing tomcat'
             curl -o /tmp/apache-tomcat-7.0.34.tar.gz http://ftp.heanet.ie/mirrors/www.apache.org/dist/tomcat/tomcat-7/v7.0.39/bin/apache-tomcat-7.0.39.tar.gz
+            sudo mkdir -p #{rubber_env.tomcat_dest_folder}
             tar -zxf /tmp/apache-tomcat-7.0.34.tar.gz -C #{rubber_env.tomcat_dest_folder}
             rm /tmp/apache-tomcat-7.0.34.tar.gz
 
