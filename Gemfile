@@ -106,7 +106,7 @@ group :assets do
   gem 'jquery-datatables-rails'
 
   # only precompile updated assets
-  gem 'turbo-sprockets-rails3'
+  # gem 'turbo-sprockets-rails3'
   # Synchronises Assets between Rails and S3
   gem 'asset_sync'
 end
