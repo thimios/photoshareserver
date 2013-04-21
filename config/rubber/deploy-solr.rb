@@ -30,7 +30,7 @@ namespace :rubber do
             update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.7/bin/javac" 1
             update-alternatives --install "/usr/bin/javaws" "javaws" "/usr/lib/jvm/jdk1.7/bin/javaws" 1
           fi
-          if [ ! -d "#{rubber_env.tomcat_dest_folder}" ]; then
+          if [ ! -d "#{rubber_env.tomcat_dest_folder}/apache-tomcat-7.0.39" ]; then
             echo 'installing tomcat'
             curl -o /tmp/apache-tomcat-7.0.39.tar.gz http://ftp.heanet.ie/mirrors/www.apache.org/dist/tomcat/tomcat-7/v7.0.39/bin/apache-tomcat-7.0.39.tar.gz
             sudo mkdir -p #{rubber_env.tomcat_dest_folder}
