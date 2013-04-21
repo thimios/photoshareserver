@@ -47,7 +47,7 @@ namespace :rubber do
             echo 'setting up solr'
             mkdir -p #{rubber_env.solr_home_dest_foler}/solr/data
             mkdir -p #{rubber_env.solr_home_dest_foler}/solr/#{rubber_env.core_name}
-            tar -zxf /tmp/solr_conf.tar.gz -C /mnt/solr/#{rubber_env.core_name}
+            tar -zxf /tmp/solr_conf.tar.gz -C #{rubber_env.solr_home_dest_foler}/solr/#{rubber_env.core_name}
             mv /tmp/#{rubber_env.solr_xml} #{rubber_env.solr_home_dest_foler}/solr
             rm /tmp/solr_conf.tar.gz
           fi
