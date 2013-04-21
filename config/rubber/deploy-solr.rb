@@ -32,16 +32,16 @@ namespace :rubber do
           fi
           if [ ! -d "#{rubber_env.tomcat_dest_folder}" ]; then
             echo 'installing tomcat'
-            curl -o /tmp/apache-tomcat-7.0.34.tar.gz http://ftp.heanet.ie/mirrors/www.apache.org/dist/tomcat/tomcat-7/v7.0.39/bin/apache-tomcat-7.0.39.tar.gz
+            curl -o /tmp/apache-tomcat-7.0.39.tar.gz http://ftp.heanet.ie/mirrors/www.apache.org/dist/tomcat/tomcat-7/v7.0.39/bin/apache-tomcat-7.0.39.tar.gz
             sudo mkdir -p #{rubber_env.tomcat_dest_folder}
-            tar -zxf /tmp/apache-tomcat-7.0.34.tar.gz -C #{rubber_env.tomcat_dest_folder}
-            rm /tmp/apache-tomcat-7.0.34.tar.gz
+            tar -zxf /tmp/apache-tomcat-7.0.39.tar.gz -C #{rubber_env.tomcat_dest_folder}
+            rm /tmp/apache-tomcat-7.0.39.tar.gz
           fi
           if [ ! -d "#{rubber_env.solr_home_dest_foler}" ]; then
             echo 'installing solr'
             curl -o /tmp/apache-solr-4.0.0.tgz http://ftp.heanet.ie/mirrors/www.apache.org/dist/lucene/solr/3.6.2/apache-solr-3.6.2.tgz
             tar -zxf /tmp/apache-solr-4.0.0.tgz -C /tmp
-            cp /tmp/apache-solr-4.0.0/dist/apache-solr-3.6.2.war /mnt/apache-tomcat-7.0.34/webapps/solr.war
+            cp /tmp/apache-solr-3.6.2/dist/apache-solr-3.6.2.war /mnt/apache-tomcat-7.0.34/webapps/solr.war
             rm -fr /tmp/apache-solr-4.0.0*
 
             echo 'setting up solr'
