@@ -166,7 +166,6 @@ GEM
     paperclip-aws (1.6.7)
       aws-sdk (>= 1.2.0)
       paperclip (>= 2.5.0)
-    pg (0.15.1)
     polyglot (0.3.3)
     pr_geohash (1.0.0)
     progress_bar (1.0.0)
@@ -319,7 +318,6 @@ DEPENDENCIES
   opinio (~> 0.6)
   paperclip (~> 3.4.1)
   paperclip-aws (~> 1.6.7)
-  pg
   progress_bar
   public_activity (~> 1.0.3)
   rack-cors (~> 0.2.7)
