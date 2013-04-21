@@ -4,7 +4,7 @@ solr_xml: solrconfig.xml
 solr_xml_path: "#{Rubber.root}/solr/conf/solrconfig.xml"
 core_name: soberlin
 tarz_config_files: "#{Rubber.root}/solr/conf.tar.gz"
-tomcat_dest_folder: "/usr/local/apache-tomcat-7.0.39"
+tomcat_dest_folder: "/usr/local"
 solr_home_dest_foler: "/usr/local/solr"
 Xmx: 1024m
 
