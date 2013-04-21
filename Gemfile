@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'rails', '3.2.11'
 
@@ -7,78 +7,64 @@ gem 'rails', '3.2.11'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 #  gem 'sqlite3'
-# gem 'pg'
+gem 'pg'
 
 gem 'jquery-rails'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
-
 #jsonp middleware 
 
-gem 'rack-cors', :require => 'rack/cors'
+gem 'rack-cors', "~> 0.2.7", :require => 'rack/cors'
   
 
-gem 'rack-jsonp-middleware',  :require => 'rack/jsonp'
+gem 'rack-jsonp-middleware', "~> 0.0.9",  :require => 'rack/jsonp'
 
 # file uploads
-gem "paperclip"
+gem "paperclip", "~> 3.4.1"
 
-gem "paperclip-aws" #support for all locations without hacks
+gem "paperclip-aws", "~> 1.6.7" #support for all locations without hacks
 
 # solr searching
-gem 'sunspot_rails'
-gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development
+gem 'sunspot_rails', "~> 2.0.0"
+gem 'sunspot_solr', "~> 2.0.0" # optional pre-packaged Solr distribution for use in development
 gem 'progress_bar' # needed to show progress bar when indexing
 
 # bundle exec rake sunspot:solr:start # or sunspot:solr:run to start in foreground
 # bundle exec rake sunspot:solr:reindex
 
 # Authentication
-gem 'devise', "2.1.2"
+gem 'devise', "~> 2.1.2"
 
 # Voting system
-gem 'thumbs_up'
+gem 'thumbs_up', '~> 0.6.4'
 
 #geocoded locations for photos and users
-gem 'geocoder'
+gem 'geocoder', "~> 1.1.6"
 
 #only used on html views to display gmaps
-gem 'gmaps4rails'
+gem 'gmaps4rails', "~> 1.5.6"
 
 # pagination
-gem "kaminari"
+gem "kaminari", "~> 0.14.1"
 
-gem 'faker'
+gem 'faker', "~> 1.1.2"
 
 # comments
-gem 'opinio'
+gem 'opinio', "~> 0.6"
 
 # activity feeds
-gem 'public_activity'
+gem 'public_activity', "~> 1.0.3"
 
-gem 'bundler'
+gem 'bundler', "~> 1.3.4"
 
-gem 'mysql2'
+gem 'mysql2', "~> 0.3.11"
 
-gem "acts_as_follower"
+gem "acts_as_follower", "~> 0.1.1"
 
 group :production do
-  gem 'newrelic_rpm'
+  gem 'newrelic_rpm', "~> 3.5.8.72"
 end
 
-gem 'rack-ssl-enforcer'
-
-gem 'unicorn'                 # Use unicorn as the app server
+gem 'rack-ssl-enforcer', "~> 0.2.5"
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
@@ -130,8 +116,12 @@ gem 'jquery-rails'
 gem 'html5-rails'
 
 #authorization
-gem "cancan"
+gem "cancan", "~> 1.6.9"
 
+# aws deployment
+gem 'rubber', "~> 2.2.4"
 
-
-
+gem 'open4'
+gem 'gelf'
+gem 'graylog2_exceptions', :git => 'git://github.com/wr0ngway/graylog2_exceptions.git'
+gem 'graylog2-resque'
