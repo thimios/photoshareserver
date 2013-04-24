@@ -9,3 +9,9 @@ test:
     hostname: localhost
     port: 8981
     log_level: FINEST
+
+production:
+  solr:
+    hostname: solr01.soberlin.org
+    port: 8080
+    log_level: FINEST

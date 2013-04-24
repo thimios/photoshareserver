@@ -64,7 +64,7 @@ namespace :rubber do
       rubber.sudo_script 'start_solr', <<-ENDSCRIPT
         echo 'starting tomcat'
         #{set_java_opts}
-        nohup #{rubber_env.tomcat_dest_folder}/apache-tomcat-7.0.34/bin/startup.sh  &
+        nohup #{rubber_env.tomcat_dest_folder}/apache-tomcat-7.0.39/bin/startup.sh  &
         sleep 5
       ENDSCRIPT
     end
@@ -74,7 +74,7 @@ namespace :rubber do
       rubber.sudo_script 'stop_solr', <<-ENDSCRIPT
         echo 'stoping tomcat'
         #{set_java_opts}
-      #{rubber_env.tomcat_dest_folder}/apache-tomcat-7.0.34/bin/shutdown.sh
+      #{rubber_env.tomcat_dest_folder}/apache-tomcat-7.0.39/bin/shutdown.sh
       ENDSCRIPT
     end
   end
