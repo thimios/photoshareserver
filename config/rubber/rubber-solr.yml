@@ -1,10 +1,4 @@
-jdk: jdk1.7.0_10.tar.gz
-jdk_path: "#{Rubber.root}/config/deploy/jdk1.7.0_10.tar.gz"
-solr_xml: solrconfig.xml
-solr_xml_path: "#{Rubber.root}/solr/conf/solrconfig.xml"
-core_name: soberlin
-tarz_config_files: "#{Rubber.root}/solr/conf.tar.gz"
-tomcat_dest_folder: "/usr/local"
-solr_home_dest_foler: "/usr/local/solr"
-Xmx: 1024m
+
+
+packages: [solr-tomcat, python-software-properties]
 
