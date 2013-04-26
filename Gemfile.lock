@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     actionmailer (3.2.11)
       actionpack (= 3.2.11)
@@ -254,46 +254,46 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts_as_follower
+  acts_as_follower (~> 0.1.1)
   asset_sync
   bullet
-  bundler
-  cancan
+  bundler (~> 1.3.4)
+  cancan (~> 1.6.9)
   capistrano
   capistrano-nginx
   capistrano-unicorn
   coffee-rails
   compass-h5bp
   compass-rails
-  devise (= 2.1.2)
+  devise (~> 2.1.2)
   exception_notification
-  faker
-  geocoder
-  gmaps4rails
+  faker (~> 1.1.2)
+  geocoder (~> 1.1.6)
+  gmaps4rails (~> 1.5.6)
   html5-rails
   jquery-datatables-rails
   jquery-rails
-  kaminari
+  kaminari (~> 0.14.1)
   libv8
-  mysql2
-  newrelic_rpm
-  opinio
-  paperclip
-  paperclip-aws
+  mysql2 (~> 0.3.11)
+  newrelic_rpm (~> 3.5.8.72)
+  opinio (~> 0.6)
+  paperclip (~> 3.4.1)
+  paperclip-aws (~> 1.6.7)
   progress_bar
-  public_activity
-  rack-cors
-  rack-jsonp-middleware
-  rack-ssl-enforcer
+  public_activity (~> 1.0.3)
+  rack-cors (~> 0.2.7)
+  rack-jsonp-middleware (~> 0.0.9)
+  rack-ssl-enforcer (~> 0.2.5)
   rails (= 3.2.11)
   rvm-capistrano
   sass-rails
-  sunspot_rails
-  sunspot_solr
+  sunspot_rails (~> 2.0.0)
+  sunspot_solr (~> 2.0.0)
   test-unit
   therubyracer
   thin
-  thumbs_up
+  thumbs_up (~> 0.6.4)
   turbo-sprockets-rails3
   uglifier
   unicorn
