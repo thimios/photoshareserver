@@ -34,6 +34,6 @@ production:
   pool: 5
   username: root
   password: s03rl1n!TS!
-  host: localhost
-  socket: /var/run/mysqld/mysqld.sock
+  host: 178.79.184.31
+  #socket: /var/run/mysqld/mysqld.sock
 
