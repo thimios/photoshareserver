@@ -3,30 +3,40 @@
   <div id="footer">
       <div class="linkContainer">
         <span class="footerLink">
-            <%= link_to 'about', about_path %>
+            <%= link_to 'About', about_path %>
         </span>
         <span class="dot">
             .
         </span>
         <span class="footerLink">
-            <%= link_to 'press', press_path %>
+            <%= link_to 'Press', press_path %>
         </span>
         <span class="dot">
             .
         </span>
         <span class="footerLink">
-            <%= link_to 'contact', contact_path %>
+          <%= link_to 'Terms and conditions', terms_path %>
         </span>
         <span class="dot">
             .
         </span>
         <span class="footerLink">
-            <%= link_to 'terms and conditions', terms_path %>
+          <%= link_to 'Contact', contact_path %>
         </span>
-        <div id="socialLinks">
-            <a target="_blank" href="http://www.facebook.com/soberlinapp"><div id="fbLink"></div></a>
+        <span class="dot">
+            .
+        </span>
+        <span class="footerLink">
+          <a target="_blank" href="http://www.facebook.com/soberlinapp"><div id="fbLink"></div></a>
+        </span>
+        <span class="footerLink">
           <a target="_blank" href="https://twitter.com/so_berlin"><div id="twitterLink"></div></a>
-        </div>
+        </span>
+        <span class="footerLink" id="wantedpixel_link">
+            <a target="_blank" href="http://www.wantedpixel.com" >
+                <%= image_tag "wanted_pixel.jpg", :style => "", :alt => "design by wanted pixel" %>
+            </a>
+        </span>
       </div>
 </div>
 
