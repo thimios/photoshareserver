@@ -21,7 +21,7 @@ production:
   # You may need to specify what region your storage bucket is in
   fog_region: eu-west-1
   existing_remote_files: keep
-  ignored_files: [%r(fonts/.*)]
+  ignored_files: %r(fonts/.*)
   aws_access_key_id: AKIAI4KGTEOUVZZZFCLA
   aws_secret_access_key: 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
   gzip_compression: true
