@@ -6,5 +6,5 @@
     <img alt="<%= photo.title %>" src=<%= photo.image.url(:medium_retina) %> />
   </div>
   <div class="photoTitle"><%= truncate(photo.title, :length => 27, :separator => ' ') %></div>
-  <div class="photoAuthor">by <%= truncate(photo.author_name, :length => 17 ) %></div>
+  <div class="photoAuthor">by <%= truncate(photo.author_name, :length => 25 ) %></div>
 </a>
