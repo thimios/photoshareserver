@@ -336,21 +336,21 @@ a{
 }
 
 #footer {
-  background: image-url("footerBg.png");
+  background: url(/assets/footerBg.png);
   background-repeat: no-repeat;
   background-position: top;
   font-family: satisfy;
   color: #696969;
   text-align: center;
-  padding-top: 13px;
   width: 1005px;
   height: 94px;
   position: fixed;
-  bottom: 0px;
+  bottom: -47px;
   z-index: 12;
-  overflow:auto;
-  left:50%;
-  margin-left:-502px;
+  overflow: auto;
+  left: 50%;
+  margin-left: -502px;
+  padding-top: 3px;
 }
 
 #footer span{
@@ -359,7 +359,7 @@ a{
   margin-right: 3px;
   position: relative;
   //top: 28px;
-  font-size: 22px;
+  font-size: 18px;
 }
 
 #detailsContainer{
@@ -392,7 +392,7 @@ a{
 
 .dot{
   top: 19px!important;
-  font-size: 32px!important;
+  font-size: 25px!important;
   margin: 0px 13px!important;
 
 }
@@ -509,15 +509,17 @@ a{
 
 .linkContainer{
   position: relative;
-  top: -10px;
+  top: -15px;
   left: -79px;
 }
 
 #fbLink, #twitterLink{
   display:inline-block;
   vertical-align:middle;
-  width:59px;
-  height:57px;
+  width:29px;
+  height:28px;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
 }
 
 #fbLink{
@@ -529,7 +531,6 @@ a{
 #twitterLink{
   background: image-url("twitter.png");
   position: relative;
-  left: 19px;
   cursor:pointer;
 
 }
@@ -583,4 +584,35 @@ a{
   overflow: hidden;
   display: inline-block;
   text-overflow: ellipsis;
+}
+
+#screenshots img{
+  width: 315px;
+}
+
+#wantedpixel_link{
+  float: right;
+  margin: 3px 35px -35px 0px !important;
+}
+
+.press_container{
+  margin-top: 0px;
+  -webkit-transform: rotate(-0.8deg);
+  display: none;
+}
+
+.press_photo{
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 15px;
+}
+
+.press_text{
+  display: inline-block;
+  width: 530px;
+  vertical-align: top;
+}
+
+.press_photo img{
+  width: 355px;
 }
