@@ -129,5 +129,4 @@ TodosSt2::Application.configure do
     Bullet.airbrake = false
   end
 
-  config.font_assets.origin = 'http://www.soberlin.org'
 end

@@ -120,7 +120,6 @@ gem 'html5-rails'
 #authorization
 gem "cancan", "~> 1.6.9"
 
-gem 'font_assets'
 
 
 
