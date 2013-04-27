@@ -161,14 +161,14 @@
   position: relative;
   margin-top: 9px;
   margin-bottom: 0px;
-
+  margin-left: 2px;
 }
 
 .photoAuthor{
   font-family: 'FuturaBT-Book';
   font-size:12px;
   position:relative;
-
+  margin-left: 2px;
 }
 
 #photosPart{
@@ -569,4 +569,18 @@ a{
 
 .photoThumb img{
   width: 200px;
+}
+
+.photoThumb{
+  height: 200px;
+  background: #f1f1f1;
+}
+
+.commenter
+{
+  white-space: nowrap;
+  max-width: 60px;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
 }

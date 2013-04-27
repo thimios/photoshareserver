@@ -31,7 +31,9 @@
               </div>
               <div class="right">
                 <div class="commentText"><%= comment.body %></div>
-                <div class="commentInfo">by <%= comment.owner.username %>, <%= comment.created_at_date %></div>
+                <div class="commentInfo">by
+                  <span class="commenter"><%= comment.owner.username %></span>
+                  , <%= comment.created_at_date %></div>
               </div>
             </div>
             <% } %>
@@ -47,7 +49,9 @@
                   </div>
                   <div class="right">
                     <div class="commentText"><%= comment.body %></div>
-                    <div class="commentInfo">by <%= comment.owner.username %>, <%= comment.created_at_date %></div>
+                    <div class="commentInfo">by
+                      <span class="commenter"><%= comment.owner.username %></span>
+                      , <%= comment.created_at_date %></div>
                   </div>
                 </div>
             <% } %>
@@ -65,7 +69,6 @@
       </script>
   <% end %>
 </div>
-
 
 
 
