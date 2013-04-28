@@ -45,7 +45,7 @@
 #############################################
 
 GIT_REPOSITORY_URL = 'git@bitbucket.org:thimios/engineyardhipster.git'
-LINODE_SERVER_HOSTNAME = 'app01.soberlin.org'
+# ALIAS = 'app01.soberlin.org'
 
 
 #############################################
@@ -61,14 +61,14 @@ set :rails_env,                  "production"
 
 set :user,                       "deploy"
 set :deploy_to,                  "/home/#{user}/app"
-set :server_name,                LINODE_SERVER_HOSTNAME
+set :server_name,                ALIAS
 
 # Password-less Deploys (Optional)
 #
 # 1. Locate your local public SSH key file. (Usually ~/.ssh/id_rsa.pub)
 # 2. Execute the following locally: (You'll need your Linode server's root password.)
 #
-#    cat ~/.ssh/id_rsa.pub | ssh root@LINODE_SERVER_HOSTNAME "cat >> ~/.ssh/authorized_keys"
+#    cat ~/.ssh/id_rsa.pub | ssh root@ALIAS "cat >> ~/.ssh/authorized_keys"
 #
 # 3. Uncomment the below ssh_options[:keys] line in this file.
 #
@@ -93,7 +93,7 @@ set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 
 # Roles
 
-server LINODE_SERVER_HOSTNAME, :app, :web, :db, :primary => true
+server ALIAS, :app, :web, :db, :primary => true
 
 before 'deploy:restart', 'deploy:migrate'
 # Install RVM
