@@ -1,6 +1,6 @@
 production:
   solr:
-    hostname: solr.soberlin.org
+    hostname: 192.168.186.193
     port: 8080
     log_level: INFO
     #pid_dir: '/home/deploy/app/shared/pids'
