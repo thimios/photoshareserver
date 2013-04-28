@@ -598,7 +598,7 @@ a{
 .press_container{
   margin-top: 0px;
   -webkit-transform: rotate(-0.8deg);
-  display: none;
+  /*display: none;*/
 }
 
 .press_photo{
@@ -615,4 +615,11 @@ a{
 
 .press_photo img{
   width: 355px;
+}
+
+.press_container h5{
+  margin-top: 0px;
+}
+.press_container h2{
+  margin-bottom: 0px;
 }
