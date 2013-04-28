@@ -45,8 +45,10 @@
 #############################################
 
 GIT_REPOSITORY_URL = 'git@bitbucket.org:thimios/engineyardhipster.git'
-# ALIAS = 'app01.soberlin.org'
 
+# Roles
+server 'app01.soberlin.org', :app, :web, :db, :primary => true
+server 'app02.soberlin.org', :app, :web
 
 #############################################
 #############################################
@@ -61,7 +63,7 @@ set :rails_env,                  "production"
 
 set :user,                       "deploy"
 set :deploy_to,                  "/home/#{user}/app"
-set :server_name,                ALIAS
+
 
 # Password-less Deploys (Optional)
 #
@@ -91,9 +93,7 @@ set :rvm_ruby_string, 'ruby-1.9.3-p194@senchatouch2'
 set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 
 
-# Roles
 
-server ALIAS, :app, :web, :db, :primary => true
 
 before 'deploy:restart', 'deploy:migrate'
 # Install RVM
