@@ -8,7 +8,7 @@ APP_USER=deploy
 PID=/home/deploy/app/shared/pids/unicorn.pid
 ENV=production
 CONFIG_FILE=/home/deploy/app/current/config/unicorn/production.rb
-CMD="cd $APP_ROOT && BUNDLE_GEMFILE=$APP_ROOT/Gemfile bundle exec unicorn -c $CONFIG_FILE -E $ENV -D"
+CMD="cd $APP_ROOT && source /home/deploy/.rvm/environments/ruby-1.9.3-p194@senchatouch2 && BUNDLE_GEMFILE=$APP_ROOT/Gemfile bundle exec unicorn -c $CONFIG_FILE -E $ENV -D"
 
 action="$1"
 set -u
