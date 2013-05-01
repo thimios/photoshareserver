@@ -89,5 +89,8 @@ class HomeController < ApplicationController
   def terms
     # terms.html.erb
   end
+  def privacy
+    # privacy.html.erb
+  end
 
 end
