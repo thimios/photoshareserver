@@ -44,7 +44,7 @@
 ##                                         ##
 #############################################
 
-GIT_REPOSITORY_URL = 'git@bitbucket.org:thimios/engineyardhipster.git'
+GIT_REPOSITORY_URL = 'git@bitbucket.org:soberlin/soberlinserver.git'
 
 # Roles
 server 'app01.soberlin.org', :app, :web, :db, :primary => true
