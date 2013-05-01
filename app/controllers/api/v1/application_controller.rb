@@ -21,14 +21,21 @@ module Api
 
       def my_authenticate_user
         if request.format == "application/json"
-              user = request.env['warden'].authenticate(:scope => :user)
-              if user.nil?
-                respond_to do |format|
-                  format.json {
-                    render :json => {:error => "Please authenticate again"}, status: :unauthorized
-                  }
-                end
-              end
+          user = User.find_by_authentication_token(params['auth_token'])
+          if user.nil?
+            user = request.env['warden'].authenticate(:scope => :user)
+          end
+          if user.nil?
+            respond_to do |format|
+              format.json {
+                render :json => {:error => "Please authenticate again"}, status: :unauthorized
+              }
+            end
+          else
+            old_current, new_current = user.current_sign_in_at, Time.now.utc
+            user.last_sign_in_at     = old_current || new_current
+            user.current_sign_in_at  = new_current
+          end
         else
           authenticate_user!
         end

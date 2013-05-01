@@ -70,6 +70,7 @@ module Api
       end
 
       def suggested_followable_users
+        my_authenticate_user
         @users, @total_count = UserSearch.suggest_followable_users(current_user, params[:page], params[:limit])
 
         @records_as_json = @users.map{|user| user.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date, :admin, :superadmin ] )  }
@@ -97,6 +98,7 @@ module Api
       # We need to use a copy of the resource because we don't want to change
       # the current user in place.
       def update
+        my_authenticate_user
         self.resource = current_user
 
         unless params[:birth_date1i].nil?
