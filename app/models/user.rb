@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :token_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :validatable
 
   default_scope :conditions => { :deleted_at => nil }
 

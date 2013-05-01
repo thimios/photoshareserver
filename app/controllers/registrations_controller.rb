@@ -79,14 +79,14 @@ class RegistrationsController < Devise::RegistrationsController
   #end
 
   def follow
-    warden.authenticate!
+    my_authenticate_user
     @user = User.find(params[:id])
     current_user.follow(@user)
     redirect_to "/users/#{@user.id}", notice: 'You are now following '+@user.username
   end
 
   def unfollow
-    warden.authenticate!
+    my_authenticate_user
     @user = User.find(params[:id])
     current_user.stop_following(@user)
     redirect_to "/users/#{@user.id}", notice: 'You are not following '+@user.username + " any more."

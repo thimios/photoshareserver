@@ -14,7 +14,7 @@ module Api
       # list users you are following: http://localhost:3000/api/v1/users?followed_by_current_user=true
       # list users following you: http://localhost:3000/api/v1/users?following_the_current_user=true
       def index
-        warden.authenticate!
+        my_authenticate_user
 
         if params[:filter]
           @filter_params = HashWithIndifferentAccess.new
@@ -135,7 +135,7 @@ module Api
       # GET /users/1.json
       # Show user's public profile
       def show
-        warden.authenticate!
+        my_authenticate_user
         @users = Array.new
         @user = (User.find(params[:id]))
 
@@ -158,14 +158,14 @@ module Api
       end
 
       def follow
-        warden.authenticate!
+        my_authenticate_user
         @user = User.find(params[:id])
         current_user.follow(@user)
         render json: [notice: 'You are now following '+@user.username], status: 200
       end
 
       def unfollow
-        warden.authenticate!
+        my_authenticate_user
         @user = User.find(params[:id])
         current_user.stop_following(@user)
         render  json: [ notice => 'You are not following '+@user.username + " any more."  ], status: 200
