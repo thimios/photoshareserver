@@ -284,7 +284,13 @@ module Api
 
         params[:photo] = params.reject{|key, value| key.in?(["_method","authenticity_token","commit","auth_token","action","controller","format", "location_reference", "location_vicinity", "location_google_id", "location_name"])}
 
+
         photo = Photo.new(params[:photo])
+
+        if photo.latitude.blank? or photo.latitude.nil?
+          photo.show_on_map=false
+        end
+
         unless params[:category_id].nil?
           photo.category_id = params[:category_id]
         end
