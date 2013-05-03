@@ -458,7 +458,7 @@
     <!--
     <lst name="slave">
       <str name="masterUrl">http://192.168.186.193:8080/solr/core0/replication</str>
-      <str name="pollInterval">00:00:20</str>
+      <str name="pollInterval">00:00:05</str>
     </lst>
     -->
 </requestHandler>-->
