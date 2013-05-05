@@ -9,9 +9,9 @@ production:
     # read_timeout: 2
     # open_timeout: 0.5
     master_solr:
-        hostname: 192.168.186.193
-        port: 8080
-        path: /solr/core0
+      hostname: 192.168.186.193
+      port: 8080
+      path: /solr/core0
     auto_commit_after_request: true
 
 development:
