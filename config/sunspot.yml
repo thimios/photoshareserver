@@ -12,7 +12,6 @@ production:
       hostname: 192.168.186.193
       port: 8080
       path: /solr/core0
-    auto_commit_after_request: true
 
 development:
   solr:
