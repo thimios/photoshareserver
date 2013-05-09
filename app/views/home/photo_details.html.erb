@@ -30,7 +30,9 @@
                 </div>
               </div>
               <div class="right">
-                <div class="commentText"><%= comment.body %></div>
+                <div class="commentText">
+                  <%= truncate(comment.body, :length => 50, :separator => ' ' ) %>
+                </div>
                 <div class="commentInfo">by
                   <span class="commenter"><%= comment.owner.username %></span>
                   , <%= comment.created_at_date %></div>
@@ -48,7 +50,9 @@
                     </div>
                   </div>
                   <div class="right">
-                    <div class="commentText"><%= comment.body %></div>
+                    <div class="commentText">
+                      <%= truncate(comment.body, :length => 50, :separator => ' ' ) %>
+                    </div>
                     <div class="commentInfo">by
                       <span class="commenter"><%= comment.owner.username %></span>
                       , <%= comment.created_at_date %></div>
