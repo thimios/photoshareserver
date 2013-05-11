@@ -18,7 +18,7 @@ module Api
         #0. -1e-5 : recent : full left
         case time_factor_param
           when "0" # recent, full left
-           return "-3.48414E-9"
+           return "-3.5E-07"
           when "2" # middle, default value
             return "-3.48414E-10"
           when "4" # all time, full right
