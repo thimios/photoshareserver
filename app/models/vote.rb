@@ -15,6 +15,8 @@ class Vote < ActiveRecord::Base
   include PublicActivity::Model
   tracked :owner => proc { |controller, model|
     controller.current_user
+  }, :recipient => proc { |controller, model|
+    model.voteable
   }
   # destroy all activity records on destroy
   has_many :activities, :class_name => "::PublicActivity::Activity", :as => :trackable, :dependent => :destroy

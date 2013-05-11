@@ -156,6 +156,8 @@ class Photo < ActiveRecord::Base
   include PublicActivity::Model
   tracked :owner => proc { |controller, model|
     controller.current_user
+  }, :recipient => proc { |controller, model|
+    model
   }
 
   # destroy all activity records on destroy

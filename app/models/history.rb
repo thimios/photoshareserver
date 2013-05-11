@@ -10,7 +10,9 @@ class History
                 :description, #either the comment or the photo description
                 :photo_id, # the id of the photo posted, liked or commented
                 :comment_id, # the id of the posted comment, or blank
-                :thumb_url # the url of the thumbnail of the photo posted, liked or commented
+                :thumb_url, # the url of the thumbnail of the photo posted, liked or commented
+                :actor_id, # the user id of the user that liked or commented the photo. It could equal to photo owner id
+                :actor_followed_by_current_user # is the actor followed by the current user, self, true, false
 
   def self.attr_accessor(*vars)
     @attributes ||= []
