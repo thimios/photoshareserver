@@ -44,12 +44,12 @@
 ##                                         ##
 #############################################
 
-GIT_REPOSITORY_URL = 'git@bitbucket.org:soberlin/soberlinserver.git'
+GIT_REPOSITORY_URL = 'git@bitbucket.org:thimios/soberlinserver.git'
 
 # Roles
-server 'app01.soberlin.org', :app, :web, :db, :primary => true
-server 'app02.soberlin.org', :app, :web
-server 'app03.soberlin.org', :app, :web
+server 'soberlindemo.wantedpixel.com', :app, :web, :db, :primary => true
+#server 'app02.soberlin.org', :app, :web
+#server 'app03.soberlin.org', :app, :web
 
 #############################################
 #############################################
