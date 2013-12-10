@@ -1,4 +1,9 @@
-
+require "rvm/capistrano"
+require "rvm/capistrano/alias_and_wrapp"
+require "bundler/capistrano"
+require "capistrano-unicorn"
+require "capistrano-file_db"
+load 'deploy/assets'
 
 
 # This capistrano deployment recipe is made to work with the optional
@@ -11,13 +16,14 @@
 # app to use this deployment recipe by doing the following:
 #
 # run  ssh -T -oStrictHostKeyChecking=no git@bitbucket.org
+# ssh-keygen -t rsa
 # copy public key to bitbucket
-# apt-get install openjdk-7-jdk
-# apt-get install imagemagick
-# apt-get install nginx
+# sudo apt-get install openjdk-7-jdk
+# sudo apt-get install imagemagick
+# sudo apt-get install nginx
 # copy config/deploy/ssl to /etc/nginx/ssl (only keys are needed, see config/deploy/nginx_conf.erb)
-# rm /etc/nginx/sites-enabled/default
-#  apt-get remove apache2
+# sudo rm /etc/nginx/sites-enabled/default
+# sudo apt-get remove apache2
 
 # 1. Add `gem 'capistrano'` to your Gemfile.
 # 2. Run `bundle install --binstubs --path=vendor/bundles`.
@@ -47,7 +53,7 @@
 GIT_REPOSITORY_URL = 'git@bitbucket.org:thimios/soberlinserver.git'
 
 # Roles
-server 'soberlindemo.wantedpixel.com', :app, :web, :db, :primary => true
+server 'soberlin.dyndns.org', :app, :web, :db, :primary => true
 #server 'app02.soberlin.org', :app, :web
 #server 'app03.soberlin.org', :app, :web
 
@@ -62,8 +68,9 @@ set :application,                "soberlin"
 set :normalize_asset_timestamps, false
 set :rails_env,                  "production"
 
-set :user,                       "deploy"
+set :user,                       "ubuntu"
 set :deploy_to,                  "/home/#{user}/app"
+set :sudo_password,              "givesudopassword"
 
 
 # Password-less Deploys (Optional)
@@ -75,10 +82,10 @@ set :deploy_to,                  "/home/#{user}/app"
 #
 # 3. Uncomment the below ssh_options[:keys] line in this file.
 #
-# ssh_options[:keys] = ["~/.ssh/id_rsa"]
+ssh_options[:keys] = ["~/.ssh/id_rsa"]
 
 set :use_sudo, true
-set :sudo_user, "deploy"
+set :sudo_user, "ubuntu"
 
 default_run_options[:pty] = true
 
@@ -94,15 +101,13 @@ set :rvm_ruby_string, 'ruby-1.9.3-p194@senchatouch2'
 set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 
 
-
-
 before 'deploy:restart', 'deploy:migrate'
 # Install RVM
-# before 'deploy:setup',   'rvm:install_rvm'
+before 'deploy:setup',   'rvm:install_rvm'
 # Install Ruby
-# before 'deploy:setup',   'rvm:install_ruby'
+before 'deploy:setup',   'rvm:install_ruby'
 # Or create gemset
-# before 'deploy',         'rvm:create_gemset'
+before 'deploy',         'rvm:create_gemset'
 after  'deploy',         'deploy:cleanup'
 
 after "deploy:setup", "nginx:setup", "nginx:reload"

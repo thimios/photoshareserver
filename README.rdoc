@@ -5,4 +5,4 @@ rails s
 
 see http://support.wantedpixel.com/projects/soberlin/wiki
 
-ssh ubuntu@soberlindemo.wantedpixel.com
+ssh ubuntu@soberlin.dyndns.org
