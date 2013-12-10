@@ -30,10 +30,10 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: railsrumble_production
+  database: soberlin_production
   pool: 5
   username: root
-  password: s03rl1n!TS!
-  host: 192.168.177.206
+  password:
+  host: localhost
   #socket: /var/run/mysqld/mysqld.sock
 
