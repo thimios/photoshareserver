@@ -79,7 +79,7 @@ set :sudo_password,              "givesudopassword"
 #
 ssh_options[:keys] = ["~/.ssh/id_rsa"]
 
-set :use_sudo, true
+set :use_sudo, false
 set :sudo_user, "ubuntu"
 
 default_run_options[:pty] = true
