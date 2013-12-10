@@ -1,9 +1,4 @@
-require "rvm/capistrano"
-require "rvm/capistrano/alias_and_wrapp"
-require "bundler/capistrano"
-require "capistrano-unicorn"
-require "capistrano-file_db"
-load 'deploy/assets'
+
 
 
 # This capistrano deployment recipe is made to work with the optional
@@ -110,7 +105,7 @@ before 'deploy:setup',   'rvm:install_ruby'
 before 'deploy',         'rvm:create_gemset'
 after  'deploy',         'deploy:cleanup'
 
-after "deploy:setup", "nginx:setup", "nginx:reload"
+after "deploy:setup", "nginx:setup"
 
 namespace :rvm do
   task :trust_rvmrc do
