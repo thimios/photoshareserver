@@ -17,6 +17,7 @@
 # copy config/deploy/ssl to /etc/nginx/ssl (only keys are needed, see config/deploy/nginx_conf.erb)
 # sudo rm /etc/nginx/sites-enabled/default
 # sudo apt-get remove apache2
+# create mysql database for root user
 
 # 1. Add `gem 'capistrano'` to your Gemfile.
 # 2. Run `bundle install --binstubs --path=vendor/bundles`.
