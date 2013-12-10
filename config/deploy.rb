@@ -13,9 +13,7 @@
 # run  ssh -T -oStrictHostKeyChecking=no git@bitbucket.org
 # ssh-keygen -t rsa
 # copy public key to bitbucket
-# sudo apt-get install openjdk-7-jdk
-# sudo apt-get install imagemagick
-# sudo apt-get install nginx
+# sudo apt-get install openjdk-7-jdk  git  imagemagick  nginx mysql-server libmysqlclient-dev
 # copy config/deploy/ssl to /etc/nginx/ssl (only keys are needed, see config/deploy/nginx_conf.erb)
 # sudo rm /etc/nginx/sites-enabled/default
 # sudo apt-get remove apache2
@@ -65,7 +63,7 @@ set :rails_env,                  "production"
 
 set :user,                       "ubuntu"
 set :deploy_to,                  "/home/#{user}/app"
-set :sudo_password,              "givesudopassword"
+set :application_hostname,       "soberlin.dyndns.org"
 
 
 # Password-less Deploys (Optional)
