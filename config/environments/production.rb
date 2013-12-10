@@ -26,7 +26,7 @@ TodosSt2::Application.configure do
   config.assets.precompile += %w( *.js *.css )
 
   # put assets on cdn
-  config.action_controller.asset_host = "d2ujlosr6qi8kc.cloudfront.net"
+  # config.action_controller.asset_host = "d2ujlosr6qi8kc.cloudfront.net"
 
   # store assets in a 'folder' instead of bucket root
   config.assets.prefix = "/production/assets"
