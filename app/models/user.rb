@@ -54,15 +54,15 @@ class User < ActiveRecord::Base
   end
 
   def full_size_url
-    avatar.url
+    "http://#{ActionMailer::Base.default_url_options[:host]}#{avatar.url}"
   end
 
   def medium_size_url
-    avatar.url(:medium)
+    "http://#{ActionMailer::Base.default_url_options[:host]}#{avatar.url(:medium)}"
   end
 
   def thumb_size_url
-    avatar.url(:thumb)
+    "http://#{ActionMailer::Base.default_url_options[:host]}#{avatar.url(:thumb)}"
   end
 
   attr_accessor :current_user

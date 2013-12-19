@@ -68,23 +68,23 @@ class Photo < ActiveRecord::Base
   end
 
   def full_size_url
-    self.original_size_url
+    "http://#{ActionMailer::Base.default_url_options[:host]}#{self.original_size_url}"
   end
 
   def medium_size_url
-    self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium)
+    "http://#{ActionMailer::Base.default_url_options[:host]}#{self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium)}"
   end
 
   def medium_retina_size_url
-    self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium_retina)
+    "http://#{ActionMailer::Base.default_url_options[:host]}#{self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium_retina)}"
   end
 
   def small_size_url
-    self.banned? ? Rails.configuration.banned_thumb_size_url : image.url(:thumb)
+    "http://#{ActionMailer::Base.default_url_options[:host]}#{self.banned? ? Rails.configuration.banned_thumb_size_url : image.url(:thumb)}"
   end
 
   def thumb_size_url
-    self.banned? ? Rails.configuration.banned_thumb_size_url : image.url(:thumb)
+    "http://#{ActionMailer::Base.default_url_options[:host]}#{self.banned? ? Rails.configuration.banned_thumb_size_url : image.url(:thumb)}"
   end
 
   # path to the photo details on the web page, to be shared on facebook etc
