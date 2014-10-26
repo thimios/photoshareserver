@@ -17,7 +17,7 @@ development:
 
 production:
   fog_provider: AWS
-  fog_directory: soberlin.production
+  fog_directory: wantedpixel.production
   # You may need to specify what region your storage bucket is in
   fog_region: eu-west-1
   existing_remote_files: keep

@@ -5,6 +5,4 @@ rails s
 Reindex solr:
 RAILS_ENV=development rake sunspot:solr:reindex
 
-see http://support.wantedpixel.com/projects/soberlin/wiki
 
-ssh ubuntu@soberlin.dyndns.org

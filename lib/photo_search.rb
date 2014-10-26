@@ -19,7 +19,7 @@ class PhotoSearch
         #c1 and c2 are negative constants.
         #Distance is the distance between the current location and the picture
         #time the time between the current time and the time the picture was taken.
-        #Clicks is the amount of "so berlin" votes the photo has received
+        #Clicks is the amount of votes the photo has received
         #
         #The constants are:
         #c1 = -7e-4

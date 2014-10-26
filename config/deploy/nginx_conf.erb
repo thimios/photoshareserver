@@ -6,8 +6,8 @@ server {
   listen 80 default;
   listen 443 default_server ssl;
 
-  ssl_certificate /etc/nginx/ssl/soberlin.org_chain.pem;
-  ssl_certificate_key /etc/nginx/ssl/soberlin.org.key;
+  ssl_certificate /etc/nginx/ssl/wantedpixel.com_chain.pem;
+  ssl_certificate_key /etc/nginx/ssl/wantedpixel.com.key;
 
   server_name _;
   return 301 $scheme://<%= application_hostname %>$request_uri;
@@ -17,8 +17,8 @@ server {
   listen 80;
   listen 443 ssl;
 
-  ssl_certificate /etc/nginx/ssl/soberlin.org_chain.pem;
-  ssl_certificate_key /etc/nginx/ssl/soberlin.org.key;
+  ssl_certificate /etc/nginx/ssl/wantedpixel.com_chain.pem;
+  ssl_certificate_key /etc/nginx/ssl/wantedpixel.com.key;
   client_max_body_size 4G;
   server_name <%= application_hostname %>;
 

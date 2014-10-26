@@ -6,7 +6,7 @@ class RegistrationsController < Devise::RegistrationsController
     if params[:signed_request].blank?
 
       # this is not a facebook callback, we just set the default avatar and call super
-      imagefile = File.open(Rails.root.join('app/assets', 'images', "Soberlin.png"))
+      imagefile = File.open(Rails.root.join('app/assets', 'images', "defaultavatar.png"))
       params[:user][:avatar] = imagefile
     else
 
@@ -19,7 +19,7 @@ class RegistrationsController < Devise::RegistrationsController
       params[:user] = params_decoded['registration']
       params[:user][:birth_date] = params[:user][:birthday]
       logger.debug(params)
-      imagefile = File.open(Rails.root.join('app/assets', 'images', "Soberlin.png"))
+      imagefile = File.open(Rails.root.join('app/assets', 'images', "defaultavatar.png"))
       params[:user][:avatar] = imagefile
 
       params[:user][:address] = "Urbanstrasse 66, 10967, Berlin, Germany"

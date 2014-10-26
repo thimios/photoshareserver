@@ -43,8 +43,8 @@ TodosSt2::Application.configure do
 
   # send an email on exceptions
   #config.middleware.use ExceptionNotifier,
-  #                      :email_prefix => "[So Berlin production] ",
-  #                      :sender_address => %{"notifier" <server@soberlin.org>},
+  #                      :email_prefix => "[photoshare production] ",
+  #                      :sender_address => %{"notifier" <server@photoshare.wantedpixel.com>},
   #                      :exception_recipients => %w{thimios@wantedpixel.com, spiros@wantedpixel.com}
 
 
@@ -83,7 +83,7 @@ TodosSt2::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.action_mailer.default_url_options = { :host => 'www.soberlin.org' }
+  config.action_mailer.default_url_options = { :host => 'www.wantedpixel.com' }
 
   config.action_mailer.delivery_method = :sendmail
 
@@ -106,7 +106,7 @@ TodosSt2::Application.configure do
       :path => ":class/:attachment/:id_partition/:style/:filename",
       :s3_protocol => "http",
       :s3_credentials => {
-          :bucket => "com.wantedpixel.soberlin.production",
+          :bucket => "com.wantedpixel.photoshare.production",
           :access_key_id => "AKIAI4KGTEOUVZZZFCLA",
           :secret_access_key => "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"
       }

@@ -23,7 +23,7 @@ class UsersController < ApplicationController
 
   def csv
     @users = User.order(:username)
-    send_data @users.to_web_csv, :filename => 'soberlin-users.csv'
+    send_data @users.to_web_csv, :filename => 'users.csv'
   end
 
   def show

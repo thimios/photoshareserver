@@ -44,10 +44,10 @@
 ##                                         ##
 #############################################
 
-GIT_REPOSITORY_URL = 'git@bitbucket.org:thimios/soberlinserver.git'
+GIT_REPOSITORY_URL = 'git@bitbucket.org:thimios/photoshareserver.git'
 
 # Roles
-server 'soberlin.dyndns.org', :app, :web, :db, :primary => true
+server 'photoshareserver.wantedpixel.com', :app, :web, :db, :primary => true
 #server 'app02.soberlin.org', :app, :web
 #server 'app03.soberlin.org', :app, :web
 

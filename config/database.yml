@@ -7,7 +7,7 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: soberlin
+  database: photoshare
   pool: 5
   username: root
   password:
@@ -20,7 +20,7 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: soberlintest
+  database: photosharetest
   pool: 5
   username: root
   password:
@@ -30,7 +30,7 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: soberlin_production
+  database: photoshare_production
   pool: 5
   username: root
   password:
