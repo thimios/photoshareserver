@@ -73,7 +73,7 @@ TodosSt2::Application.configure do
     Bullet.console = false
     Bullet.growl = false
     #Bullet.xmpp = { :account => 'photosharedev@jabber.org',
-    #                :password => 'd3vd3v12sdev',
+    #                :password => '',
     #                :receiver => 'thimios.wantedpixel.@jabber.org',
     #                :show_online_status => true }
     Bullet.rails_logger = true
