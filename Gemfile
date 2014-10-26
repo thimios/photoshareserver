@@ -2,19 +2,12 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.13'
 
-
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-#  gem 'sqlite3'
-# gem 'pg'
-
-gem 'jquery-rails'
 
 #jsonp middleware 
 
 gem 'rack-cors', "~> 0.2.7", :require => 'rack/cors'
-  
 
 gem 'rack-jsonp-middleware', "~> 0.0.9",  :require => 'rack/jsonp'
 
@@ -46,7 +39,7 @@ gem 'gmaps4rails', "~> 1.5.6"
 # pagination
 gem "kaminari", "~> 0.14.1"
 
-gem 'faker', "~> 1.1.2"
+gem 'faker'
 
 # comments
 gem 'opinio', "~> 0.6"
@@ -54,9 +47,9 @@ gem 'opinio', "~> 0.6"
 # activity feeds
 gem 'public_activity', "~> 1.0.3"
 
-gem 'bundler', "~> 1.3.4"
+gem 'bundler'
 
-gem 'mysql2', "~> 0.3.11"
+gem 'mysql2'
 
 gem "acts_as_follower", "~> 0.1.1"
 
@@ -88,7 +81,6 @@ group :development do
   # gem 'ruby-debug19', :require => false
   #gem 'ruby-debug-base19', :git => 'https://github.com/tribune/ruby-debug-base19.git', :require => false
   gem 'thin'
-
 end
 
 gem 'bullet'
@@ -113,14 +105,8 @@ group :assets do
   gem 'asset_sync'
 end
 
-
 gem 'jquery-rails'
 gem 'html5-rails'
 
 #authorization
 gem "cancan", "~> 1.6.9"
-
-
-
-
-
