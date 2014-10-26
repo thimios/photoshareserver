@@ -48,8 +48,8 @@ GIT_REPOSITORY_URL = 'git@bitbucket.org:thimios/photoshareserver.git'
 
 # Roles
 server 'photoshareserver.wantedpixel.com', :app, :web, :db, :primary => true
-#server 'app02.soberlin.org', :app, :web
-#server 'app03.soberlin.org', :app, :web
+#server 'app02.photoshareserver.wantedpixel.com', :app, :web
+#server 'app03.photoshareserver.wantedpixel.com', :app, :web
 
 #############################################
 #############################################
@@ -58,13 +58,13 @@ server 'photoshareserver.wantedpixel.com', :app, :web, :db, :primary => true
 
 set :bundle_flags,               "--deployment"
 
-set :application,                "soberlin"
+set :application,                "photoshare"
 set :normalize_asset_timestamps, false
 set :rails_env,                  "production"
 
 set :user,                       "ubuntu"
 set :deploy_to,                  "/home/#{user}/app"
-set :application_hostname,       "soberlin.dyndns.org"
+set :application_hostname,       "photoshare.wantedpixel.com"
 
 
 # Password-less Deploys (Optional)

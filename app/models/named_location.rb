@@ -1,3 +1,4 @@
+# Named locations have geo cords and many photos
 class NamedLocation < ActiveRecord::Base
   acts_as_followable #users can follow named locations
 
@@ -31,6 +32,7 @@ class NamedLocation < ActiveRecord::Base
     self.photos.count
   end
 
+  # Count the votes that all the locations photos have received
   def plusminus
     Vote.joins('LEFT OUTER JOIN photos ON photos.id = votes.voteable_id').where("votes.vote = true AND photos.named_location_id = ?", self.id).count
   end

@@ -1,3 +1,4 @@
+# Users follow other users and named categories
 class Follow < ActiveRecord::Base
 
   extend ActsAsFollower::FollowerLib

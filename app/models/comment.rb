@@ -1,3 +1,4 @@
+# Users can comment on photos
 class Comment < ActiveRecord::Base
   opinio counter_cache: true
 

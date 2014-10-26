@@ -1,3 +1,4 @@
+# User actions are captured as History objects
 class History
 
   include ActiveModel::Validations

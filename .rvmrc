@@ -1,1 +1,1 @@
-rvm ruby-1.9.3@senchatouch2 --create
+rvm ruby-2.1@photoshare --create
