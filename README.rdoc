@@ -1,3 +1,7 @@
+A rails application providing a REST-like API to develop a photo share application
+
+It includes a clusterred solr search engine, a simple admin panel and a simple frontend
+
 Start application:
 RAILS_ENV=development rake sunspot:solr:run
 rails s
