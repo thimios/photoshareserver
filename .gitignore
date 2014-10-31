@@ -11,6 +11,7 @@ config/database.yml
 config/newrelic.yml
 config/sunspot.yml
 config/html5_rails.yml
+config/initializers/secret_token.rb
 public/assets
 tmp
 .project
