@@ -8,6 +8,7 @@ log/*
 test/results/photos/*.csv
 test/results/users/*.csv
 config/database.yml
+config/newrelic.yml
 public/assets
 tmp
 .project
