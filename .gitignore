@@ -9,6 +9,7 @@ test/results/photos/*.csv
 test/results/users/*.csv
 config/database.yml
 config/newrelic.yml
+config/sunspot.yml.example
 public/assets
 tmp
 .project
