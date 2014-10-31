@@ -96,19 +96,8 @@ TodosSt2::Application.configure do
   # :enable_starttls_auto => true  }
 
   config.paperclip_defaults = {
-      :storage => :s3,
-      :s3_host_alias => '.cloudfront.net',
-      :s3_host_name => "s3-eu-west-1.amazonaws.com",
-      :url => ':s3_alias_url',
-      :path => ":class/:attachment/:id_partition/:style/:filename",
-      :s3_protocol => "http",
-      :s3_credentials => {
-          :bucket => "com.wantedpixel.photoshare.production",
-          :access_key_id => "",
-          :secret_access_key => ""
-      }
+      :storage => :filesystem
   }
-
 
   Rails.configuration.banned_original_size_url = "http://d2ujlosr6qi8kc.cloudfront.net/system_photos/images/000/000/001/original/bannedphoto.png"
   Rails.configuration.banned_full_size_url = "http://d2ujlosr6qi8kc.cloudfront.net/system_photos/images/000/000/001/full/bannedphoto.png"
