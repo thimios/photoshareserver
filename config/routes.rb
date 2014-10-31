@@ -1,4 +1,4 @@
-TodosSt2::Application.routes.draw do
+PhotoShareServer::Application.routes.draw do
 
   resources :quotes
 

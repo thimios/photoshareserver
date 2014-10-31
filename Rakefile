@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-TodosSt2::Application.load_tasks
+PhotoShareServer::Application.load_tasks
