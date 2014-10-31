@@ -16,7 +16,7 @@ set :application, 'photoshareserver'
 
 # SCM Options
 set :scm,        :git
-set :repository, git@github.com:thimios/photoshareserver.git
+set :repository, 'git@github.com:thimios/photoshareserver.git'
 set :branch,     "master"
 
 # By default, your app will be available in the root of your Uberspace. If you
