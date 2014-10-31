@@ -2,11 +2,30 @@ A rails application providing a REST-like API to develop a photo share applicati
 
 It includes a clusterred solr search engine, a simple admin panel and a simple frontend
 
-Start application:
-<tt>RAILS_ENV=development rake sunspot:solr:run
-rails s</tt>
+Setup yml configuration files for all example files under config
+
+Set a secret token at config/initializers/secret_token.rb. To generate a secret token, you can use:
+
+<tt>rake secret</tt>
+
+start solr (you need it even for db setup)
+<tt>RAILS_ENV=development rake sunspot:solr:run</tt>
+
+setup database:
+<tt>rake db:setup</tt>
+
+seed database (take a look at db/seeds.rb first! public passwords will be seeded to the database!):
+
+<tt>rake db:seed</tt>
 
 Reindex solr:
+
 <tt>RAILS_ENV=development rake sunspot:solr:reindex</tt>
+
+Start application (solr should be running already):
+
+<tt>rails s</tt>
+
+
 
 
