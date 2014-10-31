@@ -1,118 +1,34 @@
+# include uberspacify base recipes
+require 'uberspacify/base'
 
+# comment this if you don't use MySQL
+require 'uberspacify/mysql'
 
+# the Uberspace server you are on
+server 'aries.uberspace.de', :web, :app, :db, :primary => true
 
-# This capistrano deployment recipe is made to work with the optional
-# StackScript provided to all Rails Rumble teams in their Linode dashboard.
-#
-# After setting up your Linode with the provided StackScript, configuring
-# your Rails app to use your GitHub repository, and copying your deploy
-# key from your server's ~/.ssh/github-deploy-key.pub to your GitHub
-# repository's Admin / Deploy Keys section, you can configure your Rails
-# app to use this deployment recipe by doing the following:
-#
-# run  ssh -T -oStrictHostKeyChecking=no git@bitbucket.org
-# ssh-keygen -t rsa
-# copy public key to bitbucket
-# sudo apt-get install openjdk-7-jdk  git  imagemagick  nginx mysql-server libmysqlclient-dev
-# copy config/deploy/ssl to /etc/nginx/ssl (only keys are needed, see config/deploy/nginx_conf.erb)
-# sudo rm /etc/nginx/sites-enabled/default
-# sudo apt-get remove apache2
-# create mysql database for root user
+# your Uberspace username
+set :user, 'wantedsi'
 
-# 1. Add `gem 'capistrano'` to your Gemfile.
-# 2. Run `bundle install --binstubs --path=vendor/bundles`.
-# 3. Run `bin/capify .` in your app's root directory.
-# 4. Replace your new config/deploy.rb with this file's contents.
-# 5. Configure the two parameters in the Configuration section below.
-# 6. Run `git commit -a -m "Configured capistrano deployments."`.
-# 7. Run `git push origin master`.
-# 8. Run `bin/cap deploy:setup`.
-# 9. Run `bin/cap deploy:migrations` or `bin/cap deploy`.
-
-# bin/cap deploy:solr_start
-# bin/cap deploy:seed
-#
-# Note: You may also need to add your local system's public key to
-# your GitHub repository's Admin / Deploy Keys area.
-#
-# Note: When deploying, you'll be asked to enter your server's root
-# password. To configure password-less deployments, see below.
-
-#############################################
-##                                         ##
-##              Configuration              ##
-##                                         ##
-#############################################
-
-GIT_REPOSITORY_URL = 'git@bitbucket.org:thimios/photoshareserver.git'
-
-# Roles
-server 'photoshareserver.wantedpixel.com', :app, :web, :db, :primary => true
-#server 'app02.photoshareserver.wantedpixel.com', :app, :web
-#server 'app03.photoshareserver.wantedpixel.com', :app, :web
-
-#############################################
-#############################################
-
-# General Options
-
-set :bundle_flags,               "--deployment"
-
-set :application,                "photoshare"
-set :normalize_asset_timestamps, false
-set :rails_env,                  "production"
-
-set :user,                       "ubuntu"
-set :deploy_to,                  "/home/#{user}/app"
-set :application_hostname,       "photoshare.wantedpixel.com"
-
-
-# Password-less Deploys (Optional)
-#
-# 1. Locate your local public SSH key file. (Usually ~/.ssh/id_rsa.pub)
-# 2. Execute the following locally: (You'll need your Linode server's root password.)
-#
-#    cat ~/.ssh/id_rsa.pub | ssh root@ALIAS "cat >> ~/.ssh/authorized_keys"
-#
-# 3. Uncomment the below ssh_options[:keys] line in this file.
-#
-ssh_options[:keys] = ["~/.ssh/id_rsa"]
-
-set :use_sudo, false
-set :sudo_user, "ubuntu"
-
-default_run_options[:pty] = true
+# a name for your app, [a-z0-9] should be safe, will be used for your gemset,
+# databases, directories, etc.
+set :application, 'photoshareserver'
 
 # SCM Options
 set :scm,        :git
-set :repository, GIT_REPOSITORY_URL
+set :repository, git@github.com:thimios/photoshareserver.git
 set :branch,     "master"
 
-set :rvm_type, :user  # Copy the exact line. I really mean :user here
-set :normalize_asset_timestamps, false  # Убирает сёр ошибок со старыми папками жаваскрипта и имаджов
+# By default, your app will be available in the root of your Uberspace. If you
+# have your own domain set up, you can configure it here
+set :domain, 'demo1.wantedpixel.com'
 
-set :rvm_ruby_string, 'ruby-1.9.3-p194@senchatouch2'
-set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
+# By default, Ruby Enterprise Edition 1.8.7 is used for Uberspace. If you
+# prefer Ruby 1.9 or any other version, please refer to the RVM documentation
+# at https://rvm.io/integration/capistrano/ and set this variable.
+set :rvm_ruby_string, 'ruby-2.1@photoshare'
 
-
-before 'deploy:restart', 'deploy:migrate'
-# Install RVM
-before 'deploy:setup',   'rvm:install_rvm'
-# Install Ruby
-before 'deploy:setup',   'rvm:install_ruby'
-# Or create gemset
-before 'deploy',         'rvm:create_gemset'
-after  'deploy',         'deploy:cleanup'
-
-after "deploy:setup", "nginx:setup"
-
-namespace :rvm do
-  task :trust_rvmrc do
-    run "rvm rvmrc trust #{release_path}"
-  end
-end
-
-after "deploy", "rvm:trust_rvmrc"
+set :normalize_asset_timestamps, false
 
 namespace :deploy do
   task :setup_solr_data_dir do
@@ -163,21 +79,6 @@ namespace :solr do
   end
 end
 
-task :install_unicorn_init_script, :roles => :app do
-  set :user, sudo_user
-  run "#{sudo} cp #{latest_release}/config/deploy/unicorn /etc/init.d/unicorn.#{application}"
-  run "#{sudo} chmod 755 /etc/init.d/unicorn.#{application}"
-  run "#{sudo} update-rc.d unicorn.#{application} defaults"
-end
-
-task :install_solr_init_script, :roles => :app do
-  set :user, sudo_user
-  run "#{sudo} cp #{latest_release}/config/deploy/solr /etc/init.d/solr.#{application}"
-  run "#{sudo} chmod 755 /etc/init.d/solr.#{application}"
-  run "#{sudo} update-rc.d solr.#{application} defaults"
-end
-
-
 desc "tail production log files"
 task :tail_logs, :roles => :app do
   run "tail -f #{shared_path}/log/production.log" do |channel, stream, data|
@@ -198,14 +99,5 @@ task :console, :roles => :app do
 end
 
 after 'deploy:setup', 'deploy:setup_solr_data_dir'
-#after 'deploy:update_code',  'install_unicorn_init_script'
-#after 'deploy:update_code',  'install_solr_init_script'
-after 'unicorn:stop', 'solr:stop'
-before 'inicorn:start', 'solr:start'
 
-require "rvm/capistrano"
-require "bundler/capistrano"
-require "capistrano-unicorn"
-require 'capistrano/nginx/tasks'
-#require "capistrano-file_db"
 load 'deploy/assets'

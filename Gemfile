@@ -108,3 +108,6 @@ gem 'html5-rails'
 
 #authorization
 gem "cancan", "~> 1.6.9"
+
+# deployment on uberspace.de
+gem 'uberspacify'

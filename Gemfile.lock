@@ -49,6 +49,7 @@ GEM
     capistrano-nginx (0.1.0)
     capistrano-unicorn (0.2.0)
       capistrano (< 3.0)
+    capistrano_colors (0.5.5)
     chunky_png (1.2.9)
     climate_control (0.0.3)
       activesupport (>= 3.0)
@@ -69,6 +70,7 @@ GEM
       compass
     compass-rails (1.1.2)
       compass (>= 0.12.2)
+    daemon_controller (1.2.0)
     daemons (1.1.9)
     devise (2.1.4)
       bcrypt-ruby (~> 3.0)
@@ -139,6 +141,10 @@ GEM
     paperclip-aws (1.6.7)
       aws-sdk (>= 1.2.0)
       paperclip (>= 2.5.0)
+    passenger (4.0.53)
+      daemon_controller (>= 1.2.0)
+      rack
+      rake (>= 0.8.1)
     polyglot (0.3.3)
     pr_geohash (1.0.0)
     progress_bar (1.0.0)
@@ -222,6 +228,14 @@ GEM
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.2.0)
     tzinfo (0.3.38)
+    uberspacify (0.9.5)
+      capistrano (>= 2.12.0)
+      capistrano_colors (>= 0.5.5)
+      daemon_controller (>= 1.0.0)
+      mysql2 (>= 0.3.11)
+      passenger (>= 3.0.15)
+      rack (>= 1.4.1)
+      rvm-capistrano (>= 1.2.5)
     uglifier (2.3.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -279,6 +293,7 @@ DEPENDENCIES
   thin
   thumbs_up (~> 0.6.4)
   turbo-sprockets-rails3
+  uberspacify
   uglifier
   unicorn
   xmpp4r
