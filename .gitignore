@@ -10,6 +10,7 @@ test/results/users/*.csv
 config/database.yml
 config/newrelic.yml
 config/sunspot.yml
+config/html5_rails.yml
 public/assets
 tmp
 .project
