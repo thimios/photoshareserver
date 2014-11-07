@@ -39,6 +39,11 @@ namespace :deploy do
     run "ln -nfs #{deploy_to}/shared/config/initializers/secret_token.rb #{release_path}/config/initializers/secret_token.rb" # This file is not included repository, so we will create a symlink 
   end
 
+  desc "reload the database with seed data"
+  task :seed do
+    run "cd #{current_path}; bundle exec rake db:seed RAILS_ENV=#{rails_env}"
+  end
+
 end
 
 namespace :db do

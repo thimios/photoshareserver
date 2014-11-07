@@ -8,9 +8,13 @@ It includes a clusterred solr search engine, a simple admin panel and a simple f
 
 Setup yml configuration files for all example files under config
 
-start solr (you need it even for db setup)
+run solr with logging on the console (you need it even for db setup)
 
 	$ RAILS_ENV=development rake sunspot:solr:run
+
+or start solr in the background:
+
+	$ RAILS_ENV=development rake sunspot:solr:start 
 
 setup database:
 
@@ -58,10 +62,26 @@ PhotoShareServer::Application.config.secret_token = '{secret token}'
 Deploy:
 	
 	$ bundle exec cap deploy:migrations
+
+Start solr:
+
+	$ cap solr:start
+
+Seed database:
+
+	$ cap deploy:seed
+
+Reindex solr on prod unfortunately does not work remotely, login, cd to current and run:
+
+	$ RAILS_ENV=production rake sunspot:solr:reindex
 	
 View production logs:
 
 	$ cap tail_logs 
+
+Stop solr to release jvm resources:
+
+	$ cap solr:stop
 
 
 
