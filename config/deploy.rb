@@ -34,6 +34,11 @@ namespace :deploy do
   task :setup_solr_data_dir do
     run "mkdir -p #{shared_path}/solr/data"
   end
+
+  task :symlink_secret_token, :roles => :app do
+    run "ln -nfs #{deploy_to}/shared/config/initializers/secret_token.rb #{release_path}/config/initializers/secret_token.rb" # This file is not included repository, so we will create a symlink 
+  end
+
 end
 
 namespace :db do
