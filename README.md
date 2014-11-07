@@ -8,6 +8,10 @@ It includes a clusterred solr search engine, a simple admin panel and a simple f
 
 Setup yml configuration files for all example files under config
 
+Set a secret token at config/initializers/secret_token.rb. To generate a secret token, you can use:
+
+	$ rake secret
+
 run solr with logging on the console (you need it even for db setup)
 
 	$ RAILS_ENV=development rake sunspot:solr:run
