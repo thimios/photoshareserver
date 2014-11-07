@@ -104,5 +104,6 @@ task :console, :roles => :app do
 end
 
 after 'deploy:setup', 'deploy:setup_solr_data_dir'
+after 'deploy:symlink_shared', 'deploy:symlink_secret_token'
 
 load 'deploy/assets'
