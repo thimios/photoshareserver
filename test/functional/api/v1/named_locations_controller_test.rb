@@ -57,8 +57,6 @@ module Api
         assert_not_nil data
         assert_equal 0, data['records'].count, "should return no location"
       end
-
-
     end
   end
 end

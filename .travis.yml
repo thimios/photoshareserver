@@ -1,0 +1,5 @@
+# .travis.yml
+before_script:
+  - mysql -e 'create database photoshare_test;
+
+before_install: cp config/database.travis.yml config/database.yml
