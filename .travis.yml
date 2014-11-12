@@ -4,3 +4,8 @@ before_script:
   - RAILS_ENV=test bundle exec rake sunspot:solr:start
 
 before_install: cp config/database.travis.yml config/database.yml
+
+script:
+  - bundle exec rake db:schema:load
+  - bundle exec rake db:test:prepare
+  - bundle exec rake test
