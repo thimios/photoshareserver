@@ -58,15 +58,22 @@ gem 'exception_notification'
 
 gem 'faker'
 
+gem 'bullet'
+gem 'xmpp4r'
+
+# deployment on uberspace.de
+gem 'uberspacify'
+
 group :production do
   gem 'newrelic_rpm', "~> 3.5.8.72"
 end
 
 group :testing do
-  gem 'test-unit'
+  gem 'rspec-rails'
 end
 
 group :development do
+  gem 'rspec-rails'
   gem 'capistrano'
   gem 'capistrano-unicorn'
   gem 'capistrano-nginx'
@@ -78,8 +85,7 @@ group :development do
   gem 'thin'
 end
 
-gem 'bullet'
-gem 'xmpp4r'
+
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -100,5 +106,3 @@ end
 
 
 
-# deployment on uberspace.de
-gem 'uberspacify'
