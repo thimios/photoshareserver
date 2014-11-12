@@ -2,18 +2,12 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-#jsonp middleware 
-
+#jsonp middleware
 gem 'rack-cors', "~> 0.2.7", :require => 'rack/cors'
-
 gem 'rack-jsonp-middleware', "~> 0.0.9",  :require => 'rack/jsonp'
 
 # file uploads
 gem "paperclip", "~> 3.4.1"
-
 gem "paperclip-aws", "~> 1.6.7" #support for all locations without hacks
 
 # solr searching
@@ -39,8 +33,6 @@ gem 'gmaps4rails', "~> 1.5.6"
 # pagination
 gem "kaminari", "~> 0.14.1"
 
-gem 'faker'
-
 # comments
 gem 'opinio', "~> 0.6"
 
@@ -53,23 +45,26 @@ gem 'mysql2'
 
 gem "acts_as_follower", "~> 0.1.1"
 
+gem 'jquery-rails'
+gem 'html5-rails'
+
+#authorization
+gem "cancan", "~> 1.6.9"
+
+gem 'rack-ssl-enforcer', "~> 0.2.5"
+
+# send email on exception in production
+gem 'exception_notification'
+
+gem 'faker'
+
 group :production do
   gem 'newrelic_rpm', "~> 3.5.8.72"
 end
 
-gem 'rack-ssl-enforcer', "~> 0.2.5"
-
-gem 'unicorn'                 # Use unicorn as the app server
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
 group :testing do
   gem 'test-unit'
 end
-
-# send email on exception in production
-gem 'exception_notification'
 
 group :development do
   gem 'capistrano'
@@ -103,11 +98,7 @@ group :assets do
   gem 'turbo-sprockets-rails3'
 end
 
-gem 'jquery-rails'
-gem 'html5-rails'
 
-#authorization
-gem "cancan", "~> 1.6.9"
 
 # deployment on uberspace.de
 gem 'uberspacify'

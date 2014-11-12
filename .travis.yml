@@ -1,5 +1,6 @@
 # .travis.yml
 before_script:
   - mysql -e 'create database photoshare_test';
+  - RAILS_ENV=test bundle exec rake sunspot:solr:start
 
 before_install: cp config/database.travis.yml config/database.yml
