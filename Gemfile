@@ -69,13 +69,15 @@ group :production do
 end
 
 group :testing do
-  gem 'rspec-rails'
   gem 'shoulda-matchers', require: false
   gem "factory_girl_rails", "~> 4.0"
 end
 
-group :development do
+group :testing, :development do
   gem 'rspec-rails'
+end
+
+group :development do
   gem 'capistrano'
   gem 'capistrano-unicorn'
   gem 'capistrano-nginx'
