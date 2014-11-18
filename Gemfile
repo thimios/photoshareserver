@@ -71,6 +71,7 @@ end
 group :testing do
   gem 'rspec-rails'
   gem 'shoulda-matchers', require: false
+  gem "factory_girl_rails", "~> 4.0"
 end
 
 group :development do
