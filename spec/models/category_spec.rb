@@ -1,5 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Category do
-
+RSpec.describe Category, :type => :model do
+  it "should validate presence of title" do
+    expect(subject).to validate_presence_of :title
+  end
 end

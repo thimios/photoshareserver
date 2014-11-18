@@ -70,6 +70,7 @@ end
 
 group :testing do
   gem 'rspec-rails'
+  gem 'shoulda-matchers', require: false
 end
 
 group :development do
