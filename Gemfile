@@ -70,11 +70,13 @@ end
 
 group :testing do
   gem 'shoulda-matchers', require: false
-  gem "factory_girl_rails", "~> 4.0"
+
 end
 
 group :testing, :development do
   gem 'rspec-rails'
+  gem 'faker'
+  gem "factory_girl_rails", "~> 4.0"
 end
 
 group :development do

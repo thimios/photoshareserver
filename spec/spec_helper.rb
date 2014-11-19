@@ -14,6 +14,11 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+require 'factory_girl_rails'
+require 'sunspot/rails/spec_helper'
+require 'devise'
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -37,6 +42,29 @@ RSpec.configure do |config|
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
   end
+
+  # devise configuration
+  config.include Devise::TestHelpers, :type => :controller
+
+  # stub sunspot solr while testing
+  config.before(:each) do
+    ::Sunspot.session = ::Sunspot::Rails::StubSessionProxy.new(::Sunspot.session)
+  end
+
+  config.after(:each) do
+    ::Sunspot.session = ::Sunspot.session.original_session
+  end
+
+  # Factory Girl configuration
+  config.include FactoryGirl::Syntax::Methods
+  # config.before(:suite) do
+  #   begin
+  #     DatabaseCleaner.start
+  #     FactoryGirl.lint
+  #   ensure
+  #     DatabaseCleaner.clean
+  #   end
+  # end
 
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
