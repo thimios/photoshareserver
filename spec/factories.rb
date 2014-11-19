@@ -14,6 +14,8 @@ FactoryGirl.define do
   end
 
   factory :category do
+    initialize_with { Category.find_or_create_by_id(id)}
+
     trait :fashion do
       id 1
       title "fashion"
