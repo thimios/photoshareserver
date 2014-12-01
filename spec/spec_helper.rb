@@ -19,6 +19,8 @@ require 'factory_girl_rails'
 require 'sunspot/rails/spec_helper'
 require 'devise'
 
+require File.dirname(__FILE__) + "/controller_macros"
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -45,6 +47,7 @@ RSpec.configure do |config|
 
   # devise configuration
   config.include Devise::TestHelpers, :type => :controller
+  config.extend ControllerMacros, :type => :controller
 
   # stub sunspot solr while testing
   config.before(:each) do
