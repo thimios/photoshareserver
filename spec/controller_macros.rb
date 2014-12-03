@@ -7,10 +7,13 @@ module ControllerMacros
   end
 
   def login_user
+    let(:current_user)do
+      FactoryGirl.create(:user)
+    end
+
     before(:each) do
       @request.env["devise.mapping"] = Devise.mappings[:user]
-      user = FactoryGirl.create(:user)
-      sign_in user
+      sign_in current_user
     end
   end
 end
