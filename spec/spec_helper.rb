@@ -50,13 +50,13 @@ RSpec.configure do |config|
   config.extend ControllerMacros, :type => :controller
 
   # stub sunspot solr while testing
-  config.before(:each) do
-    ::Sunspot.session = ::Sunspot::Rails::StubSessionProxy.new(::Sunspot.session)
-  end
-
-  config.after(:each) do
-    ::Sunspot.session = ::Sunspot.session.original_session
-  end
+  # config.before :each do
+  #   ::Sunspot.session = ::Sunspot::Rails::StubSessionProxy.new(::Sunspot.session)
+  # end
+  #
+  # config.after :each do
+  #   ::Sunspot.session = ::Sunspot.session.original_session
+  # end
 
   # Factory Girl configuration
   config.include FactoryGirl::Syntax::Methods
