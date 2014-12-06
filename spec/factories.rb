@@ -39,10 +39,26 @@ FactoryGirl.define do
     title {Faker::Lorem.words 2}
     association :category, :fashion
     user
-    latitude 52.48929608052652
-    longitude 13.421714945981385
+    latitude Faker::Address.latitude
+    longitude Faker::Address.longitude
     show_on_map true
     banned false
+
+    trait :with_random_votes do
+      after(:create) do |n|
+        (1..10).to_a.sample.times do
+          user = create(:user)
+          user.vote_for n
+        end
+      end
+    end
+
+    trait :with_vote do
+      after(:create) do |n|
+        user = create(:user)
+        user.vote_for n
+      end
+    end
   end
 
   factory :comment do
@@ -52,8 +68,8 @@ FactoryGirl.define do
   end
 
   factory :named_location do
-    reference Faker::Lorem.characters("CoQBewAAACPvF7X9k8oESf-dqXAYvf1RbJu51SROVwrEjl8RGl2N1iftFWtUCvsOqRXzbLgcfN1DOcld-AwaVMa-aU5ubmA3QYV0RUb7MtAtUML3qNFOM0PuVTvVR2NC9yOumVui8v5tfVkZYzKj0fvLlwlYHr01RkWLMAEc_2M1ww0IhzpcEhCwLxG5ZDZ7akhO2As18G8GGhQta0Ac3s-DZvGVjBxeL_KDzgt0eg".length)
-    google_id Faker::Lorem.characters("72537495dd878b6bd2feb0104e263e730e1e63a0".length)
+    reference { Faker::Lorem.characters("CoQBewAAACPvF7X9k8oESf-dqXAYvf1RbJu51SROVwrEjl8RGl2N1iftFWtUCvsOqRXzbLgcfN1DOcld-AwaVMa-aU5ubmA3QYV0RUb7MtAtUML3qNFOM0PuVTvVR2NC9yOumVui8v5tfVkZYzKj0fvLlwlYHr01RkWLMAEc_2M1ww0IhzpcEhCwLxG5ZDZ7akhO2As18G8GGhQta0Ac3s-DZvGVjBxeL_KDzgt0eg".length) }
+    google_id { Faker::Lorem.characters("72537495dd878b6bd2feb0104e263e730e1e63a0".length) }
     latitude Faker::Address.latitude
     longitude Faker::Address.longitude
     name Faker::Name.name
@@ -61,7 +77,13 @@ FactoryGirl.define do
 
     trait :with_one_photo do
       after(:create) do |n|
-        create(:photo, named_location: n)
+        create(:photo, :with_vote, longitude: n.longitude, latitude: n.latitude, named_location: n)
+      end
+    end
+
+    trait :with_three_photos do
+      after(:create) do |n|
+        create_list(:photo, 3, longitude: n.longitude, latitude: n.latitude, named_location: n)
       end
     end
 
