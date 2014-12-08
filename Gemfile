@@ -70,7 +70,7 @@ end
 
 group :testing do
   gem 'shoulda-matchers', require: false
-
+  gem "codeclimate-test-reporter", require: nil
 end
 
 group :testing, :development do
