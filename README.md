@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/thimios/photoshareserver.svg?branch=master)](https://travis-ci.org/thimios/photoshareserver)
+[![Code Climate](https://codeclimate.com/github/thimios/photoshareserver/badges/gpa.svg)](https://codeclimate.com/github/thimios/photoshareserver)
+[![Test Coverage](https://codeclimate.com/github/thimios/photoshareserver/badges/coverage.svg)](https://codeclimate.com/github/thimios/photoshareserver)
+
 # PhotoShareServer
 
 A rails application providing a REST-like API to develop a photo share application
