@@ -11,6 +11,28 @@ describe Api::V1::RegistrationsController, :type => :controller do
     expect(subject.current_user).to_not be_nil
   end
 
+  describe "GET index" do
+    context "get users followed by a specific user" do
+      it "should return users followed" do
+        user = create :user
+        followed_users = create_list :user, 3
+
+        followed_users.each {|followed_user|
+          user.follow followed_user
+        }
+
+        #create some more users
+        create_list :user, 2
+
+        get :index , {'followed_by_user_id' => user.id }
+
+        expect(response).to be_success
+        users = assigns(:users)
+        expect(users.count).to eq 3
+      end
+    end
+  end
+
   describe "POST #create" do
     context "without errors" do
       it "should register a new user" do

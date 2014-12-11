@@ -62,6 +62,8 @@ gem 'xmpp4r'
 # deployment on uberspace.de
 gem 'uberspacify'
 
+gem 'faker'
+
 group :production do
   gem 'newrelic_rpm', "~> 3.5.8.72"
 end
@@ -73,7 +75,6 @@ end
 
 group :testing, :development do
   gem 'rspec-rails'
-  gem 'faker'
   gem "factory_girl_rails", "~> 4.0"
 end
 
