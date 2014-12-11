@@ -13,11 +13,14 @@ class Vote < ActiveRecord::Base
 
   # tracked for user's activity feeds
   include PublicActivity::Model
-  tracked :owner => proc { |controller, model|
-    controller.current_user
-  }, :recipient => proc { |controller, model|
-    model.voteable
-  }
+  unless Rails.env.test?
+    # TODO controllers should not be referenced in the model
+    tracked :owner => proc { |controller, model|
+      controller.current_user
+    }, :recipient => proc { |controller, model|
+      model.voteable
+    }
+  end
   # destroy all activity records on destroy
   has_many :activities, :class_name => "::PublicActivity::Activity", :as => :trackable, :dependent => :destroy
 

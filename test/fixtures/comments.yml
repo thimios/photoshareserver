@@ -1,6 +1,0 @@
-comments_001:
-  id: 1
-  owner_id: 1
-  commentable_id: 1
-  commentable_type: Photo
-  body: first comment on first photo

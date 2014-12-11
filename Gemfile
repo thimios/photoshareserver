@@ -56,6 +56,12 @@ gem 'rack-ssl-enforcer', "~> 0.2.5"
 # send email on exception in production
 gem 'exception_notification'
 
+gem 'bullet'
+gem 'xmpp4r'
+
+# deployment on uberspace.de
+gem 'uberspacify'
+
 gem 'faker'
 
 group :production do
@@ -63,7 +69,13 @@ group :production do
 end
 
 group :testing do
-  gem 'test-unit'
+  gem 'shoulda-matchers', require: false
+  gem "codeclimate-test-reporter", require: nil
+end
+
+group :testing, :development do
+  gem 'rspec-rails'
+  gem "factory_girl_rails", "~> 4.0"
 end
 
 group :development do
@@ -78,8 +90,7 @@ group :development do
   gem 'thin'
 end
 
-gem 'bullet'
-gem 'xmpp4r'
+
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -100,5 +111,3 @@ end
 
 
 
-# deployment on uberspace.de
-gem 'uberspacify'
