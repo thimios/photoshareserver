@@ -12,16 +12,58 @@ describe Api::V1::RegistrationsController, :type => :controller do
   end
 
   describe "GET index" do
+    context "users following the current_user" do
+      it "returns users following the current user" do
+        following_users = create_list :user, 3
+        create_list :user, 2
+        following_users.each { |following_user|
+          following_user.follow current_user
+        }
+        get :index , {'following_the_current_user' => 'true' }
+        expect(response).to be_success
+        users = assigns(:users)
+        expect(users.count).to eq 3
+      end
+    end
+
+    context "users following a specific user" do
+      it "returns users following the user" do
+        user = create :user
+        following_users = create_list :user, 3
+        create_list :user, 2
+        following_users.each { |following_user|
+          following_user.follow user
+        }
+        get :index , {'following_the_user_id' => user.id }
+        expect(response).to be_success
+        users = assigns(:users)
+        expect(users.count).to eq 3
+      end
+    end
+
+    context "get users followed by current user" do
+      it "should return users followed" do
+        followed_users = create_list :user, 3
+        followed_users.each {|followed_user|
+          current_user.follow followed_user
+        }
+        #create some irrelevant users
+        create_list :user, 2
+        get :index , {'followed_by_current_user' => 'true' }
+        expect(response).to be_success
+        users = assigns(:users)
+        expect(users.count).to eq 3
+      end
+    end
+
     context "get users followed by a specific user" do
       it "should return users followed" do
         user = create :user
         followed_users = create_list :user, 3
-
         followed_users.each {|followed_user|
           user.follow followed_user
         }
-
-        #create some more users
+        #create some irrelevant users
         create_list :user, 2
 
         get :index , {'followed_by_user_id' => user.id }
