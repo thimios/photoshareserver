@@ -56,8 +56,6 @@ gem 'rack-ssl-enforcer', "~> 0.2.5"
 # send email on exception in production
 gem 'exception_notification'
 
-gem 'faker'
-
 gem 'bullet'
 gem 'xmpp4r'
 
