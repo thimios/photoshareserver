@@ -12,6 +12,31 @@ describe Api::V1::RegistrationsController, :type => :controller do
   end
 
   describe "GET index" do
+    context "full text search" do
+      it "finds users by name" do
+        search_string = "test search"
+        create :user, username: search_string
+        create_list :user, 5
+        User.reindex
+        get :index , {'search_string' => search_string }
+        expect(response).to be_success
+        users = assigns(:users)
+        expect(users.count).to be >= 1
+      end
+
+      it "paginates" do
+        search_string = "test"
+        9.times do
+          create :user, username: search_string+Faker::Lorem.characters(7)
+        end
+        create_list :user, 5
+        User.reindex
+        get :index , {search_string: search_string, page: 2, limit: 5 }
+        expect(response).to be_success
+        users = assigns(:users)
+        expect(users.count).to be 4
+      end
+    end
     context "users following the current_user" do
       it "returns users following the current user" do
         following_users = create_list :user, 3
