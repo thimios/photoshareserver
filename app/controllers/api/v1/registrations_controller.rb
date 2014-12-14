@@ -19,16 +19,7 @@ module Api
         if params[:filter]
           @filter_params = HashWithIndifferentAccess.new
           @filter = ActiveSupport::JSON.decode(params[:filter])
-          @filter_params[@filter[0].values[0]] = @filter[0].values[1]
-          if @filter_params[:followed_by_current_user]
-            params[:followed_by_current_user] = @filter_params[:followed_by_current_user]
-          elsif @filter_params[:following_the_current_user]
-            params[:following_the_current_user] = @filter_params[:following_the_current_user]
-          elsif @filter_params[:followed_by_user_id]
-            params[:followed_by_user_id] = @filter_params[:followed_by_user_id]
-          elsif @filter_params[:following_the_user_id]
-            params[:following_the_user_id] = @filter_params[:following_the_user_id]
-          end
+          params[@filter[0].values[0]] = @filter[0].values[1]
         end
 
         if params[:followed_by_current_user] == "true"
