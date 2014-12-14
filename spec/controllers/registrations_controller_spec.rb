@@ -35,6 +35,8 @@ describe Api::V1::RegistrationsController, :type => :controller do
         expect(response).to be_success
         users = assigns(:users)
         expect(users.count).to be 4
+        total_count = assigns(:total_count)
+        expect(total_count).to eq 9
       end
     end
     context "users following the current_user" do
@@ -48,6 +50,21 @@ describe Api::V1::RegistrationsController, :type => :controller do
         expect(response).to be_success
         users = assigns(:users)
         expect(users.count).to eq 3
+      end
+
+      it "paginates" do
+        following_users = create_list :user, 9
+        create_list :user, 5
+        following_users.each { |following_user|
+          following_user.follow current_user
+        }
+        get :index , {following_the_current_user: 'true',
+                      page: 2, limit: 5 }
+        expect(response).to be_success
+        users = assigns(:users)
+        expect(users.count).to eq 4
+        total_count = assigns(:total_count)
+        expect(total_count).to eq 9
       end
     end
 
@@ -64,6 +81,22 @@ describe Api::V1::RegistrationsController, :type => :controller do
         users = assigns(:users)
         expect(users.count).to eq 3
       end
+
+      it "paginates" do
+        user = create :user
+        following_users = create_list :user, 9
+        create_list :user, 2
+        following_users.each { |following_user|
+          following_user.follow user
+        }
+        get :index , { following_the_user_id: user.id,
+                       page: 2, limit: 5 }
+        expect(response).to be_success
+        users = assigns(:users)
+        total_count = assigns(:total_count)
+        expect(users.count).to eq 4
+        expect(total_count).to eq 9
+      end
     end
 
     context "get users followed by current user" do
@@ -78,6 +111,22 @@ describe Api::V1::RegistrationsController, :type => :controller do
         expect(response).to be_success
         users = assigns(:users)
         expect(users.count).to eq 3
+      end
+
+      it "paginates" do
+        followed_users = create_list :user, 9
+        followed_users.each {|followed_user|
+          current_user.follow followed_user
+        }
+        #create some irrelevant users
+        create_list :user, 2
+        get :index , {followed_by_current_user: 'true',
+                      page: 2, limit: 5 }
+        expect(response).to be_success
+        users = assigns(:users)
+        expect(users.count).to eq 4
+        total_count = assigns(:total_count)
+        expect(total_count).to eq 9
       end
     end
 
@@ -96,6 +145,24 @@ describe Api::V1::RegistrationsController, :type => :controller do
         expect(response).to be_success
         users = assigns(:users)
         expect(users.count).to eq 3
+      end
+
+      it "paginates" do
+        user = create :user
+        followed_users = create_list :user, 9
+        followed_users.each {|followed_user|
+          user.follow followed_user
+        }
+        #create some irrelevant users
+        create_list :user, 2
+
+        get :index , {followed_by_user_id: user.id,
+                      page: 2, limit: 5 }
+        expect(response).to be_success
+        users = assigns(:users)
+        expect(users.count).to eq 4
+        total_count = assigns(:total_count)
+        expect(total_count).to eq 9
       end
     end
   end
