@@ -17,9 +17,9 @@ module Api
         my_authenticate_user
 
         if params[:filter]
-          @filter_params = HashWithIndifferentAccess.new
-          @filter = ActiveSupport::JSON.decode(params[:filter])
-          params[@filter[0].values[0]] = @filter[0].values[1]
+          filter_params = HashWithIndifferentAccess.new
+          filter = ActiveSupport::JSON.decode(params[:filter])
+          params[filter[0].values[0]] = filter[0].values[1]
         end
 
         if params[:followed_by_current_user] == "true"
@@ -56,8 +56,8 @@ module Api
           user.current_user = current_user
         }
 
-        @records_as_json = @users.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ] )
-        render :json =>  { :records => @records_as_json, :total_count => @total_count }
+        records_as_json = @users.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ] )
+        render :json =>  { :records => records_as_json, :total_count => @total_count }
       end
 
       def suggested_followable_users
@@ -163,8 +163,6 @@ module Api
         current_user.stop_following(@user)
         render  json: [ notice => 'You are not following '+@user.username + " any more."  ], status: 200
       end
-
-
     end
   end
 end
