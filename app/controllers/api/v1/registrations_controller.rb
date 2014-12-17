@@ -22,14 +22,12 @@ module Api
         end
 
         if params[:followed_by_current_user] == "true"
-          @users = User.where(:id => current_user.following_user_ids).order("username").page(params[:page]).per(params[:limit])
-          @total_count = @users.total_count
+          @users, @total_count = UserSearch.followed_by_current_user current_user, params[:page], params[:limit]
         elsif params[:following_the_current_user] == "true"
           @users = User.where(:id => current_user.followers.map{|follower_user| follower_user.id}).order("username").page(params[:page]).per(params[:limit])
           @total_count = @users.total_count
         elsif params[:followed_by_user_id]
-          @users = User.where(:id => User.find(params[:followed_by_user_id]).following_user_ids).order("username").page(params[:page]).per(params[:limit])
-          @total_count = @users.total_count
+          @users, @total_count = UserSearch.followed_by_user params[:followed_by_user_id], params[:page], params[:limit]
         elsif params[:following_the_user_id]
           @users = User.where(:id => User.find(params[:following_the_user_id]).followers.map{|follower_user| follower_user.id}).order("username").page(params[:page]).per(params[:limit])
           @total_count = @users.total_count
@@ -37,17 +35,7 @@ module Api
           @users = User.page(params[:page]).per(params[:limit])
           @total_count = @users.total_count
         else
-          @search = Sunspot.search (User) do
-            if !params[:search_string].blank?
-              fulltext params[:search_string]
-            end
-
-            if !params[:page].blank?
-              paginate(:page => params[:page], :per_page => params[:limit])
-            end
-          end
-          @users = @search.results
-          @total_count = @search.total
+          @users, @total_count = UserSearch.full_text_search params[:search_string], params[:page], params[:limit]
         end
 
         # set current_user on all users before calling voted_by_current_user
