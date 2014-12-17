@@ -118,42 +118,22 @@ module Api
       # all requests are paginated based on "page" and "limit" params and sorted according to the algorithm
       #
       # http://localhost:3000/api/v1/photos?utf8=%E2%9C%93&category_id=1&page=1&user_latitude=52.488909&user_longitude=13.421728
-      # TODO This method is a mess, split it
       def index
         # update current user location, if coordinates not empty
         current_user.update_location(params[:user_latitude], params[:user_longitude])
-
-        # time_factor
-        # distance_factor
-
         time_factor = PhotoSearch.time_factor_from_param params[:time_factor]
         distance_factor = PhotoSearch.distance_factor_from_param params[:distance_factor]
-
         if params[:filter]
-          @filter_params = HashWithIndifferentAccess.new
-          @filter = ActiveSupport::JSON.decode(params[:filter])
-          @filter_params[@filter[0].values[0]] = @filter[0].values[1]
-          if @filter_params[:feed]
-            params[:feed] = @filter_params[:feed]
-          end
-          if @filter_params[:category_id]
-            params[:category_id] = @filter_params[:category_id]
-          end
-          if @filter_params[:location_google_id]
-            params[:location_google_id] = @filter_params[:location_google_id]
-          end
-          if @filter_params[:user_id]
-            params[:user_id] = @filter_params[:user_id]
-          end
+          filter = ActiveSupport::JSON.decode(params[:filter])
+          params[filter[0].values[0]] = filter[0].values[1]
         end
 
         if !params[:user_id].nil?
-          @search = PhotoSearch.user_photos( params[:user_id], params[:page], params[:limit])
+          search = PhotoSearch.user_photos( params[:user_id], params[:page], params[:limit])
         elsif !params[:feed].blank?
-          @search = PhotoSearch.user_feed(current_user, params[:page], params[:limit])
+          search = PhotoSearch.user_feed(current_user, params[:page], params[:limit])
         else
-
-          @search = Sunspot.search (Photo) do
+          search = Sunspot.search (Photo) do
             # eager load user and named_location of each photo, to avoid N+1 queries
             data_accessor_for(Photo).include = [:user, :named_location]
 
@@ -175,75 +155,29 @@ module Api
 
             if !params[:page].blank?
               paginate(:page => params[:page], :per_page => params[:limit])
-              Rails.logger.debug "User latitude before rounding: #{params[:user_latitude]}, after: #{params[:user_latitude].to_f.round(4)}"
-              Rails.logger.debug "User longitude before rounding: #{params[:user_longitude]}, after: #{params[:user_longitude].to_f.round(4)}"
-              adjust_solr_params do |solr_params|
-
-                #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
-                #
-                #c1 and c2 are negative constants.
-                #Distance is the distance between the current location and the picture
-                #time the time between the current time and the time the picture was taken.
-                #Clicks is the amount of votes the photo has received
-                #
-                #The constants are:
-                #c1 = -7e-4
-                #c2 = -1.15e-09
-                #Assuming distance in km for c1 and milliseconds for c2.
-
-                # using reduced precision on time to prevent excessive memory consumption
-                # also using reduced precision 4 decimals on geolocation coordinates
-                solr_params[:sort] = "product(
-                                        sum(plusminus_i,1),
-                                        1.0e10,
-                                        max(
-                                          product(
-                                            exp(
-                                              product(
-                                                #{distance_factor},
-                                                geodist(
-                                                  coordinates_ll,
-                                                  #{params[:user_latitude].to_f.round(4)},
-                                                  #{params[:user_longitude].to_f.round(4)}
-                                                )
-                                              )
-                                            ),
-                                            exp(
-                                              product(
-                                                #{time_factor},
-                                                ms(NOW/HOUR, created_at_dt)
-                                              )
-                                            )
-                                          ),
-                                          1.0e-200
-                                        )
-                                     ) desc".gsub(/\s+/, " ").strip
-              end
-
+              setup_solr_search distance_factor, time_factor, params[:user_latitude], params[:user_longitude]
             end
           end
         end
 
-        @photos = @search.results
+        @photos = search.results
         # set current_user on all photos before calling voted_by_current_user
         @photos.each { |photo|
           photo.current_user = current_user
         }
+        output = { :records => @photos.map{|photo| photo.as_json}, :total_count => search.total }
+
         if !params[:location_google_id].nil?
-          location_followed_by_current_user = false
-          location_google_id = nil
-          location_reference = nil
           location = NamedLocation.find_by_google_id params[:location_google_id]
           unless location.nil?
             location.current_user = current_user
-            location_followed_by_current_user = location.followed_by_current_user
-            location_google_id = location.google_id
-            location_reference = location.reference
+            output << { location_followed_by_current_user: location.followed_by_current_user}
+            output << { location_google_id: location.google_id }
+            output << { location_reference: location.reference }
           end
-
-          render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total, :location_followed_by_current_user => location_followed_by_current_user, :location_google_id => location_google_id, :location_reference => location_reference}
+          render :json =>  output
         else
-          render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => @search.total }
+          render :json =>  { :records => @photos.map{|photo| photo.as_json}, :total_count => search.total }
         end
       end
 
@@ -355,6 +289,52 @@ module Api
 
             end
           end
+      end
+
+      protected
+
+      #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
+      #
+      #c1 and c2 are negative constants.
+      #Distance is the distance between the current location and the picture
+      #time the time between the current time and the time the picture was taken.
+      #Clicks is the amount of votes the photo has received
+      #
+      #The constants are:
+      #c1 = -7e-4
+      #c2 = -1.15e-09
+      #Assuming distance in km for c1 and milliseconds for c2.
+
+      # using reduced precision on time to prevent excessive memory consumption
+      # also using reduced precision 4 decimals on geolocation coordinates
+      def setup_solr_search distance_factor, time_factor, user_latitude, user_longitude
+        adjust_solr_params do |solr_params|
+          solr_params[:sort] = "product(
+                                        sum(plusminus_i,1),
+                                        1.0e10,
+                                        max(
+                                          product(
+                                            exp(
+                                              product(
+                                                #{distance_factor},
+                                                geodist(
+                                                  coordinates_ll,
+                                                  #{user_latitude.to_f.round(4)},
+                                                  #{user_longitude.to_f.round(4)}
+                                                )
+                                              )
+                                            ),
+                                            exp(
+                                              product(
+                                                #{time_factor},
+                                                ms(NOW/HOUR, created_at_dt)
+                                              )
+                                            )
+                                          ),
+                                          1.0e-200
+                                        )
+                                     ) desc".gsub(/\s+/, " ").strip
+        end
       end
     end
   end
