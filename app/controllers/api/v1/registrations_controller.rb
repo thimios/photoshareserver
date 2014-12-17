@@ -17,7 +17,6 @@ module Api
         my_authenticate_user
 
         if params[:filter]
-          filter_params = HashWithIndifferentAccess.new
           filter = ActiveSupport::JSON.decode(params[:filter])
           params[filter[0].values[0]] = filter[0].values[1]
         end
