@@ -3,6 +3,48 @@ module Api
 
     class PhotoSearch
 
+
+      #Points = (clicks + 1) * exp(c1 * distance) * exp(c2 * time)
+      #
+      #c1 and c2 are negative constants.
+      #Distance is the distance between the current location and the picture
+      #time the time between the current time and the time the picture was taken.
+      #Clicks is the amount of votes the photo has received
+      #
+      #The constants are:
+      #c1 = -7e-4
+      #c2 = -1.15e-09
+      #Assuming distance in km for c1 and milliseconds for c2.
+
+      # using reduced precision on time to prevent excessive memory consumption
+      # also using reduced precision 4 decimals on geolocation coordinates
+      def self.solr_search_params distance_factor, time_factor, user_latitude, user_longitude
+         "product(
+            sum(plusminus_i,1),
+            1.0e10,
+            max(
+              product(
+                exp(
+                  product(
+                    #{distance_factor},
+                    geodist(
+                      coordinates_ll,
+                      #{user_latitude.to_f.round(4)},
+                      #{user_longitude.to_f.round(4)}
+                    )
+                  )
+                ),
+                exp(
+                  product(
+                    #{time_factor},
+                    ms(NOW/HOUR, created_at_dt)
+                  )
+                )
+              ),
+              1.0e-200
+            )
+         ) desc".gsub(/\s+/, " ").strip
+      end
       # time_factor_param, 0 to 4, refering to the position of the slider
       # 0: full left: recent
       # 4: full right: all time
