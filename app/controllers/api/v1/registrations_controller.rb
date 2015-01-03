@@ -15,11 +15,7 @@ module Api
       # list users following you: http://localhost:3000/api/v1/users?following_the_current_user=true
       def index
         my_authenticate_user
-
-        if params[:filter]
-          filter = ActiveSupport::JSON.decode(params[:filter])
-          params[filter[0].values[0]] = filter[0].values[1]
-        end
+        process_filter_params
 
         if params[:followed_by_current_user] == "true"
           @users, @total_count = UserSearch.followed_by_current_user current_user, params[:page], params[:limit]
@@ -51,8 +47,8 @@ module Api
         my_authenticate_user
         @users, @total_count = UserSearch.suggest_followable_users(current_user, params[:page], params[:limit])
 
-        @records_as_json = @users.map{|user| user.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date, :admin, :superadmin ] )  }
-        render :json =>  { :records => @records_as_json, :total_count => @total_count }
+        records_as_json = @users.map{|user| user.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date, :admin, :superadmin ] )  }
+        render :json =>  { :records => records_as_json, :total_count => @total_count }
       end
 
       def create
@@ -116,24 +112,24 @@ module Api
       # Show user's public profile
       def show
         my_authenticate_user
-        @users = Array.new
+        users = Array.new
         @user = (User.find(params[:id]))
 
         @activities = PublicActivity::Activity.where(:owner_id =>params[:id])
 
-        @users[0] = @user
+        users[0] = @user
 
         # set current_user on all users before calling voted_by_current_user
-        @users.each { |user|
+        users.each { |user|
           user.current_user = current_user
         }
 
         unless params[:id].eql? (current_user.id.to_s)
-          @records_as_json = @users.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ] )
+          records_as_json = users.as_json( :except => [:email, :address,:longitude, :latitude, :gender, :birth_date ] )
         else
-          @records_as_json = @users.as_json()
+          records_as_json = users.as_json()
         end
-        render json: @records_as_json
+        render json: records_as_json
 
       end
 
@@ -149,6 +145,15 @@ module Api
         @user = User.find(params[:id])
         current_user.stop_following(@user)
         render  json: [ notice => 'You are not following '+@user.username + " any more."  ], status: 200
+      end
+
+      protected
+
+      def process_filter_params
+        if params[:filter]
+          filter = ActiveSupport::JSON.decode(params[:filter])
+          params[filter[0].values[0]] = filter[0].values[1]
+        end
       end
     end
   end

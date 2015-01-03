@@ -11,7 +11,33 @@ describe Api::V1::RegistrationsController, :type => :controller do
     expect(subject.current_user).to_not be_nil
   end
 
-  describe "GET index" do
+  describe "GET #show" do
+    context "html" do
+      it "assigns @user" do
+        user = create( :user )
+        create_list :user, 5
+        User.reindex
+        get :show , id: user.id
+        expect(response).to be_success
+        assigned_user = assigns(:user)
+        expect(assigned_user.id).to be == user.id
+      end
+    end
+
+    context "json" do
+      it "gets proper user" do
+        user = create( :user )
+        create_list :user, 5
+        User.reindex
+        get :show , id: user.id
+        data = ActiveSupport::JSON.decode(response.body)
+        expect(response).to have_http_status(200)
+        expect(data[0]['id']).to be == user.id
+      end
+    end
+  end
+
+  describe "GET #index" do
     context "full text search" do
       it "finds users by name" do
         search_string = "test search"
