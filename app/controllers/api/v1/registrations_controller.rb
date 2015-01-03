@@ -1,5 +1,6 @@
 module Api
   module V1
+    # TODO: currently it extends ApplicationController and not API::V1::ApplicationController
     class RegistrationsController < Devise::RegistrationsController
       require_dependency 'user_search'
 
