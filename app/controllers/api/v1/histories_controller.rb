@@ -10,15 +10,7 @@ module Api
       # GET /histories
       # GET /histories.json
       def index
-        if params[:filter]
-          @filter_params = HashWithIndifferentAccess.new
-          @filter = ActiveSupport::JSON.decode(params[:filter])
-          @filter_params[@filter[0].values[0]] = @filter[0].values[1]
-          if @filter_params[:user_id]
-            params[:user_id] = @filter_params[:user_id]
-          end
-
-        end
+        process_filter_params
 
         unless params[:user_id].nil?
           user_whose_history = params[:user_id] == current_user.id ? current_user : User.find(params[:user_id])

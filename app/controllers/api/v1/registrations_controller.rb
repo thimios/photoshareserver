@@ -1,6 +1,5 @@
 module Api
   module V1
-
     class RegistrationsController < Devise::RegistrationsController
       require_dependency 'user_search'
 
@@ -147,14 +146,6 @@ module Api
         render  json: [ notice => 'You are not following '+@user.username + " any more."  ], status: 200
       end
 
-      protected
-
-      def process_filter_params
-        if params[:filter]
-          filter = ActiveSupport::JSON.decode(params[:filter])
-          params[filter[0].values[0]] = filter[0].values[1]
-        end
-      end
     end
   end
 end
