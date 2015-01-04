@@ -5,16 +5,8 @@ module Api
       # the api is always available to all logged in users
       skip_authorization_check
 
-
       def index
-        if  params[:filter]
-          @filter_params = HashWithIndifferentAccess.new
-          @filter = ActiveSupport::JSON.decode(params[:filter])
-          @filter_params[@filter[0].values[0]] = @filter[0].values[1]
-          if @filter_params[:photo_id]
-            params[:photo_id] = @filter_params[:photo_id]
-          end
-        end
+        process_filter_params
 
         @comments = resource.comments.page(params[:page]).per(params[:limit])
         render :json =>  { :records => @comments, :total_count => @comments.total_count }

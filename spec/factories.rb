@@ -44,6 +44,12 @@ FactoryGirl.define do
     show_on_map true
     banned false
 
+    trait :with_one_comment do
+      after(:create) do |n|
+        create(:comment, commentable: n)
+      end
+    end
+
     trait :with_random_votes do
       after(:create) do |n|
         (1..10).to_a.sample.times do

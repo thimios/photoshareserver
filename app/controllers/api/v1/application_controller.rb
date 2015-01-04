@@ -2,6 +2,8 @@ module Api
   module V1
 
     class ApplicationController < ActionController::Base
+      require 'sencha_helpers'
+      include SenchaHelpers
       protect_from_forgery
       respond_to :json
 
@@ -38,15 +40,6 @@ module Api
           end
         else
           authenticate_user!
-        end
-      end
-
-      protected
-
-      def process_filter_params
-        if params[:filter]
-          filter = ActiveSupport::JSON.decode(params[:filter])
-          params[filter[0].values[0]] = filter[0].values[1]
         end
       end
     end
