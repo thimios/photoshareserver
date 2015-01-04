@@ -8,7 +8,10 @@ module Api
           unless exclude_ids.empty?
             without(:id, exclude_ids)
           end
-          with(:photos_count).greater_than(0)
+          if klass.eql? NamedLocation
+            with(:photos_count).greater_than(0)
+          end
+
           paginate(:page => page, :per_page => limit)
           adjust_solr_params do |solr_params|
 
