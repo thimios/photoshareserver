@@ -2,7 +2,7 @@ module Api
   module V1
     # TODO: currently it extends ApplicationController and not API::V1::ApplicationController
     class RegistrationsController < Devise::RegistrationsController
-      require_dependency 'user_search'
+      require_dependency 'api/v1/user_search'
 
       # the api is always available to all logged in users
       skip_authorization_check
