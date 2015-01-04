@@ -68,23 +68,23 @@ class Photo < ActiveRecord::Base
   end
 
   def full_size_url
-    "http://#{ActionMailer::Base.default_url_options[:host]}#{self.original_size_url}"
+    "#{default_url_prefix_for_images}#{self.original_size_url}"
   end
 
   def medium_size_url
-    "http://#{ActionMailer::Base.default_url_options[:host]}#{self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium)}"
+    "#{default_url_prefix_for_images}#{self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium)}"
   end
 
   def medium_retina_size_url
-    "http://#{ActionMailer::Base.default_url_options[:host]}#{self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium_retina)}"
+    "#{default_url_prefix_for_images}#{self.banned? ? Rails.configuration.banned_medium_size_url : image.url(:medium_retina)}"
   end
 
   def small_size_url
-    "http://#{ActionMailer::Base.default_url_options[:host]}#{self.banned? ? Rails.configuration.banned_thumb_size_url : image.url(:thumb)}"
+    "#{default_url_prefix_for_images}#{self.banned? ? Rails.configuration.banned_thumb_size_url : image.url(:thumb)}"
   end
 
   def thumb_size_url
-    "http://#{ActionMailer::Base.default_url_options[:host]}#{self.banned? ? Rails.configuration.banned_thumb_size_url : image.url(:thumb)}"
+    "#{default_url_prefix_for_images}#{self.banned? ? Rails.configuration.banned_thumb_size_url : image.url(:thumb)}"
   end
 
   # path to the photo details on the web page, to be shared on facebook etc
@@ -255,6 +255,10 @@ class Photo < ActiveRecord::Base
   end
 
   private
+
+    def default_url_prefix_for_images
+      "http://#{ActionMailer::Base.default_url_options[:host]}"
+    end
 
     def geocode?
       (!address.blank? && (latitude.blank? || longitude.blank?)) || address_changed?
