@@ -65,14 +65,9 @@ class NamedLocation < ActiveRecord::Base
   end
 
   def small_size_url
-    search = Sunspot.search (Photo) do
-      with(:named_location_id,  self.id)
-      order_by :plusminus, :desc
-      paginate :page => 1, :per_page => 1
-    end
-
-    unless search.results.empty?
-      return search.results.first.small_size_url
+    photo = best_photo
+    unless photo.nil?
+      return photo.small_size_url
     else
       # named locations that have no photo, will appear with the default avatar
       return (SystemPhoto.find_by_title "default avatar").thumb_size_url
