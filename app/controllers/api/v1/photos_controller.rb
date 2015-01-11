@@ -12,17 +12,7 @@ module Api
       def indexbbox
         current_photo_ids = params['current_markers'].split(',').map{ | item | item.to_i }
 
-        # set categories according to filtering on the map
-        categories = Array.new
-        if params[:fashion] == "true"
-          categories << 1
-        end
-        if params[:place] == "true"
-          categories << 2
-        end
-        if params[:art] == "true"
-          categories << 3
-        end
+        categories = extract_categories_from_params
 
         unless categories.empty?
           search = Sunspot.search (Photo) do
@@ -37,7 +27,6 @@ module Api
 
             paginate(:page => 1, :per_page => 60)
             order_by :created_at, :desc
-
           end
 
           photos = []
@@ -291,6 +280,23 @@ module Api
 
             end
           end
+      end
+
+      protected
+
+      def extract_categories_from_params
+        # set categories according to filtering on the map
+        categories = Array.new
+        if params[:fashion] == "true"
+          categories << 1
+        end
+        if params[:place] == "true"
+          categories << 2
+        end
+        if params[:art] == "true"
+          categories << 3
+        end
+        return categories
       end
     end
   end
