@@ -18,6 +18,9 @@
 require 'factory_girl_rails'
 require 'sunspot/rails/spec_helper'
 require 'devise'
+require 'geocoder'
+
+require File.dirname(__FILE__) + "/support/geocoder"
 
 require File.dirname(__FILE__) + "/controller_macros"
 
