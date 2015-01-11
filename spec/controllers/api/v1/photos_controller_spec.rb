@@ -403,5 +403,18 @@ describe Api::V1::PhotosController, :type => :controller do
       end
     end
   end
+
+  describe "GET #report" do
+    context "photo already reported" do
+      it "should return a notice" do
+        photo = create :photo
+        create :photo_report, user: current_user, photo: photo
+        get :report , { id: photo.id }
+        expect(response).to be_unprocessable
+        data = ActiveSupport::JSON.decode(response.body)
+        expect(data[0]['notice']).to be == 'You have already reported this photo.'
+      end
+    end
+  end
 end
 

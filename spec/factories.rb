@@ -35,6 +35,11 @@ FactoryGirl.define do
     end
   end
 
+  factory :photo_report do
+    user
+    photo
+  end
+
   factory :photo do
     title {Faker::Lorem.words 2}
     association :category, :fashion
