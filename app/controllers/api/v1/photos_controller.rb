@@ -112,10 +112,7 @@ module Api
         current_user.update_location(params[:user_latitude], params[:user_longitude])
         time_factor = PhotoSearch.time_factor_from_param params[:time_factor]
         distance_factor = PhotoSearch.distance_factor_from_param params[:distance_factor]
-        if params[:filter]
-          filter = ActiveSupport::JSON.decode(params[:filter])
-          params[filter[0].values[0]] = filter[0].values[1]
-        end
+        process_filter_params
 
         if !params[:user_id].nil?
           search = PhotoSearch.user_photos( params[:user_id], params[:page], params[:limit])
