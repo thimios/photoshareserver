@@ -85,6 +85,7 @@ group :development do
   gem 'rvm-capistrano'
   gem 'guard-rspec', require: false
   gem "spring"
+  gem 'libnotify'
 end
 
 

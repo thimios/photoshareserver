@@ -133,6 +133,8 @@ GEM
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    libnotify (0.9.1)
+      ffi (>= 1.0.11)
     libv8 (3.16.14.3)
     listen (2.8.5)
       celluloid (>= 0.15.2)
@@ -340,6 +342,7 @@ DEPENDENCIES
   jquery-datatables-rails
   jquery-rails
   kaminari (~> 0.14.1)
+  libnotify
   libv8
   mysql2
   newrelic_rpm (~> 3.5.8.72)
