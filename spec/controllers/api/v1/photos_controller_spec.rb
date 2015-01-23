@@ -416,5 +416,15 @@ describe Api::V1::PhotosController, :type => :controller do
       end
     end
   end
+
+  describe "GET #vote_up" do
+    it "should return a notice and add a vote to the photo" do
+      photo = create :photo
+      get :vote_up, { id: photo.id }
+      expect(response).to be_success
+      data = ActiveSupport::JSON.decode(response.body)
+      expect(data[0]['notice']).to be == 'Photo was successfully voted.'
+    end
+  end
 end
 
